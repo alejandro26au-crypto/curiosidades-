@@ -1,4 +1,4 @@
-# Diagnóstico de compatibilidad con OpenMontage (solo lee, no instala ni cambia nada).
+﻿# Diagnóstico de compatibilidad con OpenMontage (solo lee, no instala ni cambia nada).
 # Uso, en PowerShell:  powershell -ExecutionPolicy Bypass -File .\diagnostico_windows.ps1
 $ErrorActionPreference = "SilentlyContinue"
 function Fila($nombre, $valor, $ok) {
