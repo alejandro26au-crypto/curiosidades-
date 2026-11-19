@@ -83,6 +83,8 @@ def planificar(guion, sin_voz=False, carpeta="salida/tmp"):
         spec = personajes.get(quien, {}) if quien != "narrador" else {}
         segs.append({"texto": pl["texto"].strip(), "voz": spec.get("voz", voz_narr),
                      "velocidad": spec.get("velocidad", ESTILO["velocidad_voz"]), "tono": spec.get("tono", "+0Hz")})
+        if guion.get("voz_externa"):
+            segs[-1]["clip"] = os.path.join(guion["voz_externa"], f"{len(segs):02d}.mp3")
     if sin_voz:
         voz, tiempos = audio.estimar(segs)
     else:

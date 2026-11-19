@@ -85,7 +85,10 @@ def sintetizar(segmentos, carpeta, cache=True):
         ruta = os.path.join(carpeta, f"voz_{i:03d}.mp3")
         meta = ruta + ".json"
         clave = json.dumps(seg, sort_keys=True, ensure_ascii=False)
-        if cache and os.path.exists(meta) and json.load(open(meta)).get("clave") == clave:
+        if seg.get("clip") and os.path.exists(seg["clip"]):  # voz externa (motor/doblaje.py)
+            ruta = seg["clip"]
+            palabras = json.load(open(os.path.splitext(ruta)[0] + ".json", encoding="utf-8"))
+        elif cache and os.path.exists(meta) and json.load(open(meta)).get("clave") == clave:
             palabras = json.load(open(meta))["palabras"]
         else:
             for intento in range(4):
@@ -106,6 +109,8 @@ def sintetizar(segmentos, carpeta, cache=True):
         x = x[ini:fin]
         corr = ini / SR
         pausa = 0.08 if seg["texto"].rstrip()[-1:] in ".?!" else 0.02
+        if seg.get("clip"):
+            pausa += 0.0
         palabras = _alinear_puntuacion(seg["texto"], palabras)
         tiempos.append([[w, cursor + a - corr, cursor + b - corr] for w, a, b in palabras])
         pistas.append(x)

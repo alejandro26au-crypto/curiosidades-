@@ -50,6 +50,10 @@ def main(argv=None):
     c = sub.add_parser("todo"); c.add_argument("tema"); c.add_argument("--investigar", action="store_true")
     c.add_argument("--preview", action="store_true"); c.add_argument("--musica")
     d = sub.add_parser("validar"); d.add_argument("guion")
+    f = sub.add_parser("doblar", help="usa audios externos (ElevenLabs) en vez de edge-tts")
+    f.add_argument("guion"); f.add_argument("--voz", action="append", required=True, metavar="ID=AUDIO",
+                                            help="narrador=archivo.mp3, vecino=archivo2.mp3 ...")
+    f.add_argument("--acelerar", type=float, default=1.0, help="1.15 = 15%% más rápido sin cambiar el tono")
     e = sub.add_parser("ideas"); e.add_argument("-n", type=int, default=15); e.add_argument("--nicho", default="oficios de campo, mar, historia y naturaleza")
     args = ap.parse_args(argv)
 
@@ -68,6 +72,12 @@ def main(argv=None):
         render.renderizar(g, out, preview=args.preview, sin_voz=args.sin_voz, musica=args.musica, max_seg=args.max_seg)
     elif args.cmd == "validar":
         _reporte(render.cargar(args.guion))
+    elif args.cmd == "doblar":
+        from . import doblaje
+        audios = dict(v.split("=", 1) for v in args.voz)
+        for av in doblaje.doblar(args.guion, audios, acelerar=args.acelerar):
+            print("aviso:", av)
+        print(f"listo: {args.guion} ahora usa los audios de voces/")
     elif args.cmd == "ideas":
         from . import guion
         print(json.dumps(guion.ideas(args.n, args.nicho), ensure_ascii=False, indent=2))
