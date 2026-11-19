@@ -6,140 +6,1067 @@
   "animo_musica": "curioso",
   "voz_narrador": "es-MX-JorgeNeural",
   "personajes": {
-    "heroe": {"rol": "heroe", "sombrero": "paja", "ropa": "overol", "color_ropa": "#E9A23B", "color_ropa2": "#3F6EA8", "color_zapatos": "#4A3426", "accesorios": []},
-    "vecino": {"rol": "rival", "sombrero": "vaquero", "color_sombrero": "#3A3A40", "ropa": "chaleco", "color_ropa": "#F2EFE6", "color_ropa2": "#7A4E2E", "bigote": true, "accesorios": [], "voz": "es-CO-GonzaloNeural", "tono": "-6Hz"},
-    "comprador": {"rol": "secundario", "sombrero": "copa", "color_sombrero": "#2B2B30", "ropa": "abrigo", "color_ropa": "#5B4B8A", "accesorios": ["lentes"]},
-    "abuela": {"rol": "extra", "sombrero": "pañuelo", "color_sombrero": "#8E6BBF", "ropa": "vestido", "color_ropa": "#B5651D"},
-    "nino": {"rol": "extra", "sombrero": "gorra", "color_sombrero": "#D64541", "ropa": "camisa", "color_ropa": "#4AA3DF"}
+    "heroe": {
+      "rol": "heroe",
+      "sombrero": "paja",
+      "ropa": "overol",
+      "color_ropa": "#E9A23B",
+      "color_ropa2": "#3F6EA8",
+      "color_zapatos": "#4A3426",
+      "accesorios": []
+    },
+    "vecino": {
+      "rol": "rival",
+      "sombrero": "vaquero",
+      "color_sombrero": "#3A3A40",
+      "ropa": "chaleco",
+      "color_ropa": "#F2EFE6",
+      "color_ropa2": "#7A4E2E",
+      "bigote": true,
+      "accesorios": [],
+      "voz": "es-CO-GonzaloNeural",
+      "tono": "-6Hz"
+    },
+    "comprador": {
+      "rol": "secundario",
+      "sombrero": "copa",
+      "color_sombrero": "#2B2B30",
+      "ropa": "abrigo",
+      "color_ropa": "#5B4B8A",
+      "accesorios": [
+        "lentes"
+      ]
+    },
+    "abuela": {
+      "rol": "extra",
+      "sombrero": "pañuelo",
+      "color_sombrero": "#8E6BBF",
+      "ropa": "vestido",
+      "color_ropa": "#B5651D"
+    },
+    "nino": {
+      "rol": "extra",
+      "sombrero": "gorra",
+      "color_sombrero": "#D64541",
+      "ropa": "camisa",
+      "color_ropa": "#4AA3DF"
+    }
   },
   "planos": [
-    {"beat": "gancho", "texto": "Este lechero vendó sus cántaros como momias en el día más caliente del año.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "granero", "x": 0.15, "plano": "fondo"}, {"tipo": "lata_leche", "x": 0.68, "plano": "frente", "y": 0.86, "vendada": true}, {"tipo": "lata_leche", "x": 0.86, "plano": "frente", "y": 0.88, "vendada": true}, {"tipo": "cerca", "x": 0.5, "plano": "medio", "largo": 1600}]},
-     "actores": [{"id": "heroe", "x": 0.38, "expresion": "determinado", "pose": "trabajar", "objeto": "trapo", "mira": "der"}],
-     "camara": {"mov": "push_in", "foco": "heroe"}, "efectos": ["calor"], "destacar": ["momias"]},
-
-    {"beat": "burla", "voz": "vecino", "texto": "¿Y para cuándo el entierro, Momia?",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "cerca", "x": 0.5, "plano": "medio", "largo": 1600}, {"tipo": "arbol", "x": 0.9, "plano": "fondo"}]},
-     "actores": [{"id": "vecino", "x": 0.5, "expresion": "burla", "pose": "reir", "mira": "izq"}],
-     "camara": {"mov": "zoom_golpe", "foco": "vecino"}, "sfx": ["risa"]},
-
-    {"beat": "apuesta", "texto": "Son cuarenta litros y el comprador no llega hasta las cinco.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.3, "plano": "frente", "y": 0.85}, {"tipo": "lata_leche", "x": 0.5, "plano": "frente", "y": 0.87}, {"tipo": "lata_leche", "x": 0.7, "plano": "frente", "y": 0.85}]},
-     "actores": [],
-     "camara": {"mov": "pan_der", "encuadre": "americano", "foco": [0.5, 0.8]}, "inserto": {"tipo": "reloj", "de": 11, "a": 17, "texto": "Faltan 6 horas"}, "sfx": ["tictac"]},
-
-    {"beat": "apuesta", "texto": "Arriba de treinta grados, la leche se corta en unas horas.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.5, "plano": "frente", "y": 0.9, "escala": 1.0}]},
-     "actores": [], "camara": {"mov": "push_in", "encuadre": "detalle", "foco": [0.5, 0.78]},
-     "inserto": {"tipo": "termometro", "de": 22, "a": 31, "unidad": "°C", "etiqueta": "Leche"}, "efectos": ["calor"]},
-
-    {"beat": "apuesta", "texto": "Adiós venta.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "arbol", "x": 0.85, "plano": "fondo"}]},
-     "actores": [{"id": "heroe", "x": 0.5, "expresion": "preocupado", "pose": "rascarse", "mira": "der"}],
-     "camara": {"mov": "estatico", "encuadre": "primer_plano", "foco": "heroe"}},
-
-    {"beat": "rival", "texto": "El vecino mete la suya al granero, a la sombra, con la puerta cerrada.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "granero", "x": 0.55, "plano": "medio", "escala": 1.2}, {"tipo": "lata_leche", "x": 0.78, "plano": "frente", "y": 0.84}]},
-     "actores": [{"id": "vecino", "x": 0.3, "expresion": "presumido", "pose": "cargar", "objeto": "lata", "accion": "entrar_izq", "mira": "der"}],
-     "camara": {"mov": "seguimiento", "foco": "vecino", "entrada": "whip"}},
-
-    {"beat": "rival", "voz": "vecino", "texto": "Sombra de la buena, Momia.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "granero", "x": 0.75, "plano": "medio", "escala": 1.2}]},
-     "actores": [{"id": "vecino", "x": 0.4, "expresion": "confiado", "pose": "brazos_cruzados", "mira": "der"}],
-     "camara": {"mov": "push_in", "encuadre": "americano", "foco": "vecino"}},
-
-    {"beat": "proceso", "texto": "Él solo tiene un balde, unos trapos viejos y el viento.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "arbol", "x": 0.15, "plano": "fondo"}, {"tipo": "estanque", "x": 0.75, "plano": "medio"}]},
-     "actores": [{"id": "heroe", "x": 0.45, "expresion": "neutral", "pose": "cargar", "objeto": "balde", "mira": "der"}],
-     "camara": {"mov": "pan_izq"}, "efectos": ["hojas"], "sfx": ["viento"]},
-
-    {"beat": "proceso", "texto": "Así que moja los trapos, envuelve cada cántaro y los saca al sol.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.62, "plano": "frente", "y": 0.86, "vendada": true}, {"tipo": "lata_leche", "x": 0.8, "plano": "frente", "y": 0.87}]},
-     "actores": [{"id": "heroe", "x": 0.38, "expresion": "determinado", "pose": "trabajar", "objeto": "trapo", "mira": "der"}],
-     "camara": {"mov": "orbita", "encuadre": "americano", "foco": "heroe"}, "sfx": ["agua"]},
-
-    {"beat": "proceso", "texto": "Todo el pueblo sale a ver la locura.",
-     "fondo": {"lugar": "pueblo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.5, "plano": "medio", "vendada": true}]},
-     "actores": [{"id": "abuela", "x": 0.18, "y": 0.8, "expresion": "asombro", "pose": "idle", "mira": "der"}, {"id": "nino", "x": 0.82, "y": 0.82, "expresion": "burla", "pose": "señalar", "mira": "izq"}, {"id": "vecino", "x": 0.62, "y": 0.72, "expresion": "burla", "pose": "reir", "mira": "izq"}],
-     "camara": {"mov": "pull_out", "foco": [0.5, 0.6]}, "sfx": ["risa"]},
-
-    {"beat": "escalada", "texto": "A mediodía el sol pega a treinta y cuatro grados.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "arbol", "x": 0.2, "plano": "fondo"}]},
-     "actores": [], "camara": {"mov": "tilt_arriba", "intensidad": 1.2},
-     "inserto": {"tipo": "termometro", "de": 29, "a": 34, "unidad": "°C", "etiqueta": "Al sol"}, "efectos": ["calor"]},
-
-    {"beat": "escalada", "texto": "En el granero, la leche del vecino ya marca veinticuatro.",
-     "fondo": {"lugar": "interior", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.5, "plano": "frente", "y": 0.88, "escala": 1.0}, {"tipo": "fardos", "x": 0.15, "plano": "medio"}]},
-     "actores": [], "camara": {"mov": "push_in", "foco": [0.5, 0.75]},
-     "inserto": {"tipo": "termometro", "de": 18, "a": 24, "unidad": "°C", "etiqueta": "Granero"}},
-
-    {"beat": "escalada", "texto": "Veintiséis. Veintiocho.",
-     "fondo": {"lugar": "interior", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.5, "plano": "frente", "y": 0.88, "escala": 1.0}]},
-     "actores": [], "camara": {"mov": "zoom_golpe", "foco": [0.5, 0.72]},
-     "inserto": {"tipo": "termometro", "de": 24, "a": 28, "unidad": "°C", "etiqueta": "Granero"}, "sfx": ["tick", {"nombre": "tick", "t": 0.6}]},
-
-    {"beat": "escalada", "texto": "Y lo peor aún no llega.",
-     "fondo": {"lugar": "campo", "hora": "atardecer", "props": [{"tipo": "granero", "x": 0.5, "plano": "medio", "escala": 1.3, "vapor": true}]},
-     "actores": [], "camara": {"mov": "push_in", "intensidad": 0.6, "foco": [0.5, 0.55]}, "efectos": ["oscuro"], "sfx": ["golpe"]},
-
-    {"beat": "giro", "texto": "Ahí adentro el aire no se mueve y se calienta como un horno.",
-     "fondo": {"lugar": "interior", "hora": "dia", "props": [{"tipo": "fardos", "x": 0.85, "plano": "medio"}]},
-     "actores": [{"id": "vecino", "x": 0.45, "expresion": "preocupado", "pose": "temblar", "mira": "der", "sudor": true}],
-     "camara": {"mov": "sacudida", "intensidad": 0.5, "foco": "vecino"}, "efectos": ["calor"]},
-
-    {"beat": "giro", "texto": "Mientras, la Momia moja sus trapos cada hora.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.7, "plano": "frente", "y": 0.86, "vendada": true}, {"tipo": "lata_leche", "x": 0.86, "plano": "frente", "y": 0.88, "vendada": true}]},
-     "actores": [{"id": "heroe", "x": 0.4, "expresion": "confiado", "pose": "trabajar", "objeto": "balde", "mira": "der"}],
-     "camara": {"mov": "pan_der", "encuadre": "americano"}, "sfx": ["agua"]},
-
-    {"beat": "giro", "texto": "Su leche, bajo las vendas, marca diecinueve.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.5, "plano": "frente", "y": 0.9, "escala": 1.0, "vendada": true}]},
-     "actores": [], "camara": {"mov": "push_in", "encuadre": "detalle", "foco": [0.5, 0.78]},
-     "inserto": {"tipo": "termometro", "de": 20, "a": 19, "unidad": "°C", "etiqueta": "Momia", "min": 10, "max": 40}, "sfx": ["ding"]},
-
-    {"beat": "truco", "texto": "¿Por qué?",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": []},
-     "actores": [{"id": "vecino", "x": 0.5, "expresion": "asombro", "pose": "sorpresa", "mira": "der"}],
-     "camara": {"mov": "zoom_golpe", "encuadre": "primer_plano", "foco": "vecino"}, "efectos": ["impacto"], "sfx": ["whoosh"]},
-
-    {"beat": "truco", "texto": "El truco es que el agua, al evaporarse, se roba el calor.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "lata_leche", "x": 0.5, "plano": "frente", "y": 0.92, "escala": 1.0, "vendada": true}]},
-     "actores": [], "camara": {"mov": "orbita", "encuadre": "americano", "foco": [0.5, 0.75]},
-     "inserto": {"tipo": "capas", "capas": [{"color": "#BFE6FF", "etiqueta": "trapo mojado"}, {"color": "#C9CED6", "etiqueta": "cántaro"}, {"color": "#FFFFFF", "etiqueta": ""}]}, "efectos": ["vapor"]},
-
-    {"beat": "truco", "texto": "Igual que el sudor te enfría la piel.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": [{"tipo": "arbol", "x": 0.85, "plano": "fondo"}]},
-     "actores": [{"id": "heroe", "x": 0.5, "expresion": "feliz", "pose": "idle", "mira": "der", "sudor": true}],
-     "camara": {"mov": "push_in", "encuadre": "primer_plano", "foco": "heroe"}, "sfx": ["viento"]},
-
-    {"beat": "truco", "texto": "Más viento, más frío. La sombra no enfría, solo no calienta.",
-     "fondo": {"lugar": "campo", "hora": "dia", "props": []},
-     "actores": [], "camara": {"mov": "estatico"},
-     "inserto": {"tipo": "comparativa", "items": [{"etiqueta": "Momia", "valor": 19, "color": "#3CB371", "unidad": "°"}, {"etiqueta": "Granero", "valor": 31, "color": "#E04B3A", "unidad": "°"}], "etiqueta": "Temperatura de la leche"}},
-
-    {"beat": "desenlace", "texto": "A las cinco llega el comprador.",
-     "fondo": {"lugar": "pueblo", "hora": "atardecer", "props": [{"tipo": "carreta", "x": 0.25, "plano": "medio"}]},
-     "actores": [{"id": "comprador", "x": 0.55, "expresion": "neutral", "pose": "idle", "objeto": "libreta", "accion": "entrar_der", "mira": "izq"}],
-     "camara": {"mov": "seguimiento", "foco": "comprador"}, "sfx": ["campana"]},
-
-    {"beat": "desenlace", "texto": "Prueba la leche del vecino y la escupe. Cortada.",
-     "fondo": {"lugar": "campo", "hora": "atardecer", "props": [{"tipo": "granero", "x": 0.85, "plano": "fondo"}]},
-     "actores": [{"id": "comprador", "x": 0.35, "expresion": "enojado", "pose": "señalar", "mira": "der"}, {"id": "vecino", "x": 0.7, "expresion": "panico", "pose": "sorpresa", "mira": "izq"}],
-     "camara": {"mov": "sacudida", "intensidad": 0.6, "foco": "vecino"}, "sfx": ["error"]},
-
-    {"beat": "desenlace", "texto": "Prueba la de la Momia. Fresca. Se lleva los cuarenta litros.",
-     "fondo": {"lugar": "campo", "hora": "atardecer", "props": [{"tipo": "lata_leche", "x": 0.82, "plano": "frente", "y": 0.86, "vendada": true}]},
-     "actores": [{"id": "comprador", "x": 0.3, "expresion": "feliz", "pose": "idle", "mira": "der"}, {"id": "heroe", "x": 0.6, "expresion": "confiado", "pose": "manos_cadera", "mira": "izq"}],
-     "camara": {"mov": "push_in", "foco": "heroe"}, "inserto": {"tipo": "contador", "de": 0, "a": 40, "unidad": "L", "etiqueta": "Vendidos", "posicion": "arriba"}, "sfx": ["ding"]},
-
-    {"beat": "remate", "voz": "vecino", "texto": "Oye, Momia… ¿me prestas un trapo?",
-     "fondo": {"lugar": "campo", "hora": "atardecer", "props": [{"tipo": "lata_leche", "x": 0.8, "plano": "frente", "y": 0.86}]},
-     "actores": [{"id": "vecino", "x": 0.45, "expresion": "triste", "pose": "idle", "objeto": "lata", "mira": "der"}],
-     "camara": {"mov": "push_in", "encuadre": "americano", "foco": "vecino"}},
-
-    {"beat": "remate", "texto": "Claro. Para el entierro.",
-     "fondo": {"lugar": "campo", "hora": "atardecer", "props": [{"tipo": "lata_leche", "x": 0.2, "plano": "frente", "y": 0.86, "vendada": true}]},
-     "actores": [{"id": "heroe", "x": 0.55, "expresion": "confiado", "pose": "idle", "objeto": "trapo", "mira": "izq"}],
-     "camara": {"mov": "zoom_golpe", "encuadre": "primer_plano", "foco": "heroe"}, "sfx": ["pop"]}
+    {
+      "beat": "gancho",
+      "texto": "Este lechero vendó sus cántaros como momias en el día más caliente del año.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "granero",
+            "x": 0.15,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.68,
+            "plano": "frente",
+            "y": 0.86,
+            "vendada": true
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.86,
+            "plano": "frente",
+            "y": 0.88,
+            "vendada": true
+          },
+          {
+            "tipo": "cerca",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 1600
+          },
+          {
+            "tipo": "casa",
+            "x": 0.9,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "cubeta",
+            "x": 0.25,
+            "plano": "frente",
+            "y": 0.86
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.38,
+          "expresion": "determinado",
+          "pose": "trabajar",
+          "objeto": "trapo",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "heroe"
+      },
+      "efectos": [
+        "calor"
+      ],
+      "destacar": [
+        "momias"
+      ]
+    },
+    {
+      "beat": "burla",
+      "voz": "vecino",
+      "texto": "¿Y para cuándo el entierro, Momia?",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "cerca",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 1600
+          },
+          {
+            "tipo": "arbol",
+            "x": 0.9,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "molino",
+            "x": 0.15,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.5,
+          "expresion": "burla",
+          "pose": "reir",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "foco": "vecino"
+      },
+      "sfx": [
+        "risa"
+      ]
+    },
+    {
+      "beat": "apuesta",
+      "texto": "Son cuarenta litros y el comprador no llega hasta las cinco.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.3,
+            "plano": "frente",
+            "y": 0.85
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.87
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.7,
+            "plano": "frente",
+            "y": 0.85
+          },
+          {
+            "tipo": "pozo",
+            "x": 0.85,
+            "plano": "medio"
+          },
+          {
+            "tipo": "costal",
+            "x": 0.15,
+            "plano": "frente",
+            "y": 0.84
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "americano",
+        "foco": [
+          0.5,
+          0.8
+        ]
+      },
+      "inserto": {
+        "tipo": "reloj",
+        "de": 11,
+        "a": 17,
+        "texto": "Faltan 6 horas"
+      },
+      "sfx": [
+        "tictac"
+      ]
+    },
+    {
+      "beat": "apuesta",
+      "texto": "Arriba de treinta grados, la leche se corta en unas horas.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.9,
+            "escala": 1.0
+          },
+          {
+            "tipo": "arbol",
+            "x": 0.2,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.78
+        ]
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 22,
+        "a": 31,
+        "unidad": "°C",
+        "etiqueta": "Leche"
+      },
+      "efectos": [
+        "calor"
+      ]
+    },
+    {
+      "beat": "apuesta",
+      "texto": "Adiós venta.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "arbol",
+            "x": 0.85,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.5,
+          "expresion": "preocupado",
+          "pose": "rascarse",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "estatico",
+        "encuadre": "primer_plano",
+        "foco": "heroe"
+      }
+    },
+    {
+      "beat": "rival",
+      "texto": "El vecino mete la suya al granero, a la sombra, con la puerta cerrada.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "granero",
+            "x": 0.55,
+            "plano": "medio",
+            "escala": 1.2
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.78,
+            "plano": "frente",
+            "y": 0.84
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.3,
+          "expresion": "presumido",
+          "pose": "cargar",
+          "objeto": "lata",
+          "accion": "entrar_izq",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "seguimiento",
+        "foco": "vecino",
+        "entrada": "whip"
+      }
+    },
+    {
+      "beat": "rival",
+      "voz": "vecino",
+      "texto": "Sombra de la buena, Momia.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "granero",
+            "x": 0.75,
+            "plano": "medio",
+            "escala": 1.2
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.4,
+          "expresion": "confiado",
+          "pose": "brazos_cruzados",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "americano",
+        "foco": "vecino"
+      }
+    },
+    {
+      "beat": "proceso",
+      "texto": "Él solo tiene un balde, unos trapos viejos y el viento.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "arbol",
+            "x": 0.15,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "estanque",
+            "x": 0.75,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.45,
+          "expresion": "neutral",
+          "pose": "cargar",
+          "objeto": "balde",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_izq"
+      },
+      "efectos": [
+        "hojas"
+      ],
+      "sfx": [
+        "viento"
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Así que moja los trapos, envuelve cada cántaro y los saca al sol.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.62,
+            "plano": "frente",
+            "y": 0.86,
+            "vendada": true
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.8,
+            "plano": "frente",
+            "y": 0.87
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.38,
+          "expresion": "determinado",
+          "pose": "trabajar",
+          "objeto": "trapo",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "orbita",
+        "encuadre": "americano",
+        "foco": "heroe"
+      },
+      "sfx": [
+        "agua"
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Todo el pueblo sale a ver la locura.",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "medio",
+            "vendada": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "abuela",
+          "x": 0.18,
+          "y": 0.8,
+          "expresion": "asombro",
+          "pose": "idle",
+          "mira": "der"
+        },
+        {
+          "id": "nino",
+          "x": 0.82,
+          "y": 0.82,
+          "expresion": "burla",
+          "pose": "señalar",
+          "mira": "izq"
+        },
+        {
+          "id": "vecino",
+          "x": 0.62,
+          "y": 0.72,
+          "expresion": "burla",
+          "pose": "reir",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "pull_out",
+        "foco": [
+          0.5,
+          0.6
+        ]
+      },
+      "sfx": [
+        "risa"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "A mediodía el sol pega a treinta y cuatro grados.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "arbol",
+            "x": 0.2,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "tilt_arriba",
+        "intensidad": 1.2
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 29,
+        "a": 34,
+        "unidad": "°C",
+        "etiqueta": "Al sol"
+      },
+      "efectos": [
+        "calor"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "En el granero, la leche del vecino ya marca veinticuatro.",
+      "fondo": {
+        "lugar": "interior",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88,
+            "escala": 1.0
+          },
+          {
+            "tipo": "fardos",
+            "x": 0.15,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "foco": [
+          0.5,
+          0.75
+        ]
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 18,
+        "a": 24,
+        "unidad": "°C",
+        "etiqueta": "Granero"
+      }
+    },
+    {
+      "beat": "escalada",
+      "texto": "Veintiséis. Veintiocho.",
+      "fondo": {
+        "lugar": "interior",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88,
+            "escala": 1.0
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "zoom_golpe",
+        "foco": [
+          0.5,
+          0.72
+        ]
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 24,
+        "a": 28,
+        "unidad": "°C",
+        "etiqueta": "Granero"
+      },
+      "sfx": [
+        "tick",
+        {
+          "nombre": "tick",
+          "t": 0.6
+        }
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "Y lo peor aún no llega.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "granero",
+            "x": 0.5,
+            "plano": "medio",
+            "escala": 1.3,
+            "vapor": true
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "intensidad": 0.6,
+        "foco": [
+          0.5,
+          0.55
+        ]
+      },
+      "efectos": [
+        "oscuro"
+      ],
+      "sfx": [
+        "golpe"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "Ahí adentro el aire no se mueve y se calienta como un horno.",
+      "fondo": {
+        "lugar": "interior",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "fardos",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.45,
+          "expresion": "preocupado",
+          "pose": "temblar",
+          "mira": "der",
+          "sudor": true
+        }
+      ],
+      "camara": {
+        "mov": "sacudida",
+        "intensidad": 0.5,
+        "foco": "vecino"
+      },
+      "efectos": [
+        "calor"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "Mientras, la Momia moja sus trapos cada hora.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.7,
+            "plano": "frente",
+            "y": 0.86,
+            "vendada": true
+          },
+          {
+            "tipo": "lata_leche",
+            "x": 0.86,
+            "plano": "frente",
+            "y": 0.88,
+            "vendada": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.4,
+          "expresion": "confiado",
+          "pose": "trabajar",
+          "objeto": "balde",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "americano"
+      },
+      "sfx": [
+        "agua"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "Su leche, bajo las vendas, marca diecinueve.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.9,
+            "escala": 1.0,
+            "vendada": true
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.78
+        ]
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 20,
+        "a": 19,
+        "unidad": "°C",
+        "etiqueta": "Momia",
+        "min": 10,
+        "max": 40
+      },
+      "sfx": [
+        "ding"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "¿Por qué?",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": []
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.5,
+          "expresion": "asombro",
+          "pose": "sorpresa",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "primer_plano",
+        "foco": "vecino"
+      },
+      "efectos": [
+        "impacto"
+      ],
+      "sfx": [
+        "whoosh"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "El truco es que el agua, al evaporarse, se roba el calor.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.92,
+            "escala": 1.0,
+            "vendada": true
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "orbita",
+        "encuadre": "americano",
+        "foco": [
+          0.5,
+          0.75
+        ]
+      },
+      "inserto": {
+        "tipo": "capas",
+        "capas": [
+          {
+            "color": "#BFE6FF",
+            "etiqueta": "trapo mojado"
+          },
+          {
+            "color": "#C9CED6",
+            "etiqueta": "cántaro"
+          },
+          {
+            "color": "#FFFFFF",
+            "etiqueta": ""
+          }
+        ]
+      },
+      "efectos": [
+        "vapor"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "Igual que el sudor te enfría la piel.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "arbol",
+            "x": 0.85,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.5,
+          "expresion": "feliz",
+          "pose": "idle",
+          "mira": "der",
+          "sudor": true
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "primer_plano",
+        "foco": "heroe"
+      },
+      "sfx": [
+        "viento"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "Más viento, más frío. La sombra no enfría, solo no calienta.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": []
+      },
+      "actores": [],
+      "camara": {
+        "mov": "estatico"
+      },
+      "inserto": {
+        "tipo": "comparativa",
+        "items": [
+          {
+            "etiqueta": "Momia",
+            "valor": 19,
+            "color": "#3CB371",
+            "unidad": "°"
+          },
+          {
+            "etiqueta": "Granero",
+            "valor": 31,
+            "color": "#E04B3A",
+            "unidad": "°"
+          }
+        ],
+        "etiqueta": "Temperatura de la leche"
+      }
+    },
+    {
+      "beat": "desenlace",
+      "texto": "A las cinco llega el comprador.",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "carreta",
+            "x": 0.25,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "comprador",
+          "x": 0.55,
+          "expresion": "neutral",
+          "pose": "idle",
+          "objeto": "libreta",
+          "accion": "entrar_der",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "seguimiento",
+        "foco": "comprador"
+      },
+      "sfx": [
+        "campana"
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Prueba la leche del vecino y la escupe. Cortada.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "granero",
+            "x": 0.85,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "comprador",
+          "x": 0.35,
+          "expresion": "enojado",
+          "pose": "señalar",
+          "mira": "der"
+        },
+        {
+          "id": "vecino",
+          "x": 0.7,
+          "expresion": "panico",
+          "pose": "sorpresa",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "sacudida",
+        "intensidad": 0.6,
+        "foco": "vecino"
+      },
+      "sfx": [
+        "error"
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Prueba la de la Momia. Fresca. Se lleva los cuarenta litros.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.82,
+            "plano": "frente",
+            "y": 0.86,
+            "vendada": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "comprador",
+          "x": 0.3,
+          "expresion": "feliz",
+          "pose": "idle",
+          "mira": "der"
+        },
+        {
+          "id": "heroe",
+          "x": 0.6,
+          "expresion": "confiado",
+          "pose": "manos_cadera",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "heroe"
+      },
+      "inserto": {
+        "tipo": "contador",
+        "de": 0,
+        "a": 40,
+        "unidad": "L",
+        "etiqueta": "Vendidos",
+        "posicion": "arriba"
+      },
+      "sfx": [
+        "ding"
+      ]
+    },
+    {
+      "beat": "remate",
+      "voz": "vecino",
+      "texto": "Oye, Momia… ¿me prestas un trapo?",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.8,
+            "plano": "frente",
+            "y": 0.86
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.45,
+          "expresion": "triste",
+          "pose": "idle",
+          "objeto": "lata",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "americano",
+        "foco": "vecino"
+      }
+    },
+    {
+      "beat": "remate",
+      "texto": "Claro. Para el entierro.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "lata_leche",
+            "x": 0.2,
+            "plano": "frente",
+            "y": 0.86,
+            "vendada": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.55,
+          "expresion": "confiado",
+          "pose": "idle",
+          "objeto": "trapo",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "primer_plano",
+        "foco": "heroe"
+      },
+      "sfx": [
+        "pop"
+      ]
+    }
   ]
 }

@@ -12,7 +12,9 @@ const trabajo = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const servidor = http.createServer((req, res) => {
   const ruta = path.join(RAIZ, decodeURIComponent(req.url.split('?')[0]));
   if (!ruta.startsWith(RAIZ) || !fs.existsSync(ruta)) { res.writeHead(404); return res.end(); }
-  const tipo = ruta.endsWith('.js') ? 'text/javascript' : 'text/html';
+  const ext = path.extname(ruta).toLowerCase();
+  const tipo = { '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg',
+    '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json', '.bin': 'application/octet-stream' }[ext] || 'text/html';
   res.writeHead(200, { 'Content-Type': tipo }); fs.createReadStream(ruta).pipe(res);
 });
 

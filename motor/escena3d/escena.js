@@ -1,6 +1,9 @@
 // Escenarios 3D low-poly con sombreado toon, sombras suaves, niebla y cielo.
 // Unidades: metros. Suelo en y=0. El eje X cruza la pantalla, Z hacia la cámara.
-import * as THREE from '/node_modules/three/build/three.module.js';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 
 const W = window.ANCHO || 1080, H = window.ALTO || 1920;
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -64,6 +67,55 @@ const LUGARES = {
   interior: { suelo: '#a87a4e', lejos: '#a87a4e', pasto: '#a87a4e', densidad: 0, interior: true },
 };
 
+
+// ---------- modelos low-poly CC0 (Quaternius, Kenney, KayKit) ----------
+const CATALOGO = await (await fetch('/motor/escena3d/catalogo.json')).json();
+const MODELOS = {};
+async function precargar() {
+  const ld = new GLTFLoader(); ld.setMeshoptDecoder(MeshoptDecoder);
+  await Promise.all(Object.entries(CATALOGO.modelos).map(async ([nombre, [ruta, alto]]) => {
+    try {
+      const g = await ld.loadAsync('/motor/escena3d/modelos/' + ruta);
+      const raiz = g.scene;
+      raiz.traverse((o) => {
+        if (!o.isMesh) return;
+        o.castShadow = true; o.receiveShadow = true;
+        const conv = (m) => {
+          // los materiales 'unlit' no reciben luz: se pasan a estándar para que tengan volumen y sombra
+          const n = new THREE.MeshStandardMaterial({ color: m.color, map: m.map || null, vertexColors: m.vertexColors,
+            roughness: 0.92, metalness: 0, flatShading: !m.map, side: m.side, transparent: m.transparent, opacity: m.opacity });
+          return n;
+        };
+        o.material = Array.isArray(o.material) ? o.material.map(conv) : conv(o.material);
+      });
+      const caja = new THREE.Box3().setFromObject(raiz), tam = new THREE.Vector3(), cen = new THREE.Vector3();
+      caja.getSize(tam); caja.getCenter(cen);
+      const esc = alto / Math.max(tam.y, 1e-3);
+      MODELOS[nombre] = { raiz, esc, base: caja.min.y, cen, tam, anims: g.animations };
+    } catch (e) { console.error('modelo ' + nombre + ': ' + e.message); }
+  }));
+}
+await precargar();
+function instancia(nombre, escala = 1) {
+  const m = MODELOS[nombre]; if (!m) return null;
+  const o = m.anims.length ? SkeletonUtils.clone(m.raiz) : m.raiz.clone(true);
+  const k = m.esc * escala;
+  const g = new THREE.Group();
+  o.scale.setScalar(k);
+  o.position.set(-m.cen.x * k, -m.base * k, -m.cen.z * k);
+  g.add(o);
+  if (m.anims.length) {
+    const mixer = new THREE.AnimationMixer(o);
+    const clip = m.anims.find((a) => /idle|eat|graz/i.test(a.name)) || m.anims[0];
+    mixer.clipAction(clip).play();
+    animables.push((t) => mixer.setTime(t));
+  }
+  g.userData.ancho = m.tam.x * k; g.userData.alto = m.tam.y * k;
+  return g;
+}
+const elegir = (lista, r) => lista[Math.floor(r() * lista.length) % lista.length];
+window.modelosCargados = () => Object.keys(MODELOS).length;
+
 // ---------- cielo ----------
 function cielo(h, r) {
   const g = new THREE.SphereGeometry(500, 32, 16);
@@ -92,7 +144,17 @@ function cielo(h, r) {
   const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: texSuave, color: noche ? 0x8fa0ff : 0xffe7b0, transparent: true, opacity: 0.55, fog: false, depthWrite: false }));
   halo.position.copy(sp); halo.scale.set(110, 110, 1); scene.add(halo);
   // nubes infladas low-poly
-  if (!noche) {
+  if (!noche && MODELOS.kk_cloud_big) {
+    for (let i = 0; i < 12; i++) {
+      const g = instancia(r() < 0.5 ? 'kk_cloud_big' : 'kk_cloud_small', 2.2 + r() * 2.2);
+      g.traverse((o) => { if (o.isMesh) { o.castShadow = false; o.material = mat('#ffffff', { emissive: C('#c9d6ea'), emissiveIntensity: 0.35 }); } });
+      const ang = -0.9 + r() * 1.8;
+      g.position.set(Math.sin(ang) * (120 + r() * 60), 26 + r() * 30, -Math.cos(ang) * (120 + r() * 80));
+      g.rotation.y = r() * 6; const x0 = g.position.x, v = 0.4 + r() * 0.8;
+      animables.push((t) => { g.position.x = x0 + t * v; });
+      scene.add(g);
+    }
+  } else if (!noche) {
     for (let i = 0; i < 9; i++) {
       const g = new THREE.Group();
       const n = 4 + Math.floor(r() * 4);
@@ -374,6 +436,13 @@ function edificios(r) {
   }
 }
 
+function cercaModelo(p) {
+  const g = new THREE.Group(), largo = (p.largo || 900) / 120;
+  const m = MODELOS.fence; const paso = Math.max(m.tam.x, m.tam.z) * m.esc * 0.98 || 1.2;
+  for (let x = -largo / 2; x <= largo / 2; x += paso) { const t = instancia('fence', 1); if (m.tam.z > m.tam.x) t.rotation.y = Math.PI / 2; t.position.x = x; g.add(t); }
+  return g;
+}
+
 // ---------- API ----------
 window.construir = function (fondo) {
   scene = new THREE.Scene(); animables = [];
@@ -395,18 +464,34 @@ window.construir = function (fondo) {
   pasto(L, r);
   if (L.mar) window.__mar = mar(-0.08, -9 + (fondo.mar_sube ? 0 : 0), r); else window.__mar = null;
   if (L.edificios) edificios(r);
-  if (L.casas) for (let i = 0; i < 7; i++) { const g = new THREE.Group(); PROPS.casa(g, { color: ['#e7d3b0', '#d9a779', '#f0e6d2'][i % 3] }, r); g.position.set(-18 + i * 6 + r() * 2, 0, -18 - r() * 6); g.rotation.y = (r() - 0.5) * 0.4; scene.add(g); }
-  // ambientación: árboles lejanos para dar profundidad
-  if (!L.interior && !L.todoMar && !L.edificios) {
-    const tipo = fondo.lugar === 'sabana' ? 'acacia' : fondo.lugar === 'playa' ? 'palmera' : fondo.lugar === 'nieve' ? 'pino' : 'arbol';
-    if (L.densidad > 0.04 || fondo.lugar === 'nieve') for (let i = 0; i < 14; i++) {
-      const g = new THREE.Group(); PROPS[tipo](g, {}, r);
-      const x = (r() - 0.5) * 70; g.position.set(x, 0, -24 - r() * 30); g.scale.setScalar(0.9 + r() * 0.6); scene.add(g);
-    }
+  // ambientación con modelos: arboledas, cerros y montañas al fondo, detalles en el suelo
+  const amb = CATALOGO.ambiente[fondo.lugar] || CATALOGO.ambiente.campo;
+  for (let i = 0; i < 18 && amb.arboles.length; i++) {
+    const g = instancia(elegir(amb.arboles, r), 0.85 + r() * 0.5); if (!g) continue;
+    let x = (r() - 0.5) * 70; const z = -16 - r() * 34;
+    if (Math.abs(x) < 3 && z > -22) x += 6 * Math.sign(x || 1);
+    g.position.set(x, 0, z); g.rotation.y = r() * 6; scene.add(g);
+  }
+  for (let i = 0; i < 7 && amb.lejos.length; i++) {
+    const g = instancia(elegir(amb.lejos, r), 0.8 + r() * 0.7); if (!g) continue;
+    g.position.set(-90 + i * 30 + r() * 12, -0.5, -70 - r() * 40); g.rotation.y = r() * 6; scene.add(g);
+  }
+  for (let i = 0; i < 26 && amb.detalle.length; i++) {
+    const g = instancia(elegir(amb.detalle, r), 0.7 + r() * 0.6); if (!g) continue;
+    let x = (r() - 0.5) * 22; const z = 4 - r() * 22;
+    if (Math.abs(x) < 1.6 && z > -3) x += 3 * Math.sign(x || 1);
+    g.position.set(x, 0, z); g.rotation.y = r() * 6; scene.add(g);
+  }
+  if (amb.casas) for (let i = 0; i < 6; i++) {
+    const g = instancia(elegir(amb.casas, r), 1); if (!g) continue;
+    g.position.set(-16 + i * 6.5 + r() * 2, 0, -15 - r() * 6); g.rotation.y = (r() - 0.5) * 0.6; scene.add(g);
   }
   for (const p of (fondo.props || [])) {
-    const f = PROPS[p.tipo]; if (!f) continue;
-    const g = new THREE.Group(); f(g, p, r);
+    let g = null;
+    const procedural = (p.tipo === 'arbol' && (p.pintado || p.color)) || !CATALOGO.props[p.tipo];
+    if (!procedural) g = instancia(p.modelo || elegir(CATALOGO.props[p.tipo], r), 1);
+    if (p.tipo === 'cerca' && MODELOS.fence) g = cercaModelo(p);
+    if (!g) { const f = PROPS[p.tipo]; if (!f) continue; g = new THREE.Group(); f(g, p, r); }
     g.position.set(...p._pos); g.rotation.y = p.rot || 0; g.scale.setScalar(p._escala || 1);
     scene.add(g);
   }
