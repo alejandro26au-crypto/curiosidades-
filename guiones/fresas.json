@@ -874,65 +874,11 @@
         ]
       },
       "inserto": {
-        "tipo": "comparativa",
-        "etiqueta": "Temperatura de la fresa",
-        "items": [
-          {
-            "etiqueta": "Con hielo",
-            "valor": 0,
-            "color": "#4AA3DF",
-            "unidad": "°C"
-          },
-          {
-            "etiqueta": "Con fogata",
-            "valor": -4,
-            "color": "#E3243B",
-            "unidad": "°C"
-          }
-        ]
+        "tipo": "texto",
+        "texto": "0 °C",
+        "etiqueta": "La fresa bajo el hielo",
+        "color": "#4AA3DF"
       }
-    },
-    {
-      "beat": "desenlace",
-      "texto": "Al amanecer, los vecinos muerden sus fresas. Puro puré aguado.",
-      "fondo": {
-        "lugar": "huerto",
-        "hora": "amanecer",
-        "props": [
-          {
-            "tipo": "fresal",
-            "x": 0.5,
-            "plano": "frente",
-            "y": 0.88,
-            "fruta": "#6e2a35",
-            "largo": 900
-          },
-          {
-            "tipo": "fogata",
-            "x": 0.8,
-            "plano": "medio",
-            "apagada": true
-          }
-        ]
-      },
-      "actores": [
-        {
-          "id": "vecino",
-          "x": 0.4,
-          "expresion": "triste",
-          "pose": "agachado",
-          "mira": "der"
-        }
-      ],
-      "camara": {
-        "mov": "push_in",
-        "encuadre": "medio",
-        "foco": "vecino",
-        "entrada": "whip"
-      },
-      "sfx": [
-        "error"
-      ]
     },
     {
       "beat": "desenlace",
