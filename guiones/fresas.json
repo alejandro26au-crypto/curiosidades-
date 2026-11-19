@@ -1,0 +1,1104 @@
+{
+  "titulo": "¿Por qué este agricultor cubrió sus fresas de hielo?",
+  "apodo": "Paletero",
+  "tema": "Riego antiheladas: el agua, al congelarse, libera calor latente (80 cal/g) y mantiene la fruta cerca de 0 °C.",
+  "fuente": "Riego por aspersión contra heladas en fresa (Florida/Plant City, Huelva). Flor y fruto se dañan hacia -2 °C (28 °F); calor latente de fusión del agua 334 J/g. Hay que regar sin parar hasta que el hielo se derrite al salir el sol.",
+  "animo_musica": "tension",
+  "voz_narrador": "es-MX-JorgeNeural",
+  "personajes": {
+    "heroe": {
+      "rol": "heroe",
+      "sombrero": "paja",
+      "ropa": "overol",
+      "color_ropa": "#E9A23B",
+      "color_ropa2": "#3F6EA8",
+      "color_zapatos": "#4A3426",
+      "accesorios": [
+        "bufanda"
+      ]
+    },
+    "vecino": {
+      "rol": "rival",
+      "sombrero": "vaquero",
+      "color_sombrero": "#3A3A40",
+      "ropa": "abrigo",
+      "color_ropa": "#7A4E2E",
+      "bigote": true,
+      "accesorios": [],
+      "voz": "es-CO-GonzaloNeural",
+      "tono": "-6Hz"
+    },
+    "vecina": {
+      "rol": "extra",
+      "sombrero": "pañuelo",
+      "color_sombrero": "#8E6BBF",
+      "ropa": "vestido",
+      "color_ropa": "#B5651D"
+    },
+    "nino": {
+      "rol": "extra",
+      "sombrero": "gorro_lana",
+      "color_sombrero": "#D64541",
+      "ropa": "camisa",
+      "color_ropa": "#4AA3DF"
+    }
+  },
+  "planos": [
+    {
+      "beat": "gancho",
+      "texto": "Este agricultor cubrió sus fresas de hielo mientras el pueblo prendía fogatas.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.45,
+            "plano": "frente",
+            "y": 0.88,
+            "hielo": true,
+            "goteo": true,
+            "largo": 700
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.1,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.85,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.6,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.3,
+          "expresion": "determinado",
+          "pose": "trabajar",
+          "objeto": "balde",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "heroe"
+      },
+      "efectos": [
+        "escarcha"
+      ],
+      "destacar": [
+        "hielo",
+        "fogatas"
+      ]
+    },
+    {
+      "beat": "burla",
+      "voz": "vecino",
+      "texto": "¿Qué vendes, Paletero? ¿Raspados de fresa?",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fogata",
+            "x": 0.75,
+            "plano": "medio"
+          },
+          {
+            "tipo": "cerca",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 1600
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.45,
+          "expresion": "burla",
+          "pose": "reir",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "foco": "vecino"
+      },
+      "sfx": [
+        "risa"
+      ]
+    },
+    {
+      "beat": "apuesta",
+      "texto": "Esta noche va a bajar a cuatro bajo cero.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 900
+          },
+          {
+            "tipo": "montana",
+            "x": 0.3,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "tilt_abajo",
+        "encuadre": "general",
+        "foco": [
+          0.5,
+          0.6
+        ]
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 3,
+        "a": -4,
+        "unidad": "°C",
+        "etiqueta": "Esta noche",
+        "min": -6,
+        "max": 6
+      },
+      "efectos": [
+        "escarcha"
+      ],
+      "sfx": [
+        "viento"
+      ]
+    },
+    {
+      "beat": "apuesta",
+      "texto": "A dos bajo cero, la fresa se congela y se vuelve puré.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "largo": 300
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.83
+        ]
+      },
+      "inserto": {
+        "tipo": "texto",
+        "texto": "-2 °C",
+        "etiqueta": "La fresa se daña",
+        "color": "#E3243B"
+      },
+      "sfx": [
+        "hielo"
+      ]
+    },
+    {
+      "beat": "rival",
+      "texto": "Los vecinos prenden fogatas entre los surcos.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 900
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.25,
+            "plano": "medio"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.75,
+            "plano": "medio"
+          },
+          {
+            "tipo": "carreta",
+            "x": 0.9,
+            "plano": "fondo",
+            "carga": "leña"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.3,
+          "expresion": "presumido",
+          "pose": "cargar",
+          "objeto": "rama",
+          "accion": "entrar_izq",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "seguimiento",
+        "foco": "vecino",
+        "entrada": "whip"
+      },
+      "sfx": [
+        "fuego"
+      ]
+    },
+    {
+      "beat": "rival",
+      "voz": "vecino",
+      "texto": "Fuego, Paletero. Así se le gana al frío.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fogata",
+            "x": 0.55,
+            "plano": "frente",
+            "y": 0.84
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.35,
+          "expresion": "confiado",
+          "pose": "brazos_cruzados",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "americano",
+        "foco": "vecino"
+      },
+      "sfx": [
+        "fuego"
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Él solo tiene un pozo, una cubeta y unas latas viejas.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "pozo",
+            "x": 0.75,
+            "plano": "medio"
+          },
+          {
+            "tipo": "cubeta",
+            "x": 0.35,
+            "plano": "frente",
+            "y": 0.86
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.5,
+          "expresion": "neutral",
+          "pose": "cargar",
+          "objeto": "lata",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_izq",
+        "encuadre": "medio"
+      }
+    },
+    {
+      "beat": "proceso",
+      "texto": "Les hace agujeros y las cuelga sobre los surcos.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "goteo": true,
+            "largo": 500
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.3,
+          "expresion": "determinado",
+          "pose": "trabajar",
+          "objeto": "martillo",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "medio",
+        "foco": "heroe"
+      },
+      "sfx": [
+        "golpe",
+        {
+          "nombre": "golpe",
+          "t": 0.7
+        }
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Gota a gota, toda la noche, sin parar.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "goteo": true,
+            "largo": 300
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "estatico",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.83
+        ]
+      },
+      "sfx": [
+        "agua"
+      ],
+      "destacar": [
+        "Gota"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "A las once, cada fresa ya trae su capa de hielo.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "hielo": true,
+            "goteo": true,
+            "largo": 300
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "orbita",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.83
+        ]
+      },
+      "inserto": {
+        "tipo": "reloj",
+        "de": 21,
+        "a": 23,
+        "texto": "11 de la noche"
+      },
+      "efectos": [
+        "escarcha"
+      ],
+      "sfx": [
+        "hielo"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "A la una, junto al fuego, hace un grado.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 900
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.85
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.25,
+          "expresion": "confiado",
+          "pose": "idle",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "americano"
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 3,
+        "a": 1,
+        "unidad": "°C",
+        "etiqueta": "Fogatas",
+        "min": -6,
+        "max": 6
+      }
+    },
+    {
+      "beat": "escalada",
+      "texto": "Junto al Paletero, cero. Y de ahí no baja.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.55,
+            "plano": "frente",
+            "y": 0.87,
+            "hielo": true,
+            "goteo": true,
+            "largo": 600
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.3,
+          "expresion": "determinado",
+          "pose": "cargar",
+          "objeto": "balde",
+          "mira": "der",
+          "sudor": true
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "medio",
+        "foco": "heroe"
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": 1,
+        "a": 0,
+        "unidad": "°C",
+        "etiqueta": "Hielo",
+        "min": -6,
+        "max": 6
+      },
+      "efectos": [
+        "escarcha"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "voz": "vecino",
+      "texto": "Ya duérmete, Paletero. Eso ya se murió.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fogata",
+            "x": 0.7,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.4,
+          "expresion": "burla",
+          "pose": "señalar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "primer_plano",
+        "foco": "vecino"
+      },
+      "sfx": [
+        "risa"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "Y lo peor todavía no llega.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "montana",
+            "x": 0.5,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 900
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "pull_out",
+        "encuadre": "general",
+        "foco": [
+          0.5,
+          0.55
+        ]
+      },
+      "efectos": [
+        "oscuro",
+        "nieve"
+      ],
+      "sfx": [
+        "viento"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "A las tres se acaba la leña. Queman cajas, después la cerca.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fogata",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.85
+          },
+          {
+            "tipo": "caja",
+            "x": 0.8,
+            "plano": "frente",
+            "y": 0.86
+          },
+          {
+            "tipo": "cerca",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 1600
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.3,
+          "expresion": "preocupado",
+          "pose": "cargar",
+          "objeto": "rama",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "seguimiento",
+        "foco": "vecino",
+        "entrada": "whip"
+      },
+      "inserto": {
+        "tipo": "reloj",
+        "de": 1,
+        "a": 3,
+        "texto": "3 de la mañana"
+      },
+      "sfx": [
+        "tictac"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "Una por una, las fogatas se apagan.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fogata",
+            "x": 0.2,
+            "plano": "medio",
+            "apagada": true
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.5,
+            "plano": "medio",
+            "apagada": true
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.8,
+            "plano": "medio"
+          },
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88,
+            "largo": 900
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "general"
+      },
+      "efectos": [
+        "oscuro"
+      ],
+      "sfx": [
+        "aire"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "Tres bajo cero. Cuatro bajo cero.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 900,
+            "fruta": "#8c2a3a"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.5,
+            "plano": "medio",
+            "apagada": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.4,
+          "expresion": "panico",
+          "pose": "temblar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "estatico",
+        "encuadre": "general",
+        "foco": "vecino",
+        "sacudida": true
+      },
+      "inserto": {
+        "tipo": "termometro",
+        "de": -1,
+        "a": -4,
+        "unidad": "°C",
+        "etiqueta": "Fresas del vecino",
+        "min": -6,
+        "max": 6
+      },
+      "efectos": [
+        "nieve"
+      ],
+      "sfx": [
+        "hielo"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "El truco es que el agua, al congelarse, suelta calor.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "hielo": true,
+            "goteo": true,
+            "largo": 300
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.83
+        ]
+      },
+      "inserto": {
+        "tipo": "capas",
+        "capas": [
+          {
+            "color": "#DFF4FF",
+            "etiqueta": "Hielo (suelta calor)"
+          },
+          {
+            "color": "#8FD0FF",
+            "etiqueta": "Agua que se congela"
+          },
+          {
+            "color": "#E3243B",
+            "etiqueta": "Fresa a 0 °C"
+          }
+        ]
+      },
+      "sfx": [
+        "ding"
+      ],
+      "destacar": [
+        "suelta",
+        "calor"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "Cada gota que se congela le regala calor.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "hielo": true,
+            "goteo": true,
+            "largo": 300
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.83
+        ]
+      },
+      "efectos": [
+        "destello"
+      ],
+      "sfx": [
+        "agua"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "Mientras siga goteando, la fresa se queda en cero. Nunca llega a dos.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "medio",
+            "hielo": true,
+            "goteo": true,
+            "largo": 900
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "orbita",
+        "encuadre": "medio",
+        "foco": [
+          0.5,
+          0.75
+        ]
+      },
+      "inserto": {
+        "tipo": "comparativa",
+        "etiqueta": "Temperatura de la fresa",
+        "items": [
+          {
+            "etiqueta": "Con hielo",
+            "valor": 0,
+            "color": "#4AA3DF",
+            "unidad": "°C"
+          },
+          {
+            "etiqueta": "Con fogata",
+            "valor": -4,
+            "color": "#E3243B",
+            "unidad": "°C"
+          }
+        ]
+      }
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Al amanecer, los vecinos muerden sus fresas. Puro puré aguado.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "amanecer",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88,
+            "fruta": "#6e2a35",
+            "largo": 900
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.8,
+            "plano": "medio",
+            "apagada": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.4,
+          "expresion": "triste",
+          "pose": "agachado",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "medio",
+        "foco": "vecino",
+        "entrada": "whip"
+      },
+      "sfx": [
+        "error"
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Y él sigue regando hasta que el sol derrite el hielo.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "amanecer",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.87,
+            "hielo": true,
+            "goteo": true,
+            "largo": 800
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.3,
+          "expresion": "confiado",
+          "pose": "cargar",
+          "objeto": "balde",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "medio",
+        "foco": "heroe"
+      },
+      "efectos": [
+        "vapor"
+      ],
+      "sfx": [
+        "agua"
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Debajo, fresas rojas, firmes y dulces.",
+      "fondo": {
+        "lugar": "huerto",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "fresal",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.86,
+            "largo": 300
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.83
+        ]
+      },
+      "efectos": [
+        "destello"
+      ],
+      "sfx": [
+        "ding"
+      ],
+      "destacar": [
+        "rojas",
+        "firmes",
+        "dulces"
+      ]
+    },
+    {
+      "beat": "remate",
+      "texto": "Esa semana, el pueblo hizo fila con el Paletero.",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "puesto",
+            "x": 0.55,
+            "plano": "medio"
+          },
+          {
+            "tipo": "caja",
+            "x": 0.75,
+            "plano": "frente",
+            "y": 0.85
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.6,
+          "expresion": "feliz",
+          "pose": "manos_cadera",
+          "mira": "izq"
+        },
+        {
+          "id": "vecina",
+          "x": 0.35,
+          "expresion": "neutral",
+          "pose": "idle",
+          "mira": "der"
+        },
+        {
+          "id": "nino",
+          "x": 0.2,
+          "expresion": "feliz",
+          "pose": "idle",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pull_out",
+        "encuadre": "general",
+        "foco": "heroe"
+      }
+    },
+    {
+      "beat": "remate",
+      "voz": "vecino",
+      "texto": "Paletero... ¿me vende unas de fresa?",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "puesto",
+            "x": 0.6,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "vecino",
+          "x": 0.4,
+          "expresion": "preocupado",
+          "pose": "rascarse",
+          "mira": "der"
+        },
+        {
+          "id": "heroe",
+          "x": 0.75,
+          "expresion": "confiado",
+          "pose": "brazos_cruzados",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "americano",
+        "foco": "vecino"
+      },
+      "sfx": [
+        "pop"
+      ]
+    }
+  ]
+}

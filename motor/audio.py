@@ -37,6 +37,10 @@ def escribir_wav(ruta, x):
 # --- Voz --------------------------------------------------------------------------------
 async def _tts_uno(texto, voz, velocidad, tono, ruta):
     import edge_tts
+    # edge-tts solo confía en certifi; si hay un CA extra (proxy corporativo), se agrega.
+    ca = os.environ.get("SSL_CERT_FILE")
+    if ca and os.path.exists(ca) and hasattr(edge_tts.communicate, "_SSL_CTX"):
+        edge_tts.communicate._SSL_CTX.load_verify_locations(ca)
     com = edge_tts.Communicate(texto, voz, rate=velocidad, pitch=tono, boundary="WordBoundary")
     palabras = []
     with open(ruta, "wb") as f:

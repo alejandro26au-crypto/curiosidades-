@@ -271,6 +271,44 @@ const PROPS = {
       }
     }
   },
+  // Surco de fresas: camellón de tierra, matas y fresas. hielo: cada fresa en su capa de hielo;
+  // goteo: postes con latas agujereadas que gotean; fruta: color (p. ej. '#6e2a35' = fresa quemada por helada).
+  fresal(g, p, r) {
+    const largo = (p.largo || 600) / 100;
+    const cama = malla(new THREE.BoxGeometry(largo, 0.32, 1.1), mat('#7a5236')); cama.position.y = 0.16; g.add(cama);
+    const fc = p.fruta || '#e3243b';
+    const n = Math.max(3, Math.round(largo / 0.55));
+    for (let i = 0; i < n; i++) {
+      const x = -largo / 2 + 0.3 + i * (largo - 0.6) / Math.max(1, n - 1);
+      copa(g, 0.48, r, p.color || '#3f8f3a', 3, 0.26);
+      g.children.slice(-3).forEach((h) => { h.position.x += x; });
+      for (let k = 0; k < 3; k++) {
+        const f = malla(new THREE.ConeGeometry(0.09, 0.17, 8), mat(fc, { emissive: C(fc), emissiveIntensity: 0.1 }));
+        f.rotation.x = Math.PI; f.position.set(x + (r() - 0.5) * 0.45, 0.42, 0.42 + (r() - 0.5) * 0.15); g.add(f);
+        const hoja = malla(new THREE.ConeGeometry(0.07, 0.05, 5), mat('#2f7a2c'), false); hoja.position.set(f.position.x, 0.52, f.position.z); g.add(hoja);
+        if (p.hielo) {
+          const h = new THREE.Mesh(new THREE.IcosahedronGeometry(0.15, 1), new THREE.MeshStandardMaterial({ color: 0xdff4ff, transparent: true, opacity: 0.55, roughness: 0.1, flatShading: true }));
+          h.position.set(f.position.x, 0.45, f.position.z); g.add(h);
+        }
+      }
+    }
+    if (p.goteo) {
+      const gotas = [];
+      for (let x = -largo / 2 + 0.6; x <= largo / 2 - 0.4; x += 1.6) {
+        const po = malla(new THREE.BoxGeometry(0.08, 1.6, 0.08), mat('#8a6a42')); po.position.set(x, 0.8, -0.2); g.add(po);
+        const tr = malla(new THREE.BoxGeometry(0.6, 0.06, 0.06), mat('#8a6a42')); tr.position.set(x + 0.25, 1.58, -0.2); g.add(tr);
+        const la = malla(new THREE.CylinderGeometry(0.12, 0.12, 0.24, 12), mat('#b9bec6')); la.position.set(x + 0.45, 1.38, -0.2); g.add(la);
+        for (let k = 0; k < 3; k++) {
+          const d = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 5), new THREE.MeshBasicMaterial({ color: 0x8fd0ff }));
+          d.userData = { x: x + 0.45 + (k - 1) * 0.06, fase: k / 3 + r() * 0.2 }; g.add(d); gotas.push(d);
+        }
+      }
+      animables.push((t) => gotas.forEach((d) => {
+        const k = (t * 1.6 + d.userData.fase) % 1;
+        d.position.set(d.userData.x, 1.24 - k * 0.8, -0.2 + k * 0.5);
+      }));
+    }
+  },
   pino(g, p, r) {
     const tr = malla(new THREE.CylinderGeometry(0.12, 0.16, 1, 6), mat('#6b4a30')); tr.position.y = 0.5; g.add(tr);
     for (let k = 0; k < 3; k++) { const c = malla(new THREE.ConeGeometry(1.2 - k * 0.3, 1.6, 7), mat(p.color || '#3f7a4f')); c.position.y = 1.4 + k * 0.9; g.add(c); }

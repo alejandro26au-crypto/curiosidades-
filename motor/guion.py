@@ -16,7 +16,7 @@ def _catalogo():
 - lugares: {list(escenarios.LUGARES)}
 - horas: {list(escenarios.HORAS)}
 - props (fondo.props[].tipo): {escenarios.PROPS}
-  parámetros útiles: arbol_fruta{{fruta:'#hex', hielo:bool}}, arbol{{pintado:bool}}, fogata{{apagada:bool}},
+  parámetros útiles: arbol_fruta{{fruta:'#hex', hielo:bool}}, fresal{{largo, hielo:bool, goteo:bool, fruta:'#hex'}}, arbol{{pintado:bool}}, fogata{{apagada:bool}},
   lata_leche{{vendada:bool}}, camioneta{{color, hundida:0-1, llantas_bajas:bool}}, carreta{{carga:'leña', giro}},
   fardos{{filas, humo:bool}}, granero{{vapor:bool}}, bomba_agua{{sin_manija:bool}}, vaca{{ojos_traseros:bool, mira:±1}},
   cerca/muro{{largo}}. Cada prop: x (0-1, puede salir de 0-1 para paneos), plano: fondo|medio|frente|primer_plano,
