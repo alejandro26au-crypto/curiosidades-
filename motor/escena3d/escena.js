@@ -89,11 +89,16 @@ const texFresa = (mala = false) => pintada('fresa' + mala, 512, 512, (x, w, h) =
   }
 }, [1, 1]);
 // Hoja de fresa: verde con nervios y borde de tinta.
-const texHoja = () => pintada('hoja', 256, 256, (x, w, h) => {
-  const g = x.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w / 1.4); g.addColorStop(0, '#5fae4a'); g.addColorStop(1, '#2f7a2c');
-  x.fillStyle = g; x.fillRect(0, 0, w, h);
-  x.strokeStyle = 'rgba(200,240,170,0.6)'; x.lineWidth = 4; x.beginPath(); x.moveTo(w / 2, h); x.lineTo(w / 2, 0); x.stroke();
-  x.lineWidth = 2; for (let i = 1; i < 7; i++) { const y = h - i * h / 7; x.beginPath(); x.moveTo(w / 2, y); x.lineTo(w * 0.1, y - 30); x.moveTo(w / 2, y); x.lineTo(w * 0.9, y - 30); x.stroke(); }
+const texHoja = () => pintada('hoja2', 256, 256, (x, w, h) => {
+  // hoja dentada sobre fondo transparente (se recorta con alphaTest)
+  x.clearRect(0, 0, w, h);
+  x.beginPath(); x.moveTo(w / 2, h - 6);
+  for (let i = 0; i <= 16; i++) { const a = Math.PI * (i / 16); const rr = (i % 2 ? 0.43 : 0.47) * w; x.lineTo(w / 2 - Math.cos(a) * rr * 0.75, h * 0.55 - Math.sin(a) * rr); }
+  x.closePath();
+  const g = x.createRadialGradient(w / 2, h * 0.5, 10, w / 2, h / 2, w / 1.6); g.addColorStop(0, '#6cbf52'); g.addColorStop(1, '#2d7a2b');
+  x.fillStyle = g; x.fill(); x.strokeStyle = TINTA + '0.8)'; x.lineWidth = 6; x.stroke();
+  x.strokeStyle = 'rgba(210,245,180,0.7)'; x.lineWidth = 4; x.beginPath(); x.moveTo(w / 2, h - 10); x.lineTo(w / 2, h * 0.12); x.stroke();
+  x.lineWidth = 2.5; for (let i = 1; i < 6; i++) { const y = h * 0.9 - i * h * 0.13; x.beginPath(); x.moveTo(w / 2, y); x.lineTo(w * 0.22, y - 26); x.moveTo(w / 2, y); x.lineTo(w * 0.78, y - 26); x.stroke(); }
 });
 // Tablones de madera con veta, nudos y clavos (para puesto y cajas).
 const texMadera = (tono = 30, luz = 45, tablas = 5, rep = [1, 1]) => pintada(`madera${tono}-${luz}-${tablas}`, 512, 512, (x, w, h) => {
@@ -378,7 +383,7 @@ const PROPS = {
     const cama = malla(new THREE.BoxGeometry(largo, 0.32, 1.1), new THREE.MeshStandardMaterial({ map: texTierra([largo / 1.5, 1]), roughness: 1 }));
     cama.position.y = 0.16; g.add(cama);
     const n = Math.max(3, Math.round(largo / 0.55));
-    const matas = [], hielos = [], hojaM = new THREE.MeshStandardMaterial({ map: texHoja(), roughness: 0.8, side: THREE.DoubleSide });
+    const matas = [], hielos = [], hojaM = new THREE.MeshStandardMaterial({ map: texHoja(), roughness: 0.8, side: THREE.DoubleSide, alphaTest: 0.5 });
     for (let i = 0; i < n; i++) {
       const x = -largo / 2 + 0.3 + i * (largo - 0.6) / Math.max(1, n - 1);
       const mata = new THREE.Group(); mata.position.set(x, 0.32, 0.1); g.add(mata);
@@ -386,7 +391,7 @@ const PROPS = {
         const tallo = new THREE.Group(); const a = k / 7 * Math.PI * 2 + r();
         tallo.rotation.set(0.5 + r() * 0.3, a, 0); mata.add(tallo);
         for (let j = -1; j <= 1; j++) {
-          const h = malla(new THREE.CircleGeometry(0.09, 7), hojaM); h.scale.set(0.75, 1, 1);
+          const h = malla(new THREE.PlaneGeometry(0.2, 0.2), hojaM);
           h.position.set(j * 0.07, 0.24 + (j === 0 ? 0.05 : 0), 0); h.rotation.set(-1.2, 0, j * 0.6); tallo.add(h);
         }
       }
@@ -433,8 +438,8 @@ const PROPS = {
   // hielo: dentro de un bloque de hielo · derrite: el hielo se derrite durante el plano
   fresa_grande(g, p, r) {
     const base = malla(new THREE.CylinderGeometry(0.7, 0.8, 0.12, 20), new THREE.MeshStandardMaterial({ map: texTierra([1.5, 1.5]), roughness: 1 })); base.position.y = 0.06; g.add(base);
-    const hojaM = new THREE.MeshStandardMaterial({ map: texHoja(), roughness: 0.8, side: THREE.DoubleSide });
-    for (let k = 0; k < 5; k++) { const h = malla(new THREE.CircleGeometry(0.28, 8), hojaM); const a = k / 5 * 6.28; h.position.set(Math.cos(a) * 0.38, 0.14, Math.sin(a) * 0.3); h.rotation.set(-Math.PI / 2 + 0.25, 0, a); h.scale.set(0.7, 1, 1); g.add(h); }
+    const hojaM = new THREE.MeshStandardMaterial({ map: texHoja(), roughness: 0.8, side: THREE.DoubleSide, alphaTest: 0.5 });
+    for (let k = 0; k < 5; k++) { const h = malla(new THREE.PlaneGeometry(0.62, 0.62), hojaM); const a = k / 5 * 6.28; h.position.set(Math.cos(a) * 0.38, 0.14, Math.sin(a) * 0.3); h.rotation.set(-Math.PI / 2 + 0.25, 0, a); h.scale.set(0.7, 1, 1); g.add(h); }
     const est = p.estado || 'buena';
     const buena = fresaMalla(0.42, false), mala = fresaMalla(0.42, true);
     for (const f of [buena, mala]) { f.position.y = 0.66; f.rotation.set(0.15, 0.4, 0.2); g.add(f); }
@@ -510,7 +515,12 @@ const PROPS = {
       f.position.y = 0.2 + h / 2; g.add(f); return f;
     });
     const luz = new THREE.PointLight(0xff8a3c, 9, 14, 1.6); luz.position.y = 0.9; luz.castShadow = false; g.add(luz);
-    animables.push((t) => { llamas.forEach((f, i) => { const k = 1 + 0.15 * Math.sin(t * 13 + i * 2); f.scale.set(1 / Math.sqrt(k), k, 1 / Math.sqrt(k)); f.rotation.y = t * (i + 1); }); luz.intensity = 9 * (1 + 0.12 * Math.sin(t * 17)); });
+    const ret = p.apagandose ? (p.retraso || 0) : null;
+    animables.push((t, pr = 0) => {
+      const vida = ret === null ? 1 : Math.max(0, 1 - Math.max(0, pr - ret) * 3);
+      llamas.forEach((f, i) => { const k = 1 + 0.15 * Math.sin(t * 13 + i * 2); f.scale.set(vida / Math.sqrt(k), k * vida + 0.001, vida / Math.sqrt(k)); f.rotation.y = t * (i + 1); f.visible = vida > 0.02; });
+      luz.intensity = 9 * vida * (1 + 0.12 * Math.sin(t * 17));
+    });
     humo(g, 0, 1.4, 0, 0.6, 7, 7);
   },
   roca(g, p, r) { const o = malla(new THREE.DodecahedronGeometry(0.6, 0), flat(p.color || '#8c8a86')); o.scale.set(1.3, 0.8, 1); o.position.y = 0.35; g.add(o); },
@@ -543,8 +553,14 @@ const PROPS = {
     if (p.carga === 'leña') for (let i = 0; i < 9; i++) { const l = malla(new THREE.CylinderGeometry(0.12, 0.12, 1.2, 7), mat('#b98a5a')); l.rotation.x = Math.PI / 2; l.position.set(-0.9 + (i % 5) * 0.42, 1.25 + Math.floor(i / 5) * 0.22, 0); g.add(l); }
   },
   estanque(g, p, r) {
-    const o = new THREE.Mesh(new THREE.CircleGeometry(2.2, 18), new THREE.MeshStandardMaterial({ color: C('#4e8fc0'), roughness: 0.2, flatShading: true }));
+    const o = new THREE.Mesh(new THREE.CircleGeometry(2.2, 18), p.helado
+      ? new THREE.MeshPhysicalMaterial({ map: pintada('hielo_estanque', 512, 512, (x, w, h) => {
+          x.fillStyle = '#cfe6f5'; x.fillRect(0, 0, w, h); const q = azarT(3);
+          for (let i = 0; i < 40; i++) { x.strokeStyle = `rgba(${q() > 0.5 ? '255,255,255' : '90,130,170'},0.6)`; x.lineWidth = 1 + q() * 3; x.beginPath(); let px = q() * w, py = q() * h; x.moveTo(px, py); for (let k = 0; k < 4; k++) { px += (q() - 0.5) * 120; py += (q() - 0.5) * 120; x.lineTo(px, py); } x.stroke(); }
+        }), roughness: 0.15, clearcoat: 1 })
+      : new THREE.MeshStandardMaterial({ color: C('#4e8fc0'), roughness: 0.2, flatShading: true }));
     o.rotation.x = -Math.PI / 2; o.position.y = 0.03; o.scale.y = 0.6; o.receiveShadow = true; g.add(o);
+    const borde = malla(new THREE.TorusGeometry(2.2, 0.12, 6, 24), flat('#7d7a72')); borde.rotation.x = -Math.PI / 2; borde.scale.y = 0.6; borde.position.y = 0.05; g.add(borde);
   },
   barco(g, p, r) {
     const casco = malla(new THREE.CylinderGeometry(1.2, 1.2, 6, 12, 1, false, 0, Math.PI), mat(p.color || '#6b4a30'));

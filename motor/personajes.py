@@ -33,7 +33,8 @@ PEINADOS = ["ninguno", "calvo_lados", "flequillo", "moño", "canas", "rizos"]
 ROPAS = ["camisa", "overol", "hawaiana", "chaleco", "abrigo", "vestido", "uniforme", "bata"]
 ACCESORIOS = ["bufanda", "lentes", "lentes_sol", "mochila", "tirantes", "corbata", "delantal"]
 OBJETOS = ["balde", "martillo", "brocha", "reloj", "fosforo", "barra", "lata",
-           "termometro", "trapo", "farol", "carton", "rama", "pala", "libreta", "pez"]
+           "termometro", "trapo", "farol", "carton", "rama", "pala", "libreta", "pez",
+           "fresa", "fresa_mala", "fresa_mordida", "canasta", "monedas", "malvavisco", "malvavisco_helado"]
 
 
 # --- Poses -----------------------------------------------------------------------
@@ -614,6 +615,63 @@ def dibujar_objeto(ctx, nombre, x, y, mira, t=0.0, escala=1.0):
         relleno_contorno(ctx, (0.55, 0.7, 0.85), 6)
         poligono(ctx, [(60, 0), (84, -18), (84, 18)])
         relleno_contorno(ctx, (0.55, 0.7, 0.85), 6)
+    elif nombre in ("fresa", "fresa_mala", "fresa_mordida"):
+        mala = nombre != "fresa"
+        cuerpo = (0.36, 0.13, 0.17) if mala else (0.89, 0.14, 0.23)
+        ctx.new_path()
+        ctx.move_to(0, -40)
+        ctx.curve_to(36, -44, 40, -10, 4 + (6 if mala else 0), 34 - (8 if mala else 0))
+        ctx.curve_to(-38, -6, -36, -44, 0, -40)
+        ctx.close_path()
+        relleno_contorno(ctx, cuerpo, 5)
+        if nombre == "fresa_mordida":  # mordisco con pulpa aguada
+            ctx.arc(26, -22, 15, 0, 2 * math.pi)
+            color(ctx, (0.62, 0.32, 0.36))
+            ctx.fill()
+        for i in range(9):
+            sx, sy = -16 + (i % 3) * 14 + (i // 3) * 3, -26 + (i // 3) * 16
+            elipse(ctx, sx, sy, 2.6, 4)
+            color(ctx, (0.6, 0.55, 0.35) if mala else (1, 0.85, 0.3))
+            ctx.fill()
+        if not mala:
+            elipse(ctx, -12, -28, 6, 10)
+            color(ctx, (1, 1, 1), 0.45)
+            ctx.fill()
+        for k in range(5):
+            a = -math.pi / 2 + (k - 2) * 0.5
+            poligono(ctx, [(0, -40), (math.cos(a) * 26, -40 + math.sin(a) * 14 - 4), (math.cos(a + 0.2) * 12, -44)])
+            relleno_contorno(ctx, (0.45, 0.5, 0.22) if mala else (0.2, 0.6, 0.2), 3)
+        if mala:  # gotas de jugo que escurren
+            for i in range(2):
+                yy = 30 + ((t * 70 + i * 25) % 50)
+                ctx.arc(6 + i * 8, yy, 4.5, 0, 2 * math.pi)
+                color(ctx, (0.45, 0.06, 0.12), 0.9)
+                ctx.fill()
+    elif nombre == "canasta":
+        curva(ctx, (-46, -10), (0, -80), (46, -10), 6, (0.6, 0.42, 0.2))
+        for i in range(7):
+            ctx.arc(-34 + i * 11, -14 - (i % 2) * 8, 11, 0, 2 * math.pi)
+            relleno_contorno(ctx, (0.89, 0.14, 0.23), 3)
+        poligono(ctx, [(-50, -10), (50, -10), (40, 44), (-40, 44)])
+        relleno_contorno(ctx, (0.8, 0.56, 0.25), 6)
+        for i in range(3):
+            linea(ctx, [(-46 + i * 3, 6 + i * 13), (46 - i * 3, 6 + i * 13)], 3, (0.55, 0.36, 0.15))
+    elif nombre in ("malvavisco", "malvavisco_helado"):
+        linea(ctx, [(0, 10), (70, -110)], 6, (0.55, 0.38, 0.2))
+        rect_redondo(ctx, 56, -150, 40, 46, 12)
+        relleno_contorno(ctx, (0.85, 0.93, 1) if nombre == "malvavisco_helado" else (1, 0.97, 0.9), 5)
+        if nombre == "malvavisco":
+            rect_redondo(ctx, 56, -116, 40, 12, 6)
+            color(ctx, (0.85, 0.6, 0.3))
+            ctx.fill()
+        else:
+            for i in range(3):
+                poligono(ctx, [(60 + i * 12, -104), (66 + i * 12, -104), (63 + i * 12, -86)])
+                relleno_contorno(ctx, (0.8, 0.92, 1), 2)
+    elif nombre == "monedas":
+        for i in range(3):
+            elipse(ctx, 6 + i * 4, -i * 9, 20, 8)
+            relleno_contorno(ctx, (0.96, 0.78, 0.2), 4)
     ctx.restore()
 
 

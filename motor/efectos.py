@@ -12,7 +12,7 @@ from .formula import ESTILO
 
 W, H = 1080, 1920
 INSERTOS = ["termometro", "manometro", "contador", "reloj", "comparativa", "flechas",
-            "texto", "capas", "regla"]
+            "texto", "capas", "regla", "corte"]
 EFECTOS = ["nieve", "lluvia", "chispas", "polvo", "vapor", "escarcha", "velocidad",
            "impacto", "destello", "calor", "hojas", "burbujas", "oscuro"]
 
@@ -153,6 +153,55 @@ def dibujar_inserto(ctx, ins, p, t, dur):
         texto(ctx, izq, -250, -210, 56, relleno=(0.88, 0.18, 0.15))
         texto(ctx, der, 230, -210, 56, relleno=(0.9, 0.5, 0.05))
         linea(ctx, [(0, -240), (0, 200)], 4, (0.7, 0.7, 0.7))
+    elif tipo == "corte":
+        # Fresa partida a la mitad. estado: helada (cristales de hielo crecen hacia dentro) | buena (jugosa)
+        _panel(ctx, W * 0.5, cy, 660, 700, k)
+        helada = ins.get("estado", "helada") == "helada"
+        def contorno(esc):
+            ctx.new_path()
+            ctx.move_to(0, -200 * esc)
+            ctx.curve_to(230 * esc, -250 * esc, 250 * esc, 40 * esc, 0, 240 * esc)
+            ctx.curve_to(-250 * esc, 40 * esc, -230 * esc, -250 * esc, 0, -200 * esc)
+            ctx.close_path()
+        piel = (0.88, 0.12, 0.2)
+        pulpa = mezcla((0.98, 0.42, 0.45), (0.78, 0.62, 0.7), anim if helada else 0)
+        contorno(1.0)
+        relleno_contorno(ctx, piel, 9)
+        contorno(0.86)
+        color(ctx, pulpa)
+        ctx.fill()
+        contorno(0.45)
+        color(ctx, mezcla((1, 0.82, 0.82), (0.9, 0.9, 0.95), anim if helada else 0))
+        ctx.fill()
+        for i in range(16):  # semillas en el borde
+            a_ = i / 16 * 2 * math.pi
+            elipse(ctx, math.cos(a_) * 175, math.sin(a_) * 170 + 10, 6, 9)
+            color(ctx, (1, 0.85, 0.3))
+            ctx.fill()
+        if helada:  # agujas de hielo desde la piel hacia el centro
+            rnd = random.Random(4)
+            for i in range(26):
+                a_ = rnd.uniform(0, 2 * math.pi)
+                r0 = 185
+                largo = (60 + rnd.uniform(0, 110)) * anim
+                x0, y0 = math.cos(a_) * r0, math.sin(a_) * r0 * 0.95 + 10
+                x1, y1 = x0 - math.cos(a_) * largo, y0 - math.sin(a_) * largo * 0.95
+                poligono(ctx, [(x0 - math.sin(a_) * 9, y0 + math.cos(a_) * 9), (x1, y1), (x0 + math.sin(a_) * 9, y0 - math.cos(a_) * 9)])
+                color(ctx, (0.85, 0.95, 1), 0.9)
+                ctx.fill_preserve()
+                color(ctx, (0.35, 0.55, 0.8), 0.9)
+                ctx.set_line_width(3)
+                ctx.stroke()
+        else:
+            elipse(ctx, -70, -90, 30, 50)
+            color(ctx, (1, 1, 1), 0.45)
+            ctx.fill()
+        for k2 in range(5):  # cáliz
+            a_ = -math.pi / 2 + (k2 - 2) * 0.45
+            poligono(ctx, [(0, -205), (math.cos(a_) * 120, -205 + math.sin(a_) * 60 - 20), (math.cos(a_ + 0.25) * 50, -225)])
+            relleno_contorno(ctx, (0.2, 0.6, 0.2), 6)
+        if etiqueta:
+            texto(ctx, etiqueta, 0, 290, 46, relleno=(0.25, 0.25, 0.3))
     elif tipo == "capas":
         _panel(ctx, W * 0.5, cy, 680, 680, k)
         capas = ins.get("capas") or [{"color": "#BFE6FF", "etiqueta": "hielo"},

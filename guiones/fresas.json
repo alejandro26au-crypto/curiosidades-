@@ -41,6 +41,23 @@
       "color_sombrero": "#D64541",
       "ropa": "camisa",
       "color_ropa": "#4AA3DF"
+    },
+    "amigo1": {
+      "rol": "extra",
+      "sombrero": "gorra",
+      "color_sombrero": "#2E5E3E",
+      "ropa": "chaleco",
+      "color_ropa": "#C9A86A",
+      "color_ropa2": "#5A4632",
+      "bigote": true
+    },
+    "amigo2": {
+      "rol": "extra",
+      "sombrero": "boina",
+      "color_sombrero": "#3A3A40",
+      "ropa": "abrigo",
+      "color_ropa": "#4B5D7A",
+      "barba": true
     }
   },
   "planos": [
@@ -53,7 +70,7 @@
         "props": [
           {
             "tipo": "fresal",
-            "x": 0.45,
+            "x": 0.55,
             "plano": "frente",
             "y": 0.88,
             "hielo": true,
@@ -62,17 +79,17 @@
           },
           {
             "tipo": "fogata",
-            "x": 0.1,
+            "x": 0.05,
             "plano": "fondo"
           },
           {
             "tipo": "fogata",
-            "x": 0.85,
+            "x": 0.95,
             "plano": "fondo"
           },
           {
-            "tipo": "casa",
-            "x": 0.6,
+            "tipo": "iglesia",
+            "x": 0.75,
             "plano": "fondo"
           }
         ]
@@ -80,7 +97,7 @@
       "actores": [
         {
           "id": "heroe",
-          "x": 0.3,
+          "x": 0.28,
           "expresion": "determinado",
           "pose": "trabajar",
           "objeto": "balde",
@@ -93,6 +110,9 @@
       },
       "efectos": [
         "escarcha"
+      ],
+      "sfx": [
+        "agua"
       ],
       "destacar": [
         "hielo",
@@ -109,21 +129,35 @@
         "props": [
           {
             "tipo": "fogata",
-            "x": 0.75,
-            "plano": "medio"
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.84
           },
           {
             "tipo": "cerca",
             "x": 0.5,
             "plano": "medio",
             "largo": 1600
+          },
+          {
+            "tipo": "tocon",
+            "x": 0.2,
+            "plano": "frente",
+            "y": 0.85
           }
         ]
       },
       "actores": [
         {
           "id": "vecino",
-          "x": 0.45,
+          "x": 0.3,
+          "expresion": "burla",
+          "pose": "sentado",
+          "mira": "der"
+        },
+        {
+          "id": "amigo1",
+          "x": 0.72,
           "expresion": "burla",
           "pose": "reir",
           "mira": "izq"
@@ -134,7 +168,8 @@
         "foco": "vecino"
       },
       "sfx": [
-        "risa"
+        "risa",
+        "fuego"
       ]
     },
     {
@@ -145,15 +180,42 @@
         "hora": "noche",
         "props": [
           {
+            "tipo": "fogata",
+            "x": -0.3,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.1,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.45,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.8,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "fogata",
+            "x": 1.15,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "iglesia",
+            "x": 1.25,
+            "plano": "fondo",
+            "escala": 0.7
+          },
+          {
             "tipo": "fresal",
             "x": 0.5,
             "plano": "medio",
-            "largo": 900
-          },
-          {
-            "tipo": "montana",
-            "x": 0.3,
-            "plano": "fondo"
+            "largo": 1200,
+            "hielo": true
           }
         ]
       },
@@ -163,7 +225,7 @@
         "encuadre": "general",
         "foco": [
           0.5,
-          0.6
+          0.55
         ]
       },
       "inserto": {
@@ -179,7 +241,11 @@
         "escarcha"
       ],
       "sfx": [
-        "viento"
+        "viento",
+        {
+          "nombre": "campana",
+          "t": 0.4
+        }
       ]
     },
     {
@@ -190,11 +256,11 @@
         "hora": "noche",
         "props": [
           {
-            "tipo": "fresal",
+            "tipo": "fresa_grande",
             "x": 0.5,
             "plano": "frente",
             "y": 0.86,
-            "largo": 300
+            "estado": "dana"
           }
         ]
       },
@@ -204,14 +270,14 @@
         "encuadre": "detalle",
         "foco": [
           0.5,
-          0.83
+          0.8
         ]
       },
       "inserto": {
-        "tipo": "texto",
-        "texto": "-2 °C",
-        "etiqueta": "La fresa se daña",
-        "color": "#E3243B"
+        "tipo": "corte",
+        "estado": "helada",
+        "etiqueta": "A −2 °C: hielo por dentro",
+        "posicion": "arriba"
       },
       "sfx": [
         "hielo"
@@ -225,38 +291,38 @@
         "hora": "noche",
         "props": [
           {
+            "tipo": "carreta",
+            "x": 0.62,
+            "plano": "frente",
+            "y": 0.84,
+            "carga": "leña"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.2,
+            "plano": "medio"
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.85,
+            "plano": "medio"
+          },
+          {
             "tipo": "fresal",
             "x": 0.5,
             "plano": "medio",
-            "largo": 900
-          },
-          {
-            "tipo": "fogata",
-            "x": 0.25,
-            "plano": "medio"
-          },
-          {
-            "tipo": "fogata",
-            "x": 0.75,
-            "plano": "medio"
-          },
-          {
-            "tipo": "carreta",
-            "x": 0.9,
-            "plano": "fondo",
-            "carga": "leña"
+            "largo": 1000
           }
         ]
       },
       "actores": [
         {
           "id": "vecino",
-          "x": 0.3,
+          "x": 0.38,
           "expresion": "presumido",
-          "pose": "cargar",
-          "objeto": "rama",
-          "accion": "entrar_izq",
-          "mira": "der"
+          "pose": "manos_cadera",
+          "mira": "der",
+          "accion": "entrar_izq"
         }
       ],
       "camara": {
@@ -281,13 +347,19 @@
             "x": 0.55,
             "plano": "frente",
             "y": 0.84
+          },
+          {
+            "tipo": "carreta",
+            "x": 0.9,
+            "plano": "medio",
+            "carga": "leña"
           }
         ]
       },
       "actores": [
         {
           "id": "vecino",
-          "x": 0.35,
+          "x": 0.33,
           "expresion": "confiado",
           "pose": "brazos_cruzados",
           "mira": "der"
@@ -310,32 +382,43 @@
         "hora": "noche",
         "props": [
           {
+            "tipo": "estanque",
+            "x": 0.68,
+            "plano": "frente",
+            "y": 0.9,
+            "helado": true
+          },
+          {
             "tipo": "pozo",
-            "x": 0.75,
+            "x": 0.9,
             "plano": "medio"
           },
           {
             "tipo": "cubeta",
-            "x": 0.35,
+            "x": 0.25,
             "plano": "frente",
-            "y": 0.86
+            "y": 0.88
           }
         ]
       },
       "actores": [
         {
           "id": "heroe",
-          "x": 0.5,
-          "expresion": "neutral",
-          "pose": "cargar",
-          "objeto": "lata",
+          "x": 0.42,
+          "expresion": "preocupado",
+          "pose": "rascarse",
+          "objeto": "balde",
           "mira": "der"
         }
       ],
       "camara": {
         "mov": "pan_izq",
-        "encuadre": "medio"
-      }
+        "encuadre": "medio",
+        "foco": "heroe"
+      },
+      "efectos": [
+        "escarcha"
+      ]
     },
     {
       "beat": "proceso",
@@ -345,19 +428,24 @@
         "hora": "noche",
         "props": [
           {
+            "tipo": "tocon",
+            "x": 0.55,
+            "plano": "frente",
+            "y": 0.86
+          },
+          {
             "tipo": "fresal",
             "x": 0.5,
-            "plano": "frente",
-            "y": 0.86,
+            "plano": "medio",
             "goteo": true,
-            "largo": 500
+            "largo": 700
           }
         ]
       },
       "actores": [
         {
           "id": "heroe",
-          "x": 0.3,
+          "x": 0.38,
           "expresion": "determinado",
           "pose": "trabajar",
           "objeto": "martillo",
@@ -366,14 +454,18 @@
       ],
       "camara": {
         "mov": "push_in",
-        "encuadre": "medio",
+        "encuadre": "americano",
         "foco": "heroe"
       },
       "sfx": [
         "golpe",
         {
           "nombre": "golpe",
-          "t": 0.7
+          "t": 0.6
+        },
+        {
+          "nombre": "golpe",
+          "t": 1.2
         }
       ]
     },
@@ -388,20 +480,29 @@
             "tipo": "fresal",
             "x": 0.5,
             "plano": "frente",
-            "y": 0.86,
+            "y": 0.88,
             "goteo": true,
-            "largo": 300
+            "hielo_crece": true,
+            "largo": 900
           }
         ]
       },
-      "actores": [],
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.2,
+          "expresion": "determinado",
+          "pose": "caminar",
+          "objeto": "balde",
+          "mira": "der",
+          "accion": "mover",
+          "x2": 0.75
+        }
+      ],
       "camara": {
-        "mov": "estatico",
-        "encuadre": "detalle",
-        "foco": [
-          0.5,
-          0.83
-        ]
+        "mov": "seguimiento",
+        "encuadre": "medio",
+        "foco": "heroe"
       },
       "sfx": [
         "agua"
@@ -418,13 +519,12 @@
         "hora": "noche",
         "props": [
           {
-            "tipo": "fresal",
+            "tipo": "fresa_grande",
             "x": 0.5,
             "plano": "frente",
             "y": 0.86,
-            "hielo": true,
-            "goteo": true,
-            "largo": 300
+            "estado": "buena",
+            "hielo": true
           }
         ]
       },
@@ -434,7 +534,7 @@
         "encuadre": "detalle",
         "foco": [
           0.5,
-          0.83
+          0.8
         ]
       },
       "inserto": {
@@ -447,6 +547,7 @@
         "escarcha"
       ],
       "sfx": [
+        "campana",
         "hielo"
       ]
     },
@@ -458,16 +559,16 @@
         "hora": "noche",
         "props": [
           {
-            "tipo": "fresal",
-            "x": 0.5,
-            "plano": "medio",
-            "largo": 900
-          },
-          {
             "tipo": "fogata",
             "x": 0.5,
             "plano": "frente",
-            "y": 0.85
+            "y": 0.84
+          },
+          {
+            "tipo": "cerca",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 1600
           }
         ]
       },
@@ -475,14 +576,27 @@
         {
           "id": "vecino",
           "x": 0.25,
-          "expresion": "confiado",
-          "pose": "idle",
+          "expresion": "feliz",
+          "pose": "sentado",
+          "objeto": "malvavisco",
           "mira": "der"
+        },
+        {
+          "id": "amigo1",
+          "x": 0.75,
+          "expresion": "feliz",
+          "pose": "sentado",
+          "objeto": "malvavisco",
+          "mira": "izq"
         }
       ],
       "camara": {
         "mov": "pan_der",
-        "encuadre": "americano"
+        "encuadre": "general",
+        "foco": [
+          0.5,
+          0.7
+        ]
       },
       "inserto": {
         "tipo": "termometro",
@@ -492,7 +606,10 @@
         "etiqueta": "Fogatas",
         "min": -6,
         "max": 6
-      }
+      },
+      "sfx": [
+        "fuego"
+      ]
     },
     {
       "beat": "escalada",
@@ -533,7 +650,7 @@
         "de": 1,
         "a": 0,
         "unidad": "°C",
-        "etiqueta": "Hielo",
+        "etiqueta": "Bajo el hielo",
         "min": -6,
         "max": 6
       },
@@ -550,8 +667,15 @@
         "hora": "noche",
         "props": [
           {
+            "tipo": "cerca",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.84,
+            "largo": 1600
+          },
+          {
             "tipo": "fogata",
-            "x": 0.7,
+            "x": 0.85,
             "plano": "medio"
           }
         ]
@@ -559,15 +683,22 @@
       "actores": [
         {
           "id": "vecino",
-          "x": 0.4,
+          "x": 0.35,
           "expresion": "burla",
           "pose": "señalar",
+          "mira": "der"
+        },
+        {
+          "id": "amigo2",
+          "x": 0.62,
+          "expresion": "burla",
+          "pose": "reir",
           "mira": "der"
         }
       ],
       "camara": {
         "mov": "zoom_golpe",
-        "encuadre": "primer_plano",
+        "encuadre": "americano",
         "foco": "vecino"
       },
       "sfx": [
@@ -582,33 +713,44 @@
         "hora": "noche",
         "props": [
           {
-            "tipo": "montana",
-            "x": 0.5,
-            "plano": "fondo"
+            "tipo": "estanque",
+            "x": 0.55,
+            "plano": "frente",
+            "y": 0.9,
+            "helado": true
           },
           {
-            "tipo": "fresal",
-            "x": 0.5,
-            "plano": "medio",
-            "largo": 900
+            "tipo": "pozo",
+            "x": 0.9,
+            "plano": "medio"
           }
         ]
       },
-      "actores": [],
+      "actores": [
+        {
+          "id": "heroe",
+          "x": 0.45,
+          "expresion": "determinado",
+          "pose": "trabajar",
+          "objeto": "balde",
+          "mira": "der"
+        }
+      ],
       "camara": {
         "mov": "pull_out",
-        "encuadre": "general",
-        "foco": [
-          0.5,
-          0.55
-        ]
+        "encuadre": "medio",
+        "foco": "heroe",
+        "sacudida": true
       },
       "efectos": [
-        "oscuro",
         "nieve"
       ],
       "sfx": [
-        "viento"
+        "hielo",
+        {
+          "nombre": "golpe",
+          "t": 0.5
+        }
       ]
     },
     {
@@ -620,21 +762,20 @@
         "props": [
           {
             "tipo": "fogata",
-            "x": 0.5,
+            "x": 0.6,
             "plano": "frente",
             "y": 0.85
           },
           {
-            "tipo": "caja",
-            "x": 0.8,
-            "plano": "frente",
-            "y": 0.86
+            "tipo": "carreta",
+            "x": 0.85,
+            "plano": "medio"
           },
           {
             "tipo": "cerca",
-            "x": 0.5,
+            "x": 0.3,
             "plano": "medio",
-            "largo": 1600
+            "largo": 500
           }
         ]
       },
@@ -643,9 +784,17 @@
           "id": "vecino",
           "x": 0.3,
           "expresion": "preocupado",
+          "pose": "trabajar",
+          "objeto": "martillo",
+          "mira": "der"
+        },
+        {
+          "id": "amigo1",
+          "x": 0.75,
+          "expresion": "panico",
           "pose": "cargar",
           "objeto": "rama",
-          "mira": "der"
+          "mira": "izq"
         }
       ],
       "camara": {
@@ -660,6 +809,11 @@
         "texto": "3 de la mañana"
       },
       "sfx": [
+        "golpe",
+        {
+          "nombre": "golpe",
+          "t": 0.8
+        },
         "tictac"
       ]
     },
@@ -672,38 +826,51 @@
         "props": [
           {
             "tipo": "fogata",
-            "x": 0.2,
+            "x": 0.1,
             "plano": "medio",
-            "apagada": true
+            "apagandose": true,
+            "retraso": 0.0
           },
           {
             "tipo": "fogata",
-            "x": 0.5,
+            "x": 0.35,
             "plano": "medio",
-            "apagada": true
+            "apagandose": true,
+            "retraso": 0.13
           },
           {
             "tipo": "fogata",
-            "x": 0.8,
-            "plano": "medio"
+            "x": 0.6,
+            "plano": "medio",
+            "apagandose": true,
+            "retraso": 0.26
+          },
+          {
+            "tipo": "fogata",
+            "x": 0.85,
+            "plano": "medio",
+            "apagandose": true,
+            "retraso": 0.39
           },
           {
             "tipo": "fresal",
             "x": 0.5,
             "plano": "frente",
-            "y": 0.88,
-            "largo": 900
+            "y": 0.9,
+            "largo": 1200
           }
         ]
       },
       "actores": [],
       "camara": {
         "mov": "pan_der",
-        "encuadre": "general"
+        "encuadre": "general",
+        "foco": [
+          0.5,
+          0.7
+        ]
       },
-      "efectos": [
-        "oscuro"
-      ],
+      "efectos": [],
       "sfx": [
         "aire"
       ]
@@ -716,32 +883,33 @@
         "hora": "noche",
         "props": [
           {
+            "tipo": "fogata",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.85,
+            "apagada": true
+          },
+          {
             "tipo": "fresal",
             "x": 0.5,
             "plano": "medio",
-            "largo": 900,
-            "fruta": "#8c2a3a"
-          },
-          {
-            "tipo": "fogata",
-            "x": 0.5,
-            "plano": "medio",
-            "apagada": true
+            "largo": 900
           }
         ]
       },
       "actores": [
         {
           "id": "vecino",
-          "x": 0.4,
+          "x": 0.38,
           "expresion": "panico",
           "pose": "temblar",
+          "objeto": "malvavisco_helado",
           "mira": "der"
         }
       ],
       "camara": {
         "mov": "estatico",
-        "encuadre": "general",
+        "encuadre": "americano",
         "foco": "vecino",
         "sacudida": true
       },
@@ -752,13 +920,15 @@
         "unidad": "°C",
         "etiqueta": "Fresas del vecino",
         "min": -6,
-        "max": 6
+        "max": 6,
+        "posicion": "medio"
       },
       "efectos": [
         "nieve"
       ],
       "sfx": [
-        "hielo"
+        "hielo",
+        "viento"
       ]
     },
     {
@@ -769,13 +939,12 @@
         "hora": "noche",
         "props": [
           {
-            "tipo": "fresal",
+            "tipo": "fresa_grande",
             "x": 0.5,
             "plano": "frente",
             "y": 0.86,
-            "hielo": true,
-            "goteo": true,
-            "largo": 300
+            "estado": "buena",
+            "hielo": true
           }
         ]
       },
@@ -785,7 +954,7 @@
         "encuadre": "detalle",
         "foco": [
           0.5,
-          0.83
+          0.82
         ]
       },
       "inserto": {
@@ -891,13 +1060,13 @@
             "tipo": "fresal",
             "x": 0.5,
             "plano": "frente",
-            "y": 0.88,
-            "fruta": "#6e2a35",
+            "y": 0.9,
+            "mala": true,
             "largo": 900
           },
           {
             "tipo": "fogata",
-            "x": 0.8,
+            "x": 0.85,
             "plano": "medio",
             "apagada": true
           }
@@ -906,17 +1075,35 @@
       "actores": [
         {
           "id": "vecino",
-          "x": 0.4,
+          "x": 0.35,
           "expresion": "triste",
-          "pose": "agachado",
+          "pose": "idle",
+          "objeto": "fresa_mordida",
           "mira": "der"
+        },
+        {
+          "id": "amigo1",
+          "x": 0.7,
+          "expresion": "preocupado",
+          "pose": "agachado",
+          "objeto": "fresa_mala",
+          "mira": "izq"
         }
       ],
       "camara": {
         "mov": "push_in",
-        "encuadre": "medio",
-        "foco": "vecino",
+        "encuadre": "general",
+        "foco": [
+          0.5,
+          0.7
+        ],
         "entrada": "whip"
+      },
+      "inserto": {
+        "tipo": "corte",
+        "estado": "helada",
+        "etiqueta": "Por dentro: puro hielo",
+        "posicion": "arriba"
       },
       "sfx": [
         "error"
@@ -931,10 +1118,10 @@
         "props": [
           {
             "tipo": "fresal",
-            "x": 0.5,
+            "x": 0.55,
             "plano": "frente",
             "y": 0.87,
-            "hielo": true,
+            "derrite": true,
             "goteo": true,
             "largo": 800
           }
@@ -945,7 +1132,7 @@
           "id": "heroe",
           "x": 0.3,
           "expresion": "confiado",
-          "pose": "cargar",
+          "pose": "trabajar",
           "objeto": "balde",
           "mira": "der"
         }
@@ -970,22 +1157,29 @@
         "hora": "dia",
         "props": [
           {
-            "tipo": "fresal",
+            "tipo": "fresa_grande",
             "x": 0.5,
             "plano": "frente",
             "y": 0.86,
-            "largo": 300
+            "estado": "buena",
+            "derrite": true
           }
         ]
       },
       "actores": [],
       "camara": {
-        "mov": "zoom_golpe",
+        "mov": "push_in",
         "encuadre": "detalle",
         "foco": [
           0.5,
-          0.83
+          0.82
         ]
+      },
+      "inserto": {
+        "tipo": "corte",
+        "estado": "buena",
+        "etiqueta": "Por dentro: jugosa",
+        "posicion": "arriba"
       },
       "efectos": [
         "destello"
@@ -1008,45 +1202,61 @@
         "props": [
           {
             "tipo": "puesto",
-            "x": 0.55,
-            "plano": "medio"
+            "x": 0.62,
+            "plano": "medio",
+            "fresas": true
           },
           {
-            "tipo": "caja",
-            "x": 0.75,
+            "tipo": "canasta",
+            "x": 0.85,
             "plano": "frente",
-            "y": 0.85
+            "y": 0.86
           }
         ]
       },
       "actores": [
         {
           "id": "heroe",
-          "x": 0.6,
+          "x": 0.86,
           "expresion": "feliz",
-          "pose": "manos_cadera",
+          "pose": "saludar",
+          "objeto": "canasta",
           "mira": "izq"
         },
         {
           "id": "vecina",
-          "x": 0.35,
-          "expresion": "neutral",
+          "x": 0.55,
+          "expresion": "feliz",
           "pose": "idle",
+          "objeto": "monedas",
           "mira": "der"
         },
         {
           "id": "nino",
-          "x": 0.2,
+          "x": 0.35,
           "expresion": "feliz",
+          "pose": "idle",
+          "mira": "der"
+        },
+        {
+          "id": "amigo2",
+          "x": 0.15,
+          "expresion": "neutral",
           "pose": "idle",
           "mira": "der"
         }
       ],
       "camara": {
-        "mov": "pull_out",
+        "mov": "pan_der",
         "encuadre": "general",
-        "foco": "heroe"
-      }
+        "foco": [
+          0.55,
+          0.75
+        ]
+      },
+      "sfx": [
+        "campana"
+      ]
     },
     {
       "beat": "remate",
@@ -1058,17 +1268,19 @@
         "props": [
           {
             "tipo": "puesto",
-            "x": 0.6,
-            "plano": "medio"
+            "x": 0.65,
+            "plano": "medio",
+            "fresas": true
           }
         ]
       },
       "actores": [
         {
           "id": "vecino",
-          "x": 0.4,
+          "x": 0.35,
           "expresion": "preocupado",
           "pose": "rascarse",
+          "objeto": "monedas",
           "mira": "der"
         },
         {
