@@ -1,0 +1,53 @@
+# Canal Citrino — instrucciones
+Háblale al usuario en español sencillo y corto.
+
+## Qué hay en este repo
+- `dibujos/`: **motor de dibujos** (el de los romanos + mejoras del submarino). Es el motor para los vídeos de Citrino.
+  Reglas y pasos: `dibujos/LEEME.md`. Punto de partida de cada vídeo: `dibujos/plantilla/`.
+- `docs/FORMULA-GUIONES-CITRINO.md`: **la fórmula de guiones de Citrino** (la que manda).
+- `motor/`, `ejemplos/`, `openmontage/`, `ANALISIS.md`: el motor anterior de Shorts en 3D low-poly y el análisis del
+  canal Zingo. Se conservan como consulta; no se usan para los vídeos de dibujos.
+
+## Guion — FÓRMULA DE CITRINO (del usuario, 20 nov 2026) — ver `docs/FORMULA-GUIONES-CITRINO.md`
+- 8 etapas: 1 HOOK · 2 PROMESA · 3 RECOMPENSA 1 · 4 BUCLE 1 · 5 RECOMPENSA 2 · 6 BUCLE 2 · 7 CLÍMAX · 8 CTA (una sola acción).
+- Columna vertebral, no jaula: más o menos bucles y recompensas según la duración. Valor desde el primer segundo.
+- Cada segmento aporta información o curiosidad; primera recompensa rápido; interés que crece; sin bucles artificiales,
+  anticipaciones repetidas ni relleno; narración fluida; toda promesa se resuelve.
+- **No inventar tensión, datos ni revelaciones.** Datos reales comprobados en fuentes fiables.
+- **Auditoría obligatoria** sobre 100 (gancho, promesa, recompensas, bucles, clímax, ritmo, CTA). Con < 90: buscar
+  puntos de abandono y redundancias, reescribir lo débil y volver a auditar. Nunca entregar el primer borrador.
+  Leerlo en voz alta: tiene que sonar natural.
+- **Entrega (siempre, en este orden):** 1) guion por las 8 etapas; 2) auditoría y nota; 3) guion limpio para locución
+  (bloque para copiar); 4) pausas, énfasis y ritmo; 5) fuentes.
+- NO usar la fórmula de Benthara (misterio/rival) ni la de Zingo para Citrino.
+- Canal en español. Duración y público: por confirmar con el usuario.
+
+## REGLAS DEL MOTOR DE DIBUJOS — ver `dibujos/LEEME.md`
+- **Calidad = la del ejemplo de los romanos** (`dibujos/kit/example/`): misma especie de personaje, luz, piel, colores
+  vivos y texturas pintadas. Comparar lado a lado (`dibujos/herramientas/comparar.py`) antes de montar.
+- **Cada decorado se construye A MEDIDA del vídeo**, con las piezas del KIT y, si hace falta algo nuevo, en su mismo
+  estilo. Solo se reutiliza algo si el guion o la voz lo mencionan. Cada vídeo, mejor que el anterior.
+- **Gestos = los del kit**: caras fijas que cambian en la palabra clave, `idle()` siempre, impulso, asentir, negar,
+  4-5 cambios de brazos por vídeo.
+- Personajes: mismo cuerpo y cara del kit; solo cambia la ropa (OUTFITS en `web/roman.js`).
+- **Encuadre:** personajes más pequeños o lejos para que se vea el entorno (ocupan ~1/3-1/2 de la altura). Caras a
+  pantalla completa solo en 1-2 golpes clave y breves.
+- **Revisar YO cada imagen** antes de enviarla. Nada en pantalla que no diga el guion.
+- **Entregar dos versiones: con música y sin música, + la ficha para publicar.**
+
+## Proceso de un vídeo
+1. Guion con la fórmula de Citrino, auditado y aprobado → `script.txt`. Voz del usuario → `voice.mp3`.
+2. `cp -r dibujos/plantilla dibujos/videos/<nombre>` + `bash dibujos/herramientas/preparar.sh dibujos/videos/<nombre>`.
+3. `python3 ../../herramientas/tiempos_es.py voice.mp3 script.txt es` (escribe `web/tiempos.js`).
+4. Decorado (`web/_world.js`), ropa (`web/roman.js`), planos (`web/story.js`) → `bash rebuild.sh` → `carta.mjs`.
+5. Hoja de fotos + `comparar.py`, REVISARLA, corregir, enseñarla.
+6. Montaje en segundo plano (`node render.mjs frames "0-N"`) → `python3 audio.py` → `mix.py` con y sin música →
+   `terminar.sh` dos veces.
+7. Revisar la hoja final, enviar los dos MP4.
+8. **Siempre después de los MP4:** la ficha para publicar en bloques para copiar (título de 4-7 palabras, descripción
+   con datos reales y hashtags, etiquetas, comentario fijado, ajustes de YouTube, hora recomendada, fuentes), en
+   español, guardada en `dibujos/videos/<nombre>/publicar.md` (modelo: `dibujos/plantilla/publicar.md`).
+9. Guardar y subir a la rama de trabajo según se avanza (sin esperar al final).
+
+## Créditos de vidIQ
+NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
