@@ -50,3 +50,16 @@ El guion es un JSON legible (mira `ejemplos/lechero.json`): cada plano lleva su 
 
 ## Rendimiento
 Los fondos 3D se renderizan en Chromium. Sin GPU (SwiftShader) tarda unos 18 s por segundo de video en 1080p. En una PC con GPU va mucho más rápido.
+
+## Voces de ElevenLabs (doblaje)
+Genera en ElevenLabs un audio del narrador y uno por personaje, con sus líneas en el orden del guion. Luego:
+```bash
+python -m motor doblar guiones/fresas.json --voz narrador=narrador.mp3 --voz vecino=vecino.mp3 --acelerar 1.18
+```
+Transcribe los audios (faster-whisper), corta un clip por plano en `voces/<guion>/` y el render los usa en lugar de edge-tts. `--acelerar` sube la velocidad sin cambiar el tono; las pausas largas se acortan solas.
+
+## Props y objetos nuevos
+- Props 3D: `fresal` {largo, hielo, hielo_crece, derrite, goteo, mala}, `fresa_grande` {estado: buena|mala|dana, hielo, derrite}, `fresa_partida` {estado: buena|helada|congelando}, `canasta`, `puesto` {fresas, letrero}, `estanque` {helado}, `fogata` {apagandose, retraso}.
+- Objetos en mano: `fresa`, `fresa_mala`, `fresa_mordida`, `canasta`, `monedas`, `malvavisco`, `malvavisco_helado`.
+- Tarjetas: `inserto.posicion` = `arriba` | `medio` | `izq` | `der` (las dos últimas, pequeñas en la esquina, para no tapar caras). Nuevo tipo `corte` (fruta partida en 2D).
+- Texturas pintadas con línea de tinta (tierra, piel de fresa, hojas, madera, mimbre, hielo) en `motor/escena3d/escena.js`.

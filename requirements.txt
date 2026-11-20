@@ -2,3 +2,4 @@ numpy>=1.26
 pycairo>=1.25
 edge-tts>=7.0
 anthropic>=0.70
+faster-whisper>=1.0   # solo para 'python -m motor doblar' (voces de ElevenLabs)
