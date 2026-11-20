@@ -5,8 +5,9 @@ Háblale al usuario en español sencillo y corto.
 - `dibujos/`: **motor de dibujos** (el de los romanos + mejoras del submarino). Es el motor para los vídeos de Citrino.
   Reglas y pasos: `dibujos/LEEME.md`. Punto de partida de cada vídeo: `dibujos/plantilla/`.
 - `docs/FORMULA-GUIONES-CITRINO.md`: **la fórmula de guiones de Citrino** (la que manda).
-- `motor/`, `ejemplos/`, `openmontage/`, `ANALISIS.md`: el motor anterior de Shorts en 3D low-poly y el análisis del
-  canal Zingo. Se conservan como consulta; no se usan para los vídeos de dibujos.
+- `docs/LO-QUE-SIRVE-DE-ZINGO.md`: lo aprovechado del canal Zingo (lecciones de retención y producción).
+- `motor/`, `ejemplos/`, `ANALISIS.md`: el motor anterior (Zingo, 3D low-poly). Ya NO se usa; lo útil está en `dibujos/`.
+- `openmontage/`: plan e instalador de OpenMontage para Windows (aparte).
 
 ## Guion — FÓRMULA DE CITRINO (del usuario, 20 nov 2026) — ver `docs/FORMULA-GUIONES-CITRINO.md`
 - 8 etapas: 1 HOOK · 2 PROMESA · 3 RECOMPENSA 1 · 4 BUCLE 1 · 5 RECOMPENSA 2 · 6 BUCLE 2 · 7 CLÍMAX · 8 CTA (una sola acción).
@@ -20,7 +21,11 @@ Háblale al usuario en español sencillo y corto.
 - **Entrega (siempre, en este orden):** 1) guion por las 8 etapas; 2) auditoría y nota; 3) guion limpio para locución
   (bloque para copiar); 4) pausas, énfasis y ritmo; 5) fuentes.
 - NO usar la fórmula de Benthara (misterio/rival) ni la de Zingo para Citrino.
-- Canal en español. Duración y público: por confirmar con el usuario.
+- Canal en español. **La duración NO es fija: la marca la fórmula narrativa** (las 8 etapas con los bucles y
+  recompensas que el tema necesite, sin relleno). Para estimarla antes de grabar:
+  `python3 dibujos/herramientas/tiempos_estimados.py script.txt` (~170 palabras por minuto). Decirla en la entrega.
+- De Zingo (ver `docs/LO-QUE-SIRVE-DE-ZINGO.md`): gancho en 0-3 s sin introducción; final que enlaza con el principio
+  cuando encaje; la ciencia con una analogía de casa; cifras concretas que se puedan enseñar con un inserto.
 
 ## REGLAS DEL MOTOR DE DIBUJOS — ver `dibujos/LEEME.md`
 - **Calidad = la del ejemplo de los romanos** (`dibujos/kit/example/`): misma especie de personaje, luz, piel, colores
@@ -39,10 +44,12 @@ Háblale al usuario en español sencillo y corto.
 1. Guion con la fórmula de Citrino, auditado y aprobado → `script.txt`. Voz del usuario → `voice.mp3`.
 2. `cp -r dibujos/plantilla dibujos/videos/<nombre>` + `bash dibujos/herramientas/preparar.sh dibujos/videos/<nombre>`.
 3. `python3 ../../herramientas/tiempos_es.py voice.mp3 script.txt es` (escribe `web/tiempos.js`).
-4. Decorado (`web/_world.js`), ropa (`web/roman.js`), planos (`web/story.js`) → `bash rebuild.sh` → `carta.mjs`.
+   (sin voz todavía: `tiempos_estimados.py script.txt` para ir planificando).
+4. Decorado (`web/_world.js`), ropa (`web/roman.js`), planos (`web/story.js`: un plano cada 2-3 s, zoom de golpe en
+   cifras y revelaciones, insertos de datos cuando la voz dice una cifra) → `bash rebuild.sh` → `carta.mjs`.
 5. Hoja de fotos + `comparar.py`, REVISARLA, corregir, enseñarla.
 6. Montaje en segundo plano (`node render.mjs frames "0-N"`) → `python3 audio.py` → `mix.py` con y sin música →
-   `terminar.sh` dos veces.
+   `subtitulos.py` (siempre el `.srt` para subirlo) → `terminar.sh` dos veces (`SUBS=1` si se quieren quemados).
 7. Revisar la hoja final, enviar los dos MP4.
 8. **Siempre después de los MP4:** la ficha para publicar en bloques para copiar (título de 4-7 palabras, descripción
    con datos reales y hashtags, etiquetas, comentario fijado, ajustes de YouTube, hora recomendada, fuentes), en

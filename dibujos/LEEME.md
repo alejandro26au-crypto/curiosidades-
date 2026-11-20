@@ -16,6 +16,9 @@ el 20 nov 2026 con todas las mejoras del vídeo del submarino.
   - `comparar.py`: hoja de fotos al lado de los romanos (para revisar la calidad).
   - `mix.py`: música al 50 % de la voz (−6 dB) y efectos al 50 % o menos; también sin música (`-`).
   - `terminar.sh`: junta imagen y sonido a −14 LUFS y revisa (congelados, negros); sale `out/hoja_final.jpg`.
+  - `tiempos_estimados.py`: tiempos sin voz (~170 ppm) para planificar y estimar la duración (de Zingo).
+  - `subtitulos.py`: subtítulos de 1-2 palabras con las cifras en amarillo → `out/subtitulos.srt` (para subir) y
+    `out/subtitulos.ass` (`SUBS=1 bash terminar.sh …` los quema en el vídeo) (de Zingo).
   - `gestos.js` (brazos con impulso, asentir) y `boca.py` (boca según la voz; solo si se pide).
 - `plantilla/`: el punto de partida de CADA vídeo (ver `plantilla/LEEME.md`). Trae un decorado de ejemplo (plaza de
   pueblo) que se cambia siempre.
@@ -39,6 +42,8 @@ el 20 nov 2026 con todas las mejoras del vídeo del submarino.
 6. `audio.py`: música por tramos (tema, silencio antes del golpe, cómico, solemne, fanfarria, dron) + whoosh en cada
    corte y efecto en cada golpe → `music.wav` y `sfx.wav`.
 7. `publicar.md`: ficha para publicar.
+8. `insertos.js` (de Zingo): termómetro, manómetro, contador, barra, reloj, comparativa y capas, con tinta y rebote;
+   en `story.js`, `inserto('barra', f, f0, f1, { de, a, unidad, etiqueta })` lo pone delante de la cámara, nítido.
 
 ## REGLAS DEL MOTOR (del usuario)
 - **Calidad = romanos**: comparar lado a lado (`comparar.py`) antes de montar.
@@ -56,7 +61,8 @@ el 20 nov 2026 con todas las mejoras del vídeo del submarino.
 ## Hacer un vídeo (pasos)
 1. Guion aprobado (fórmula de Citrino: `docs/FORMULA-GUIONES-CITRINO.md`) → `script.txt`. Voz del usuario → `voice.mp3` (no se sube).
 2. `cp -r dibujos/plantilla dibujos/videos/<nombre>` y `bash dibujos/herramientas/preparar.sh dibujos/videos/<nombre>`.
-3. Desde la carpeta del vídeo: `python3 ../../herramientas/tiempos_es.py voice.mp3 script.txt es`.
+3. Desde la carpeta del vídeo: `python3 ../../herramientas/tiempos_es.py voice.mp3 script.txt es`
+   (sin voz aún: `python3 ../../herramientas/tiempos_estimados.py script.txt`; la duración la marca el guion).
 4. Decorado en `web/_world.js`, ropa en `web/roman.js`, planos en `web/story.js` → `bash rebuild.sh`.
 5. `node carta.mjs carta.png '[["vecino",{"R":"hold"}]]'` para probar personajes.
 6. Hoja: `node render.mjs stills/a "30,140,…"` + `python3 ../../herramientas/comparar.py hoja.jpg stills/a/f*.jpg` →
@@ -64,7 +70,7 @@ el 20 nov 2026 con todas las mejoras del vídeo del submarino.
 7. Montaje en segundo plano: `node render.mjs frames "0-<DURACION-1>"`.
 8. `python3 audio.py` → `python3 ../../herramientas/mix.py voice.mp3 music.wav sfx.wav` y
    `python3 ../../herramientas/mix.py voice.mp3 - sfx.wav out/mix_sin_musica.wav`.
-9. `bash ../../herramientas/terminar.sh "Titulo"` y `bash ../../herramientas/terminar.sh "Titulo" out/mix_sin_musica.wav`
+9. `python3 ../../herramientas/subtitulos.py` → `bash ../../herramientas/terminar.sh "Titulo"` y `bash ../../herramientas/terminar.sh "Titulo" out/mix_sin_musica.wav`
    → revisar `out/hoja_final.jpg` → enviar los dos MP4.
 10. Enviar la ficha (`publicar.md`) en bloques para copiar y guardarla en la carpeta del vídeo.
 

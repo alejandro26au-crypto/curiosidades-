@@ -12,6 +12,7 @@ Trae un decorado de EJEMPLO (plaza de pueblo de día) que hay que CAMBIAR en cad
 | `web/story.js` | **planos, luces, cámaras, golpes, zooms, barridos, gestos, efectos 2D** | **sí** |
 | `web/roman.js` | caras, poses y **la ropa del reparto** (OUTFITS) | ropa sí |
 | `web/paint.js` | texturas pintadas (kit + nuevas: chapa, suelo estriado, colchón, manta, esfera, batería, rayos de luz) | si hace falta una textura nueva |
+| `web/insertos.js` | insertos de datos (termómetro, contador, reloj, comparativa…) | no |
 | `web/tiempos.js` | frases y palabras con su fotograma (lo escribe `tiempos_es.py`) | no a mano |
 | `rebuild.sh` | junta `_head+_world+_tail+_frame` → `main.js` y `toonbase+roman` → `toon.js` | ejecutar tras cada cambio |
 | `carta.mjs` | prueba de personajes sueltos (poses y caras) sin renderizar escenas | — |

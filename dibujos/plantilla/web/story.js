@@ -9,12 +9,14 @@
 //   · SACUDIDAS: temblor continuo (alarmas, explosiones) · FLASHES: destello blanco
 //   · personajes con idle() siempre, caras fijas que cambian en la palabra clave, impulso (pop), asentir (nod),
 //     negar (shake) y 4-5 cambios de brazos con brazosEn (impulso y asiento)
+//   · INSERTOS de datos (de Zingo): termómetro, manómetro, contador, barra, reloj, comparativa, capas, mientras la voz canta la cifra
 //   · efectos 2D (FX): vapor, burbujas, chorro, onda, explosión aditiva, palabra que salta, objeto en el suelo + los del kit
 // ENCUADRE (regla del usuario): personajes pequeños o lejos para que se vea el entorno (plano medio-general: el personaje
 // ocupa ~1/3-1/2 de la altura). Caras a pantalla completa solo 1-2 veces y breves. Nada en pantalla que no diga el guion.
 import { M, clamp, lerp, lerp3, ramp, camFromKeys, idle, blinkAt, q } from './motion.js';
 import { brazosEn } from './gestos.js';
 import { FRASES, PAL, DURACION } from './tiempos.js';
+import { INSERTOS } from './insertos.js';
 export const FPS = 30, TOTAL = DURACION;
 
 // ---------- palabras → fotogramas ----------
@@ -159,8 +161,26 @@ const blast = (p, t) => { const g = p.g, r = 80 + 220 * M.easeOut(t), gr = g.cre
 const word = (p, txt, col, t) => { const g = p.g; g.save(); g.translate(300, 500); const s = 0.6 + 0.4 * M.back(clamp(t * 3)); g.scale(s, s); g.rotate(-0.12); g.font = '900 150px Arial Black, Arial'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round'; g.lineWidth = 34; g.strokeStyle = '#241726'; g.strokeText(txt, 0, 0); g.fillStyle = col; g.fillText(txt, 0, 0); g.restore(); };
 const coin = (p) => { p.ell(300, 500, 110, 110, '#e8c45a', 8); p.ell(300, 500, 80, 80, '#f2d27a', 4); p.ell(270, 470, 22, 14, '#fff6d0', 0); }; // objeto suelto (como el gorro en el suelo del submarino)
 
+
+// ---------- insertos de datos (insertos.js) ----------
+/** valor animado de «de» a «a» entre f0 y f1 + entrada con rebote: { v, k, t } */
+const animDato = (f, f0, f1, o) => { const t = M.easeOut(ramp(f, f0 + 3, f0 + 18)), k = Math.max(0.001, M.back(ramp(f, f0, f0 + 9)) * (1 - M.easeIn(ramp(f, f1 - 5, f1)))); return { ...o, v: lerp(o.de ?? o.a ?? 0, o.a ?? 0, t), k: q(k, 2), t: q(t, 2) }; };
+/** punto delante de la cámara (como un rótulo en pantalla): dx, dy en fracción de pantalla (-0.5..0.5); a la distancia de enfoque para que salga nítido */
+const delante = (f, dx = 0, dy = 0.22) => {
+  const C = camAt(f), d = dofAt(f).focus, D = C.look.map((v, i) => v - C.pos[i]), n = Math.hypot(...D), F = D.map((v) => v / n);
+  const R = [-F[2], 0, F[0]], rn = Math.hypot(...R), Rn = R.map((v) => v / rn), U = [Rn[1] * F[2] - Rn[2] * F[1], Rn[2] * F[0] - Rn[0] * F[2], Rn[0] * F[1] - Rn[1] * F[0]];
+  const h = 2 * d * Math.tan(C.fov * Math.PI / 360), w = h * 9 / 16;
+  return { c: C.pos.map((v, i) => v + F[i] * d + Rn[i] * dx * w + U[i] * dy * h), w };
+};
+/** tarjeta de inserto: tipo de INSERTOS, visible de f0 a f1, opciones del dato. ancho = fracción del ancho de pantalla */
+const inserto = (tipo, f, f0, f1, o, ancho = 0.62, dx = 0, dy = 0.22) => {
+  if (f < f0 || f > f1) return null; const a = animDato(f, f0, f1, o), P = delante(f, dx, dy);
+  return FX(tipo + JSON.stringify(a), (p) => INSERTOS[tipo](p, a), P.c, P.w * ancho / 0.56, { order: 7, blob: false, shadow: false });
+};
+
 export const fxAt = (f, T) => {
   const S = shotAt(f), out = [];
+  { const c = inserto('barra', f, en('diez'), en('vecino') - 6, { de: 0, a: 10, min: 0, max: 10, unidad: 'm', etiqueta: 'PROFUNDIDAD' }); if (c) out.push(c); } // «¡Diez metros!»
   if (S.id === 'apuesta' && f >= en('cien')) { // «¡cien monedas!»: la cifra salta, estallido y monedas
     const t = clamp((f - en('cien')) / 10);
     out.push(FX('w' + q(t, 2), (p) => word(p, '¡100!', '#ffd23a', t), [-0.5, 2.25, -1.0], 1.5, { order: 6 }));
