@@ -256,31 +256,33 @@
         "hora": "noche",
         "props": [
           {
-            "tipo": "fresa_grande",
+            "tipo": "fresa_partida",
             "x": 0.5,
             "plano": "frente",
             "y": 0.86,
-            "estado": "dana"
+            "estado": "congelando"
           }
         ]
       },
       "actores": [],
       "camara": {
         "mov": "push_in",
-        "encuadre": "detalle",
+        "encuadre": "medio",
         "foco": [
           0.5,
           0.8
-        ]
+        ],
+        "intensidad": 1.4
       },
-      "inserto": {
-        "tipo": "corte",
-        "estado": "helada",
-        "etiqueta": "A −2 °C: hielo por dentro",
-        "posicion": "arriba"
-      },
+      "efectos": [
+        "escarcha"
+      ],
       "sfx": [
-        "hielo"
+        "hielo",
+        {
+          "nombre": "hielo",
+          "t": 1.2
+        }
       ]
     },
     {
@@ -605,7 +607,8 @@
         "unidad": "°C",
         "etiqueta": "Fogatas",
         "min": -6,
-        "max": 6
+        "max": 6,
+        "posicion": "der"
       },
       "sfx": [
         "fuego"
@@ -652,7 +655,8 @@
         "unidad": "°C",
         "etiqueta": "Bajo el hielo",
         "min": -6,
-        "max": 6
+        "max": 6,
+        "posicion": "der"
       },
       "efectos": [
         "escarcha"
@@ -806,7 +810,8 @@
         "tipo": "reloj",
         "de": 1,
         "a": 3,
-        "texto": "3 de la mañana"
+        "texto": "3 de la mañana",
+        "posicion": "der"
       },
       "sfx": [
         "golpe",
@@ -921,7 +926,7 @@
         "etiqueta": "Fresas del vecino",
         "min": -6,
         "max": 6,
-        "posicion": "medio"
+        "posicion": "der"
       },
       "efectos": [
         "nieve"
@@ -1099,12 +1104,6 @@
         ],
         "entrada": "whip"
       },
-      "inserto": {
-        "tipo": "corte",
-        "estado": "helada",
-        "etiqueta": "Por dentro: puro hielo",
-        "posicion": "arriba"
-      },
       "sfx": [
         "error"
       ]
@@ -1174,12 +1173,6 @@
           0.5,
           0.82
         ]
-      },
-      "inserto": {
-        "tipo": "corte",
-        "estado": "buena",
-        "etiqueta": "Por dentro: jugosa",
-        "posicion": "arriba"
       },
       "efectos": [
         "destello"

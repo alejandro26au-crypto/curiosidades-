@@ -148,6 +148,24 @@ function fresaMalla(tam = 0.1, mala = false) {
   f.scale.setScalar(tam); f.userData.cuerpo = cuerpo;
   return f;
 }
+// Perfil de la fresa (mismo que fresaMalla) y textura de su cara partida: pulpa, corazón claro, semillas en el borde.
+const perfilFresa = (v) => 0.62 * (v < 0.82 ? Math.pow(Math.sin(Math.PI / 2 * v / 0.82), 0.75) : Math.pow(Math.max(0, Math.cos((v - 0.82) / 0.18 * Math.PI / 2)), 0.45));
+const texCorte = (helada) => pintada('corte' + helada, 512, 640, (x, w, h) => {
+  x.clearRect(0, 0, w, h);
+  const forma = (esc) => { x.beginPath(); for (let i = 0; i <= 40; i++) { const v = i / 40; const rr = perfilFresa(v) / 0.62 * esc; x.lineTo(w / 2 + rr * w * 0.5, h - v * h); } for (let i = 40; i >= 0; i--) { const v = i / 40; const rr = perfilFresa(v) / 0.62 * esc; x.lineTo(w / 2 - rr * w * 0.5, h - v * h); } x.closePath(); };
+  forma(0.98); x.fillStyle = helada ? '#9c2a3c' : '#d9142e'; x.fill(); x.strokeStyle = TINTA + '0.9)'; x.lineWidth = 8; x.stroke();
+  forma(0.86); const g = x.createRadialGradient(w / 2, h * 0.45, 20, w / 2, h * 0.5, w * 0.5);
+  if (helada) { g.addColorStop(0, '#e9e3ee'); g.addColorStop(0.5, '#c7a3b4'); g.addColorStop(1, '#a8687e'); } else { g.addColorStop(0, '#fff0f0'); g.addColorStop(0.45, '#ff8a92'); g.addColorStop(1, '#e8283f'); }
+  x.fillStyle = g; x.fill();
+  // fibras radiales desde el corazón
+  x.strokeStyle = helada ? 'rgba(255,255,255,0.35)' : 'rgba(255,220,220,0.55)'; x.lineWidth = 3;
+  for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2; x.beginPath(); x.moveTo(w / 2, h * 0.48); x.lineTo(w / 2 + Math.cos(a) * w * 0.33, h * 0.48 + Math.sin(a) * h * 0.36); x.stroke(); }
+  const q = azarT(9);
+  for (let i = 0; i < 22; i++) { const v = 0.08 + q() * 0.85; const lado = q() > 0.5 ? 1 : -1; const rr = perfilFresa(v) / 0.62 * 0.92; x.fillStyle = helada ? '#b9a66a' : '#ffd84a'; x.beginPath(); x.ellipse(w / 2 + lado * rr * w * 0.5, h - v * h, 6, 9, 0, 0, 7); x.fill(); x.strokeStyle = TINTA + '0.6)'; x.lineWidth = 2; x.stroke(); }
+  if (helada) { // escarcha blanca y grietas de hielo dentro de la pulpa
+    for (let i = 0; i < 260; i++) { x.fillStyle = `rgba(255,255,255,${0.25 + q() * 0.5})`; const a = q() * 6.28, d = q() * 0.36; x.beginPath(); x.arc(w / 2 + Math.cos(a) * d * w, h * 0.5 + Math.sin(a) * d * h * 0.9, 1 + q() * 3, 0, 7); x.fill(); }
+  } else { x.fillStyle = 'rgba(255,255,255,0.5)'; x.beginPath(); x.ellipse(w * 0.38, h * 0.35, 30, 60, -0.3, 0, 7); x.fill(); }
+});
 const hieloMat = () => new THREE.MeshPhysicalMaterial({ color: 0xe6f6ff, transparent: true, opacity: 0.5, roughness: 0.05, metalness: 0, clearcoat: 1, flatShading: true });
 
 // ---------- paletas ----------
@@ -458,6 +476,41 @@ const PROPS = {
       charco.visible = dano > 0.5; charco.scale.setScalar(0.3 + 0.7 * Math.min(1, (dano - 0.5) * 2 + t * 0.05));
       gotas.forEach((d) => { const k = (t * 0.9 + d.userData.fase) % 1; d.visible = dano > 0.5; d.position.set(0.12, 0.42 - k * 0.3, 0.12); });
       if (hielo) { const k = p.derrite ? Math.max(0, 1 - pr * 1.25) : 1; hielo.scale.set(k, 1.2 * k, k); hielo.visible = k > 0.03; }
+    });
+  },
+  // Fresa partida a la mitad, mostrando la cara del corte. estado: buena | helada | congelando (el hielo crece por dentro durante el plano)
+  fresa_partida(g, p, r) {
+    const base = malla(new THREE.CylinderGeometry(0.75, 0.85, 0.12, 22), new THREE.MeshStandardMaterial({ map: texMadera(30, 50, 4), roughness: 0.8 })); base.position.y = 0.06; g.add(base);
+    const est = p.estado || 'helada';
+    const mitad = new THREE.Group(); mitad.position.y = 0.8; mitad.rotation.z = -0.08; g.add(mitad);
+    const pts = []; for (let i = 0; i <= 14; i++) { const v = i / 14; pts.push(new THREE.Vector2(Math.max(0.001, perfilFresa(v)), v * 1.25 - 1.25)); }
+    const piel = new THREE.MeshStandardMaterial({ map: texFresa(est !== 'buena'), roughness: 0.4, side: THREE.DoubleSide });
+    const cuerpo = malla(new THREE.LatheGeometry(pts, 18, 0, Math.PI), piel); cuerpo.rotation.y = Math.PI / 2; mitad.add(cuerpo);
+    const ancho = 0.62 * 2 * 1.0, alto = 1.25;
+    const caraB = new THREE.Mesh(new THREE.PlaneGeometry(ancho, alto), new THREE.MeshStandardMaterial({ map: texCorte(false), emissiveMap: texCorte(false), emissive: C('#ffffff'), emissiveIntensity: 0.35, transparent: true, alphaTest: 0.05, roughness: 0.3 }));
+    const caraH = new THREE.Mesh(new THREE.PlaneGeometry(ancho, alto), new THREE.MeshStandardMaterial({ map: texCorte(true), emissiveMap: texCorte(true), emissive: C('#ffffff'), emissiveIntensity: 0.35, transparent: true, alphaTest: 0.05, roughness: 0.15 }));
+    for (const c of [caraB, caraH]) { c.position.set(0, -alto / 2, 0.002); mitad.add(c); }
+    caraH.position.z = 0.004;
+    // agujas de hielo que crecen desde la piel hacia el centro
+    const agujas = [];
+    for (let i = 0; i < 22; i++) {
+      const v = 0.12 + r() * 0.8, lado = r() > 0.5 ? 1 : -1, rr = perfilFresa(v) * 0.95;
+      const ag = new THREE.Mesh(new THREE.ConeGeometry(0.025, 0.14 + r() * 0.12, 4), new THREE.MeshPhysicalMaterial({ color: 0xe8f7ff, transparent: true, opacity: 0.85, roughness: 0.05, clearcoat: 1 }));
+      ag.position.set(lado * (rr - 0.08), v * alto - alto, 0.03); ag.rotation.z = lado * Math.PI / 2 + (r() - 0.5) * 0.6; mitad.add(ag); agujas.push(ag);
+    }
+    for (let k = 0; k < 7; k++) { const h = malla(new THREE.ConeGeometry(0.1, 0.42, 4), mat('#2f8a2c')); const a = -Math.PI / 2 + (k - 3) * 0.42; h.position.set(Math.cos(a) * 0.2, 0.03, 0.02); h.rotation.set(0, 0, a + Math.PI / 2); h.scale.z = 0.3; mitad.add(h); }
+    const tallo = malla(new THREE.CylinderGeometry(0.025, 0.035, 0.22, 6), mat('#3f7a2c')); tallo.position.y = 0.12; mitad.add(tallo);
+    mitad.scale.setScalar(0.5);
+    // la otra mitad, tumbada al lado
+    const otra = fresaMalla(0.4, est !== 'buena'); otra.position.set(0.5, 0.3, -0.15); otra.rotation.set(0.2, 0.5, 1.45); g.add(otra);
+    const cuchillo = new THREE.Group(); cuchillo.position.set(-0.45, 0.14, 0.25); cuchillo.rotation.y = 0.5; g.add(cuchillo);
+    const hoja = malla(new THREE.BoxGeometry(0.5, 0.012, 0.09), new THREE.MeshStandardMaterial({ color: 0xcfd4da, metalness: 0.8, roughness: 0.25 })); hoja.position.x = 0.25; cuchillo.add(hoja);
+    const mango = malla(new THREE.BoxGeometry(0.28, 0.05, 0.07), new THREE.MeshStandardMaterial({ map: texMadera(20, 30, 2) })); mango.position.x = -0.13; cuchillo.add(mango);
+    animables.push((t, pr = 0) => {
+      const k = est === 'buena' ? 0 : est === 'helada' ? 1 : Math.min(1, Math.max(0, (pr - 0.15) / 0.6));
+      caraH.material.opacity = k; caraH.visible = k > 0.01;
+      agujas.forEach((a, i) => { const s = Math.min(1, Math.max(0, k * 1.4 - (i % 5) * 0.08)); a.scale.set(s, s, s); a.visible = s > 0.02; });
+      mitad.rotation.y = 0.18 * Math.sin(t * 0.7);
     });
   },
   // Canasta de mimbre llena de fresas.

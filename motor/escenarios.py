@@ -603,7 +603,7 @@ import os as _os
 _CAT = _json.load(open(_os.path.join(_os.path.dirname(__file__), "escena3d", "catalogo.json"), encoding="utf-8"))
 PROPS_MODELO = sorted(_CAT["props"])
 PROPS = PROPS_MODELO + ["arbol_fruta", "granero", "fardos", "camioneta", "lata_leche", "torre_agua", "bomba_agua",
-         "puesto", "pasto_alto", "vaca", "cañon", "muro", "bandera", "poste", "humo", "fogata", "cerca", "estanque", "fresal", "fresa_grande", "canasta",
+         "puesto", "pasto_alto", "vaca", "cañon", "muro", "bandera", "poste", "humo", "fogata", "cerca", "estanque", "fresal", "fresa_grande", "fresa_partida", "canasta",
          "barco", "carreta", "acacia"]
 _PROPS_2D = ["arbol", "arbol_fruta", "pino", "arbusto", "palmera", "acacia", "granero", "casa",
          "cerca", "fogata", "roca", "fardos", "camioneta", "auto", "carreta", "estanque", "barco",

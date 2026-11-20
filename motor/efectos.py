@@ -48,6 +48,10 @@ def dibujar_inserto(ctx, ins, p, t, dur):
     pos = ins.get("posicion", "arriba")
     cy = H * (0.30 if pos == "arriba" else 0.45)
     ctx.save()
+    if pos in ("izq", "der"):  # tarjeta pequeña en la esquina superior, para no tapar caras
+        ctx.translate(W * (0.24 if pos == "izq" else 0.76), H * 0.15)
+        ctx.scale(0.52, 0.52)
+        ctx.translate(-W * 0.5, -cy)
     if tipo == "termometro":
         _panel(ctx, W * 0.5, cy, 640, 620, k)
         lo, hi = float(ins.get("min", min(de, a) - 5)), float(ins.get("max", max(de, a) + 5))
