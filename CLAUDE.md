@@ -56,5 +56,16 @@ Háblale al usuario en español sencillo y corto.
    español, guardada en `dibujos/videos/<nombre>/publicar.md` (modelo: `dibujos/plantilla/publicar.md`).
 9. Guardar y subir a la rama de trabajo según se avanza (sin esperar al final).
 
+## Guardar siempre (límite de uso de 5 horas)
+- No veo el contador del límite, así que **guardo y subo (commit + push) después de cada paso terminado**: guion,
+  decorado, hoja de fotos aprobada, montaje, sonido, MP4. Así, si se corta, no se pierde nada.
+- En renders largos, subir los avances (código y notas; los fotogramas no se suben, se rehacen con
+  `RESUME=1 node render.mjs frames "0-N"`, que salta los ya hechos).
+- Mantener al día la sección «Estado» de abajo: qué está hecho y cuál es el siguiente paso, para continuar en otro chat.
+
+## Estado (actualizar en cada paso)
+- 20 nov 2026: motor de dibujos portado y probado (calidad = romanos). Fórmula de Citrino guardada. Lo útil de Zingo
+  pasado al motor. Siguiente: el primer vídeo de Citrino (tema y guion con la fórmula).
+
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
