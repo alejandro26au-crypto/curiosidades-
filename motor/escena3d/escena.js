@@ -45,6 +45,106 @@ const rayas = (c1, c2, n = 6, vertical = false) => texCanvas(256, 256, (g, w, h)
   for (let i = 0; i < n; i++) { g.fillStyle = i % 2 ? c2 : c1; vertical ? g.fillRect(i * w / n, 0, w / n + 1, h) : g.fillRect(0, i * h / n, w, h / n + 1); }
 });
 
+// ---------- texturas pintadas (canvas con línea de tinta, estilo ilustrado) ----------
+const _texCache = new Map();
+function pintada(clave, w, h, fn, rep = [1, 1]) {
+  const k = clave + '|' + rep.join('x');
+  if (_texCache.has(k)) return _texCache.get(k);
+  const t = texCanvas(w, h, fn);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rep[0], rep[1]); t.anisotropy = 8;
+  _texCache.set(k, t); return t;
+}
+const TINTA = 'rgba(28,18,22,';
+const azarT = (s) => { let x = s; return () => { x = (x * 16807) % 2147483647; return (x - 1) / 2147483646; }; };
+// Tierra de surco: terrones con luz arriba y sombra abajo, piedritas y rayas de tinta.
+const texTierra = (rep = [1, 1]) => pintada('tierra', 512, 512, (x, w, h) => {
+  const r = azarT(11);
+  x.fillStyle = '#7a5236'; x.fillRect(0, 0, w, h);
+  for (let i = 0; i < 260; i++) {
+    const cx = r() * w, cy = r() * h, rr = 6 + r() * 22, l = 28 + r() * 16;
+    x.fillStyle = `hsl(${22 + r() * 10},${38 + r() * 12}%,${l}%)`;
+    x.beginPath(); x.ellipse(cx, cy, rr, rr * (0.55 + r() * 0.3), r() * 3, 0, 7); x.fill();
+    x.fillStyle = 'rgba(255,230,190,0.10)'; x.beginPath(); x.ellipse(cx - rr * 0.2, cy - rr * 0.25, rr * 0.55, rr * 0.25, 0, 0, 7); x.fill();
+    if (r() > 0.6) { x.strokeStyle = TINTA + '0.35)'; x.lineWidth = 2; x.beginPath(); x.ellipse(cx, cy, rr, rr * 0.6, 0, 0.2, 2.6); x.stroke(); }
+  }
+  for (let i = 0; i < 70; i++) { x.fillStyle = `rgba(${r() > 0.5 ? '200,190,175' : '40,28,20'},0.5)`; x.beginPath(); x.arc(r() * w, r() * h, 1.5 + r() * 3, 0, 7); x.fill(); }
+}, rep);
+// Piel de fresa: degradado rojo, semillas amarillas en su hoyito y brillo húmedo.
+const texFresa = (mala = false) => pintada('fresa' + mala, 512, 512, (x, w, h) => {
+  const r = azarT(mala ? 7 : 5);
+  const g = x.createLinearGradient(0, 0, 0, h);
+  if (mala) { g.addColorStop(0, '#5b2a2c'); g.addColorStop(0.5, '#4a1c25'); g.addColorStop(1, '#3a1520'); }
+  else { g.addColorStop(0, '#ff4a4a'); g.addColorStop(0.55, '#e3243b'); g.addColorStop(1, '#b3122a'); }
+  x.fillStyle = g; x.fillRect(0, 0, w, h);
+  if (mala) for (let i = 0; i < 40; i++) { // manchas blandas y pliegues
+    x.fillStyle = `rgba(${r() > 0.5 ? '120,60,70' : '20,8,12'},${0.25 + r() * 0.3})`;
+    x.beginPath(); x.ellipse(r() * w, r() * h, 10 + r() * 40, 6 + r() * 20, r() * 3, 0, 7); x.fill();
+  }
+  const filas = 9, cols = 10;
+  for (let f = 0; f < filas; f++) for (let c = 0; c < cols; c++) {
+    const sx = (c + (f % 2) * 0.5 + (r() - 0.5) * 0.2) * w / cols, sy = (f + 0.5 + (r() - 0.5) * 0.2) * h / filas;
+    x.fillStyle = mala ? 'rgba(20,6,10,0.55)' : 'rgba(120,10,25,0.55)'; x.beginPath(); x.ellipse(sx, sy, 9, 12, 0, 0, 7); x.fill();
+    x.fillStyle = mala ? '#8a7a4a' : '#ffd84a'; x.beginPath(); x.ellipse(sx, sy - 1, 4, 6, 0, 0, 7); x.fill();
+    x.strokeStyle = TINTA + '0.6)'; x.lineWidth = 1.5; x.stroke();
+  }
+}, [1, 1]);
+// Hoja de fresa: verde con nervios y borde de tinta.
+const texHoja = () => pintada('hoja', 256, 256, (x, w, h) => {
+  const g = x.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w / 1.4); g.addColorStop(0, '#5fae4a'); g.addColorStop(1, '#2f7a2c');
+  x.fillStyle = g; x.fillRect(0, 0, w, h);
+  x.strokeStyle = 'rgba(200,240,170,0.6)'; x.lineWidth = 4; x.beginPath(); x.moveTo(w / 2, h); x.lineTo(w / 2, 0); x.stroke();
+  x.lineWidth = 2; for (let i = 1; i < 7; i++) { const y = h - i * h / 7; x.beginPath(); x.moveTo(w / 2, y); x.lineTo(w * 0.1, y - 30); x.moveTo(w / 2, y); x.lineTo(w * 0.9, y - 30); x.stroke(); }
+});
+// Tablones de madera con veta, nudos y clavos (para puesto y cajas).
+const texMadera = (tono = 30, luz = 45, tablas = 5, rep = [1, 1]) => pintada(`madera${tono}-${luz}-${tablas}`, 512, 512, (x, w, h) => {
+  const r = azarT(tono * 7 + tablas);
+  const hh = h / tablas;
+  for (let i = 0; i < tablas; i++) {
+    const y0 = i * hh, l = luz + (r() - 0.5) * 10;
+    x.fillStyle = `hsl(${tono},45%,${l}%)`; x.fillRect(0, y0, w, hh);
+    for (let k = 0; k < 9; k++) { x.strokeStyle = `hsla(${tono},40%,${l - 12}%,0.55)`; x.lineWidth = 1.5 + r() * 2; x.beginPath(); const yy = y0 + r() * hh; x.moveTo(0, yy); x.bezierCurveTo(w * 0.3, yy + (r() - 0.5) * 14, w * 0.7, yy + (r() - 0.5) * 14, w, yy); x.stroke(); }
+    if (r() > 0.4) { const nx = r() * w, ny = y0 + hh / 2; x.fillStyle = `hsl(${tono},40%,${l - 18}%)`; x.beginPath(); x.ellipse(nx, ny, 12, 6, 0, 0, 7); x.fill(); }
+    x.fillStyle = 'rgba(255,255,255,0.10)'; x.fillRect(0, y0 + 3, w, hh * 0.15);
+    x.strokeStyle = TINTA + '0.85)'; x.lineWidth = 5; x.strokeRect(2, y0 + 2, w - 4, hh - 4);
+    for (const nx of [18, w - 18]) { x.fillStyle = '#3a3a40'; x.beginPath(); x.arc(nx, y0 + hh / 2, 4, 0, 7); x.fill(); }
+  }
+}, rep);
+// Mimbre tejido (canastas).
+const texMimbre = () => pintada('mimbre', 256, 256, (x, w, h) => {
+  x.fillStyle = '#b8843f'; x.fillRect(0, 0, w, h);
+  const n = 8, s = w / n;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    const vert = (i + j) % 2 === 0; x.fillStyle = vert ? '#d9a75a' : '#c48f45';
+    x.beginPath(); x.roundRect(i * s + 3, j * s + 3, s - 6, s - 6, 6); x.fill();
+    x.strokeStyle = TINTA + '0.55)'; x.lineWidth = 2; x.stroke();
+    x.strokeStyle = 'rgba(255,240,200,0.4)'; x.beginPath(); vert ? (x.moveTo(i * s + s / 2, j * s + 6), x.lineTo(i * s + s / 2, j * s + s - 6)) : (x.moveTo(i * s + 6, j * s + s / 2), x.lineTo(i * s + s - 6, j * s + s / 2)); x.stroke();
+  }
+});
+// Letrero pintado.
+const texLetrero = (txt) => pintada('letrero' + txt, 512, 160, (x, w, h) => {
+  x.fillStyle = '#f4ead2'; x.fillRect(0, 0, w, h);
+  x.strokeStyle = TINTA + '0.9)'; x.lineWidth = 10; x.strokeRect(5, 5, w - 10, h - 10);
+  x.fillStyle = '#c4162f'; x.font = 'bold 96px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(txt, w / 2, h / 2 + 6);
+});
+// Fresa 3D: perfil de corazón girado (Lathe) con piel pintada y cáliz de hojitas.
+function fresaMalla(tam = 0.1, mala = false) {
+  const pts = [];
+  for (let i = 0; i <= 14; i++) { const v = i / 14; const rad = Math.sin(Math.PI * Math.pow(v, 0.8)) * (0.55 + 0.45 * v) * 0.62; pts.push(new THREE.Vector2(Math.max(0.001, rad), v * 1.25 - 1.25)); }
+  const geo = new THREE.LatheGeometry(pts, 18);
+  const m = new THREE.MeshStandardMaterial({ map: texFresa(mala), roughness: mala ? 0.25 : 0.42, metalness: 0, emissive: C(mala ? '#200608' : '#5a0a12'), emissiveIntensity: 0.12 });
+  const f = new THREE.Group();
+  const cuerpo = malla(geo, m); f.add(cuerpo);
+  for (let k = 0; k < 6; k++) {
+    const h = malla(new THREE.ConeGeometry(0.16, 0.5, 4), mat(mala ? '#4d5a2a' : '#2f8a2c'));
+    const a = k / 6 * Math.PI * 2; h.position.set(Math.cos(a) * 0.22, 0.02, Math.sin(a) * 0.22);
+    h.rotation.set(Math.sin(a) * 1.45, 0, -Math.cos(a) * 1.45); h.scale.z = 0.3; f.add(h);
+  }
+  const tallo = malla(new THREE.CylinderGeometry(0.03, 0.04, 0.25, 6), mat('#3f7a2c')); tallo.position.y = 0.12; f.add(tallo);
+  f.scale.setScalar(tam); f.userData.cuerpo = cuerpo;
+  return f;
+}
+const hieloMat = () => new THREE.MeshPhysicalMaterial({ color: 0xe6f6ff, transparent: true, opacity: 0.5, roughness: 0.05, metalness: 0, clearcoat: 1, flatShading: true });
+
 // ---------- paletas ----------
 const HORAS = {
   dia:       { cieloA: '#4f9be6', cieloB: '#cfe9fa', hemiA: '#d9efff', hemiB: '#8f8a5c', hemi: 1.35, sol: '#fff3dc', solI: 2.6, solPos: [-8, 14, 9], niebla: '#cfe2ee', exp: 1.05 },
@@ -106,9 +206,8 @@ function instancia(nombre, escala = 1) {
   g.add(o);
   if (m.anims.length) {
     const mixer = new THREE.AnimationMixer(o);
-    const clip = m.anims.find((a) => /idle|eat|graz/i.test(a.name)) || m.anims[0];
-    mixer.clipAction(clip).play();
-    animables.push((t) => mixer.setTime(t));
+    const clip = m.anims.find((a) => /idle|eat|graz/i.test(a.name));
+    if (clip) { mixer.clipAction(clip).play(); animables.push((t) => mixer.setTime(t)); }
   }
   g.userData.ancho = m.tam.x * k; g.userData.alto = m.tam.y * k;
   return g;
@@ -271,33 +370,54 @@ const PROPS = {
       }
     }
   },
-  // Surco de fresas: camellón de tierra, matas y fresas. hielo: cada fresa en su capa de hielo;
-  // goteo: postes con latas agujereadas que gotean; fruta: color (p. ej. '#6e2a35' = fresa quemada por helada).
+  // Surco de fresas: camellón de tierra pintada, matas que se mecen y fresas con piel de semillas.
+  // hielo: capa de hielo · hielo_crece: el hielo se forma durante el plano · derrite: se derrite durante el plano
+  // goteo: postes con latas que gotean · mala: fresas quemadas por la helada (oscuras y blandas)
   fresal(g, p, r) {
     const largo = (p.largo || 600) / 100;
-    const cama = malla(new THREE.BoxGeometry(largo, 0.32, 1.1), mat('#7a5236')); cama.position.y = 0.16; g.add(cama);
-    const fc = p.fruta || '#e3243b';
+    const cama = malla(new THREE.BoxGeometry(largo, 0.32, 1.1), new THREE.MeshStandardMaterial({ map: texTierra([largo / 1.5, 1]), roughness: 1 }));
+    cama.position.y = 0.16; g.add(cama);
     const n = Math.max(3, Math.round(largo / 0.55));
+    const matas = [], hielos = [], hojaM = new THREE.MeshStandardMaterial({ map: texHoja(), roughness: 0.8, side: THREE.DoubleSide });
     for (let i = 0; i < n; i++) {
       const x = -largo / 2 + 0.3 + i * (largo - 0.6) / Math.max(1, n - 1);
-      copa(g, 0.48, r, p.color || '#3f8f3a', 3, 0.26);
-      g.children.slice(-3).forEach((h) => { h.position.x += x; });
+      const mata = new THREE.Group(); mata.position.set(x, 0.32, 0.1); g.add(mata);
+      for (let k = 0; k < 7; k++) {   // hojas trifoliadas
+        const tallo = new THREE.Group(); const a = k / 7 * Math.PI * 2 + r();
+        tallo.rotation.set(0.5 + r() * 0.3, a, 0); mata.add(tallo);
+        for (let j = -1; j <= 1; j++) {
+          const h = malla(new THREE.CircleGeometry(0.09, 7), hojaM); h.scale.set(0.75, 1, 1);
+          h.position.set(j * 0.07, 0.24 + (j === 0 ? 0.05 : 0), 0); h.rotation.set(-1.2, 0, j * 0.6); tallo.add(h);
+        }
+      }
+      matas.push({ o: mata, fase: r() * 6 });
       for (let k = 0; k < 3; k++) {
-        const f = malla(new THREE.ConeGeometry(0.09, 0.17, 8), mat(fc, { emissive: C(fc), emissiveIntensity: 0.1 }));
-        f.rotation.x = Math.PI; f.position.set(x + (r() - 0.5) * 0.45, 0.42, 0.42 + (r() - 0.5) * 0.15); g.add(f);
-        const hoja = malla(new THREE.ConeGeometry(0.07, 0.05, 5), mat('#2f7a2c'), false); hoja.position.set(f.position.x, 0.52, f.position.z); g.add(hoja);
-        if (p.hielo) {
-          const h = new THREE.Mesh(new THREE.IcosahedronGeometry(0.15, 1), new THREE.MeshStandardMaterial({ color: 0xdff4ff, transparent: true, opacity: 0.55, roughness: 0.1, flatShading: true }));
-          h.position.set(f.position.x, 0.45, f.position.z); g.add(h);
+        const f = fresaMalla(0.13, !!p.mala);
+        f.position.set((r() - 0.5) * 0.45, p.mala ? 0.08 : 0.12, 0.3 + (r() - 0.5) * 0.15);
+        f.rotation.z = (r() - 0.5) * 0.5; if (p.mala) f.scale.y *= 0.8;
+        mata.add(f); matas.push({ o: f, fase: r() * 6, fruta: true });
+        if (p.hielo || p.hielo_crece || p.derrite) {
+          const h = new THREE.Mesh(new THREE.IcosahedronGeometry(0.12, 1), hieloMat());
+          h.position.copy(f.position); h.position.y -= 0.06; mata.add(h); hielos.push(h);
         }
       }
     }
+    animables.push((t, pr = 0) => {
+      const viento = p.hielo || p.hielo_crece ? 0.25 : 1;   // con hielo casi no se mueven
+      matas.forEach((m) => { m.o.rotation.x = (m.fruta ? 0.12 : 0.05) * viento * Math.sin(t * 1.7 + m.fase); m.o.rotation.z = (m.fruta ? 0.1 : 0.04) * viento * Math.sin(t * 1.3 + m.fase * 1.7); });
+      hielos.forEach((h, i) => {
+        let k = 1;
+        if (p.hielo_crece) k = Math.min(1, Math.max(0.05, pr * 1.3 - (i % 3) * 0.08));
+        if (p.derrite) k = Math.max(0.0, 1 - pr * 1.2);
+        h.scale.setScalar(k); h.material.opacity = 0.5 * Math.min(1, k * 1.5); h.visible = k > 0.02;
+      });
+    });
     if (p.goteo) {
       const gotas = [];
       for (let x = -largo / 2 + 0.6; x <= largo / 2 - 0.4; x += 1.6) {
-        const po = malla(new THREE.BoxGeometry(0.08, 1.6, 0.08), mat('#8a6a42')); po.position.set(x, 0.8, -0.2); g.add(po);
+        const po = malla(new THREE.BoxGeometry(0.08, 1.6, 0.08), new THREE.MeshStandardMaterial({ map: texMadera(30, 40, 3), roughness: 0.9 })); po.position.set(x, 0.8, -0.2); g.add(po);
         const tr = malla(new THREE.BoxGeometry(0.6, 0.06, 0.06), mat('#8a6a42')); tr.position.set(x + 0.25, 1.58, -0.2); g.add(tr);
-        const la = malla(new THREE.CylinderGeometry(0.12, 0.12, 0.24, 12), mat('#b9bec6')); la.position.set(x + 0.45, 1.38, -0.2); g.add(la);
+        const la = malla(new THREE.CylinderGeometry(0.12, 0.12, 0.24, 14), new THREE.MeshStandardMaterial({ color: 0xb9bec6, roughness: 0.35, metalness: 0.7 })); la.position.set(x + 0.45, 1.38, -0.2); g.add(la);
         for (let k = 0; k < 3; k++) {
           const d = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 5), new THREE.MeshBasicMaterial({ color: 0x8fd0ff }));
           d.userData = { x: x + 0.45 + (k - 1) * 0.06, fase: k / 3 + r() * 0.2 }; g.add(d); gotas.push(d);
@@ -308,6 +428,39 @@ const PROPS = {
         d.position.set(d.userData.x, 1.24 - k * 0.8, -0.2 + k * 0.5);
       }));
     }
+  },
+  // Fresa grande para primeros planos. estado: buena | mala | dana (se echa a perder durante el plano)
+  // hielo: dentro de un bloque de hielo · derrite: el hielo se derrite durante el plano
+  fresa_grande(g, p, r) {
+    const base = malla(new THREE.CylinderGeometry(0.7, 0.8, 0.12, 20), new THREE.MeshStandardMaterial({ map: texTierra([1.5, 1.5]), roughness: 1 })); base.position.y = 0.06; g.add(base);
+    const hojaM = new THREE.MeshStandardMaterial({ map: texHoja(), roughness: 0.8, side: THREE.DoubleSide });
+    for (let k = 0; k < 5; k++) { const h = malla(new THREE.CircleGeometry(0.28, 8), hojaM); const a = k / 5 * 6.28; h.position.set(Math.cos(a) * 0.38, 0.14, Math.sin(a) * 0.3); h.rotation.set(-Math.PI / 2 + 0.25, 0, a); h.scale.set(0.7, 1, 1); g.add(h); }
+    const est = p.estado || 'buena';
+    const buena = fresaMalla(0.42, false), mala = fresaMalla(0.42, true);
+    for (const f of [buena, mala]) { f.position.y = 0.66; f.rotation.set(0.15, 0.4, 0.2); g.add(f); }
+    mala.visible = est === 'mala'; buena.visible = est !== 'mala';
+    // jugo que escurre de la fresa mala
+    const charco = new THREE.Mesh(new THREE.CircleGeometry(0.3, 18), new THREE.MeshStandardMaterial({ color: 0x5a0f1c, roughness: 0.1, transparent: true, opacity: 0.85 }));
+    charco.rotation.x = -Math.PI / 2; charco.position.y = 0.125; g.add(charco);
+    const gotas = []; for (let k = 0; k < 4; k++) { const d = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6), new THREE.MeshStandardMaterial({ color: 0x7a1424, roughness: 0.1 })); d.userData.fase = k / 4; g.add(d); gotas.push(d); }
+    let hielo = null;
+    if (p.hielo || p.derrite) { hielo = new THREE.Mesh(new THREE.IcosahedronGeometry(0.45, 1), hieloMat()); hielo.position.y = 0.6; hielo.scale.set(1, 1.2, 1); g.add(hielo); }
+    animables.push((t, pr = 0) => {
+      let dano = est === 'mala' ? 1 : est === 'dana' ? Math.min(1, Math.max(0, (pr - 0.25) / 0.5)) : 0;
+      buena.visible = dano < 0.5; mala.visible = dano >= 0.5;
+      const sq = 1 - 0.22 * dano; mala.scale.set(0.42 * (1 + 0.1 * dano), 0.42 * sq, 0.42 * (1 + 0.1 * dano)); mala.position.y = 0.66 - 0.08 * dano;
+      buena.rotation.y = mala.rotation.y = 0.4 + 0.25 * Math.sin(t * 0.8);
+      charco.visible = dano > 0.5; charco.scale.setScalar(0.3 + 0.7 * Math.min(1, (dano - 0.5) * 2 + t * 0.05));
+      gotas.forEach((d) => { const k = (t * 0.9 + d.userData.fase) % 1; d.visible = dano > 0.5; d.position.set(0.12, 0.42 - k * 0.3, 0.12); });
+      if (hielo) { const k = p.derrite ? Math.max(0, 1 - pr * 1.25) : 1; hielo.scale.set(k, 1.2 * k, k); hielo.visible = k > 0.03; }
+    });
+  },
+  // Canasta de mimbre llena de fresas.
+  canasta(g, p, r) {
+    const c = malla(new THREE.CylinderGeometry(0.32, 0.24, 0.26, 16, 1, true), new THREE.MeshStandardMaterial({ map: texMimbre(), roughness: 0.9, side: THREE.DoubleSide })); c.position.y = 0.13; g.add(c);
+    const fondo = malla(new THREE.CircleGeometry(0.24, 16), mat('#8a5f2c')); fondo.rotation.x = -Math.PI / 2; fondo.position.y = 0.01; g.add(fondo);
+    const asa = malla(new THREE.TorusGeometry(0.3, 0.025, 6, 20, Math.PI), new THREE.MeshStandardMaterial({ map: texMimbre() })); asa.position.y = 0.26; g.add(asa);
+    for (let i = 0; i < 14; i++) { const f = fresaMalla(0.09, !!p.mala); const a = r() * 6.28, d = Math.sqrt(r()) * 0.22; f.position.set(Math.cos(a) * d, 0.28 + r() * 0.05, Math.sin(a) * d); f.rotation.set(Math.PI + (r() - 0.5), r() * 6, (r() - 0.5)); g.add(f); }
   },
   pino(g, p, r) {
     const tr = malla(new THREE.CylinderGeometry(0.12, 0.16, 1, 6), mat('#6b4a30')); tr.position.y = 0.5; g.add(tr);
@@ -420,9 +573,15 @@ const PROPS = {
     if (!p.sin_manija) { const m = malla(new THREE.BoxGeometry(0.8, 0.06, 0.06), mat('#222')); m.position.set(0.35, 1.25, 0); m.rotation.z = 0.35; g.add(m); }
   },
   puesto(g, p, r) {
-    const m = malla(new THREE.BoxGeometry(2.4, 0.9, 1), mat('#b98a5a')); m.position.y = 0.45; g.add(m);
-    for (const x of [-1.15, 1.15]) { const po = malla(new THREE.BoxGeometry(0.08, 2.2, 0.08), mat('#6b4a30')); po.position.set(x, 1.1, 0.45); g.add(po); }
-    const tol = malla(new THREE.BoxGeometry(2.6, 0.08, 1.4), mat('#ffffff', { map: rayas('#e74c3c', '#ffffff', 8, true) })); tol.position.set(0, 2.2, 0.3); tol.rotation.x = 0.25; g.add(tol);
+    const madera = new THREE.MeshStandardMaterial({ map: texMadera(28, 46, 4), roughness: 0.85 });
+    const m = malla(new THREE.BoxGeometry(2.4, 0.9, 1), madera); m.position.y = 0.45; g.add(m);
+    const tabla = malla(new THREE.BoxGeometry(2.6, 0.08, 1.15), new THREE.MeshStandardMaterial({ map: texMadera(30, 52, 6), roughness: 0.8 })); tabla.position.y = 0.94; g.add(tabla);
+    for (const x of [-1.15, 1.15]) { const po = malla(new THREE.BoxGeometry(0.1, 2.3, 0.1), madera); po.position.set(x, 1.15, 0.45); g.add(po); }
+    const tol = malla(new THREE.BoxGeometry(2.7, 0.08, 1.4), mat('#ffffff', { map: rayas('#e74c3c', '#ffffff', 8, true) })); tol.position.set(0, 2.25, 0.3); tol.rotation.x = 0.25; g.add(tol);
+    if (p.fresas) {
+      const le = malla(new THREE.BoxGeometry(1.4, 0.44, 0.04), new THREE.MeshStandardMaterial({ map: texLetrero(p.letrero || 'FRESAS'), roughness: 0.8 })); le.position.set(0, 1.85, 0.52); g.add(le);
+      for (let i = 0; i < 4; i++) { const c = new THREE.Group(); PROPS.canasta(c, {}, r); c.position.set(-0.9 + i * 0.6, 0.98, 0.15 + (i % 2) * 0.12); c.scale.setScalar(0.9); g.add(c); }
+    }
   },
   pasto_alto(g, p, r) {
     for (let i = 0; i < 120; i++) { const b = malla(new THREE.ConeGeometry(0.04, 1.2 + r(), 3), flat(p.color || '#c8a24a'), false); b.position.set((r() - 0.5) * 4, 0.6, (r() - 0.5) * 1.5); b.rotation.z = (r() - 0.5) * 0.4; g.add(b); }
@@ -542,7 +701,7 @@ window.cuadro = function (cam, t, p) {
   camera.up.set(Math.sin(cam.roll || 0), Math.cos(cam.roll || 0), 0);
   camera.lookAt(...cam.target);
   camera.fov = cam.fov; camera.updateProjectionMatrix();
-  for (const a of animables) a(t);
+  for (const a of animables) a(t, p);
   if (window.__mar && window.__marSube) window.__mar.position.z = -209 + window.__marSube * 6 * p;
   renderer.render(scene, camera);
   return renderer.domElement.toDataURL('image/jpeg', 0.93);

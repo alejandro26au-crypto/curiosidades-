@@ -151,7 +151,7 @@
   },
   "ambiente": {
     "campo":   {"arboles": ["tree_oak", "tree_fat", "kk_tree_A", "kk_trees_A", "kk_trees_B"], "lejos": ["kk_hills_A", "kk_hills_B", "kk_mountain_A"], "detalle": ["bush", "rock_small", "flower_red", "kk_rock_E"]},
-    "huerto":  {"arboles": ["tree_fat", "kk_tree_B", "tree_oak"], "lejos": ["kk_hills_A", "kk_hills_C"], "detalle": ["bush", "rock_small"]},
+    "huerto":  {"arboles": ["tree_fat", "tree_oak"], "lejos": ["kk_hills_A", "kk_hills_C"], "detalle": ["bush", "rock_small"]},
     "pueblo":  {"arboles": ["tree_oak", "kk_tree_A"], "lejos": ["kk_hills_B", "kk_mountain_B"], "detalle": ["kk_barrel", "kk_crate", "rock_small"], "casas": ["kk_home_A", "kk_home_B", "kk_home_A_blue", "kk_home_B_yellow", "kk_tavern", "kk_market"]},
     "sabana":  {"arboles": [], "lejos": ["kk_hills_C"], "detalle": ["rock_small", "bush"]},
     "playa":   {"arboles": ["tree_palm"], "lejos": ["kk_hills_C"], "detalle": ["rock_small", "crab"]},
