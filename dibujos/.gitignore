@@ -14,3 +14,4 @@
 plantilla/sheet.py
 videos/*/sheet.py
 # main.js lo junta rebuild.sh
+videos/_*/

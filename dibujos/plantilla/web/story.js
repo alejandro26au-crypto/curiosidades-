@@ -26,11 +26,15 @@ export const en = (w, n = 1) => { let k = 0; for (const [p, f0] of PAL) if (norm
 
 // ---------- planos ----------
 // id, a-b (fotogramas), light (preset de LIGHTS), barrido (false = corte seco)
-export const SHOTS = [
-  { id: 'plaza', a: 0, b: 84, light: 'dia' },        // plano general: el pueblo entero y los tres pequeños junto al pozo
-  { id: 'apuesta', a: 85, b: 159, light: 'dia' },    // plano medio-general: la apuesta
-  { id: 'tarde', a: 160, b: TOTAL - 1, light: 'tarde' }, // luz de atardecer
+// Cada plano EMPIEZA en una palabra (en('…') - 2: el corte llega justo antes de oírla) y acaba donde empieza el siguiente.
+// Así, si cambia la voz, los cortes se mueven solos. id, a (inicio), light (preset de LIGHTS), barrido (false = corte seco)
+const PLANOS = [
+  { id: 'plaza', a: 0, light: 'dia' },                    // plano general: el pueblo entero y los tres pequeños junto al pozo
+  { id: 'apuesta', a: en('el') - 2, light: 'dia' },       // plano medio-general: la apuesta
+  { id: 'tarde', a: en('y') - 2, light: 'tarde' },        // luz de atardecer
 ];
+export const SHOTS = PLANOS.map((s, i) => ({ ...s, b: i < PLANOS.length - 1 ? PLANOS[i + 1].a - 1 : TOTAL - 1 }));
+const SH = Object.fromEntries(SHOTS.map((s) => [s.id, s])); // SH.apuesta.a, SH.apuesta.b…
 export const shotAt = (f) => SHOTS.find((s) => f >= s.a && f <= s.b) || SHOTS[SHOTS.length - 1];
 
 // ---------- luces (una por plano; lightFor puede cambiarlas a mitad) ----------
@@ -64,9 +68,9 @@ const S_ = 0.85; // escala de los personajes (≈ 1,7 m)
 // ---------- cámaras ----------
 // { f, pos, look, fov, roll?, ease? ('smooth' | 'easeOut' | 'easeIn' | 'back'), path? } — entre claves desliza; parada = se acerca despacio
 const CAMS = {
-  plaza: [{ f: 0, pos: [-1.2, 1.75, 6.6], look: [0.5, 1.45, -3.0], fov: 46 }, { f: 84, pos: [-0.8, 1.7, 5.9], look: [0.5, 1.4, -3.0], fov: 45 }],
-  apuesta: [{ f: 85, pos: [2.2, 1.35, 4.4], look: [0.0, 1.2, -1.7], fov: 44 }, { f: 159, pos: [1.9, 1.33, 3.9], look: [0.0, 1.2, -1.7], fov: 42 }],
-  tarde: [{ f: 160, pos: [-1.8, 1.4, 4.4], look: [0.2, 1.3, -2.0], fov: 44 }, { f: TOTAL - 1, pos: [-1.5, 1.38, 3.9], look: [0.2, 1.3, -2.0], fov: 42 }],
+  plaza: [{ f: SH.plaza.a, pos: [-1.2, 1.75, 6.6], look: [0.5, 1.45, -3.0], fov: 46 }, { f: SH.plaza.b, pos: [-0.8, 1.7, 5.9], look: [0.5, 1.4, -3.0], fov: 45 }],
+  apuesta: [{ f: SH.apuesta.a, pos: [2.2, 1.35, 4.4], look: [0.0, 1.2, -1.7], fov: 44 }, { f: SH.apuesta.b, pos: [1.9, 1.33, 3.9], look: [0.0, 1.2, -1.7], fov: 42 }],
+  tarde: [{ f: SH.tarde.a, pos: [-1.8, 1.4, 4.4], look: [0.2, 1.3, -2.0], fov: 44 }, { f: SH.tarde.b, pos: [-1.5, 1.38, 3.9], look: [0.2, 1.3, -2.0], fov: 42 }],
 };
 const KICKS = [{ f: en('diez'), a: 0.03 }, { f: en('cien'), a: 0.05 }, { f: en('rio'), a: 0.02 }];          // golpes de cámara
 const ZOOMS = [[en('diez'), 0.14], [en('cien'), 0.18]];                                                       // zoom de golpe [fotograma, fuerza]
@@ -188,7 +192,7 @@ export const fxAt = (f, T) => {
     for (let i = 0; i < 5; i++) { const k = clamp((f - en('cien') - i * 3) / 20); if (k > 0) out.push(FX('coin', coin, [-1.3 + i * 0.35, Math.max(0.08, 2.2 - 4 * k * k + 1.2 * k), -1.3 + (i % 2) * 0.3], 0.16, { roll: q(k * 9 + i, 1) })); }
   }
   if (S.id === 'tarde') { // hojas que cruzan con la brisa de la tarde
-    for (let i = 0; i < 7; i++) { const t = ((f - 160) * 0.012 + i / 7) % 1, cols = ['#d9822b', '#c4452c', '#e6b13a'];
+    for (let i = 0; i < 7; i++) { const t = ((f - SH.tarde.a) * 0.012 + i / 7) % 1, cols = ['#d9822b', '#c4452c', '#e6b13a'];
       out.push(FX('leaf' + i % 3, (p) => T.fxLeaf(p, cols[i % 3]), [-2.6 + t * 5 + Math.sin(i * 3.1) * 0.4, 2.6 - t * 2.4 + Math.sin(t * 9 + i) * 0.2, -1.0 + i * 0.25], 0.12, { roll: q(t * 8 + i, 1) })); }
   }
   // ejemplos listos para copiar:
@@ -199,4 +203,4 @@ export const fxAt = (f, T) => {
   //   gas/polvo: FX('gas' + k, (p) => T.fxDust(p, k, '#9ee06a'), c, 1.4, { alpha: 0.8, tint: '#c8ff9a' })
   return out;
 };
-export { steam, bubbles, spray, ping, blast, word, coin, POZO, FRASES };
+export { steam, bubbles, spray, ping, blast, word, coin, POZO, FRASES, SH };

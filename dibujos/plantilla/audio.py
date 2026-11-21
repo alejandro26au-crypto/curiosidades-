@@ -219,9 +219,9 @@ def flush(d=1.8):
     n = int(d * SR); t = np.arange(n) / SR
     return (lp_fast(noise(d), 1800) * np.sin(np.pi * t / d) * 1.2 + thunk(140, 0.3).tolist().__len__() * 0).astype(np.float32)
 
-# un «whoosh» en cada corte de plano (los barridos de cámara): pon aquí los fotogramas de SHOTS de story.js
-CUTS = [85, 160]
-for c in CUTS: place(sfx, whoosh(0.3), F(c) - 0.18, 0.45)
+# un «whoosh» en cada corte de plano (los barridos de cámara): las mismas palabras que PLANOS en story.js
+CUTS = [en("el"), en("y")]
+for c in CUTS: place(sfx, whoosh(0.3), c - 0.07 - 0.18, 0.45)
 place(sfx, splash(0.8), en("metros") + 0.3, 0.5)                # el cubo cae al pozo
 place(sfx, thunk(110, 0.3), en("diez"), 0.6)                     # golpe en la cifra
 place(sfx, ting(), en("cien"), 0.35); place(sfx, strike(), en("cien"), 0.4)  # «¡cien!»: brillo + golpe

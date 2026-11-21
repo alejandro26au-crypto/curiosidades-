@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# ORDEN ÚNICA DE CITRINO (idea copiada de «./inercia» del canal Inercia del Consumo). Desde la raíz del repo:
+#   ./citrino comprobar                      deja el entorno listo y dice qué falta (instalar.sh)
+#   ./citrino temas                          banco de ideas (guiones/IDEAS.md)
+#   ./citrino guion nuevo "Título"           ficha nueva con las 8 etapas (guiones/<titulo>.json)
+#   ./citrino guion <ficha.json>             auditoría sobre 100 + duración estimada
+#   ./citrino video <nombre> <ficha.json>    carpeta del vídeo desde la plantilla + script.txt del guion + tiempos estimados
+#   ./citrino voz <nombre>                   tiempos de la voz (voice.mp3) y avisos si no coincide con el guion
+#   ./citrino fotos <nombre> "30,140,…"      hoja de fotos al lado de los romanos (stills/hoja.jpg) para REVISAR
+#   ./citrino montar <nombre> [trabajadores] todos los fotogramas, en paralelo y reanudable
+#   ./citrino terminar <nombre> "Título" [subs]   música y efectos, mezcla con y sin música, subtítulos y los dos MP4
+#   ./citrino publicar <nombre>              la ficha para publicar del vídeo
+#   ./citrino medir                          tabla de resultados (docs/RESULTADOS.md)
+set -e
+R="$(cd "$(dirname "$0")" && pwd)"; H="$R/dibujos/herramientas"; cmd="${1:-ayuda}"; shift || true
+V() { D="$R/dibujos/videos/${1:?falta el nombre del vídeo}"; [ -d "$D" ] || { echo "no existe $D (./citrino video $1 …)"; exit 1; }; cd "$D"; }
+dur() { grep -o "DURACION = [0-9]*" web/tiempos.js | grep -o "[0-9]*"; }
+case "$cmd" in
+  comprobar) bash "$H/instalar.sh" ;;
+  temas) grep -E "^[0-9]+\. \*\*" "$R/guiones/IDEAS.md" | sed 's/\*\*//g' ;;
+  guion) cd "$R"; if [ "${1:-}" = nuevo ]; then python3 guiones/citrino.py nuevo "${2:?título}"; else python3 guiones/citrino.py auditar "${1:?ficha.json}"; fi ;;
+  video)
+    N="${1:?nombre}"; FI="${2:?ficha.json}"; D="$R/dibujos/videos/$N"
+    [ -e "$D" ] && { echo "ya existe $D"; exit 1; }
+    cp -r "$R/dibujos/plantilla" "$D"; rm -rf "$D/stills" "$D/out" "$D/frames" "$D/prueba_vs_romanos.jpg"
+    bash "$H/preparar.sh" "$D" >/dev/null 2>&1
+    (cd "$R" && python3 guiones/citrino.py auditar "$FI" | tail -3)
+    (cd "$R" && python3 guiones/citrino.py texto "$FI" "$D/script.txt")
+    cd "$D" && python3 "$H/tiempos_estimados.py" script.txt
+    echo "→ siguiente: decorado (web/_world.js), ropa (web/roman.js), planos (web/story.js), y la voz en $D/voice.mp3" ;;
+  voz)
+    V "$1"; [ -f voice.mp3 ] || { echo "falta voice.mp3 en $(pwd)"; exit 1; }
+    python3 "$H/tiempos_es.py" voice.mp3 script.txt es 2>&1 | grep -v -i warning
+    echo "→ duración del vídeo: $(dur) fotogramas ($(( $(dur) / 30 )) s). Recuerda: bash rebuild.sh" ;;
+  fotos)
+    V "$1"; F="${2:?fotogramas, p. ej. \"30,140,260\"}"; bash rebuild.sh; rm -rf stills/a
+    node render.mjs stills/a "$F" 2>&1 | grep -E "ERR|done"
+    python3 "$H/comparar.py" stills/hoja.jpg stills/a/f*.jpg; echo "→ REVISAR cada imagen de $(pwd)/stills/hoja.jpg antes de enseñarla" ;;
+  montar) V "$1"; bash rebuild.sh; bash "$H/montar.sh" "0-$(( $(dur) - 1 ))" "${2:-$(nproc)}" ;;
+  terminar)
+    V "$1"; T="${2:?título}"; S="${3:-}"
+    python3 audio.py
+    python3 "$H/mix.py" voice.mp3 music.wav sfx.wav | tail -1
+    python3 "$H/mix.py" voice.mp3 - sfx.wav out/mix_sin_musica.wav | tail -1
+    python3 "$H/subtitulos.py"
+    SUBS=$([ "$S" = subs ] && echo 1 || echo 0) bash "$H/terminar.sh" "$T"
+    SUBS=$([ "$S" = subs ] && echo 1 || echo 0) bash "$H/terminar.sh" "$T" out/mix_sin_musica.wav
+    a=$(ffprobe -v error -show_entries format=duration -of csv=p=0 voice.mp3); v=$(echo "scale=1; $(dur) / 30" | bc)
+    echo "voz ${a%.*} s · vídeo $v s"; ls -1 out/*.mp4 out/subtitulos.srt; echo "→ revisar out/hoja_final.jpg y enviar los dos MP4 + ./citrino publicar $1" ;;
+  publicar) V "$1"; cat publicar.md ;;
+  medir) cat "$R/docs/RESULTADOS.md" ;;
+  *) sed -n '2,13p' "$0" ;;
+esac

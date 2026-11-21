@@ -15,7 +15,11 @@ txt = open(guion, encoding="utf-8").read().strip()
 frases = re.split(r"(?<=[.!?])\s+", txt)
 norm = lambda w: re.sub(r"[^a-z0-9ñ]", "", "".join(c for c in unicodedata.normalize("NFD", w.lower()) if unicodedata.category(c) != "Mn"))
 m = WhisperModel("small", device="cpu", compute_type="int8")
-segs, _ = m.transcribe(voz, language=idioma, word_timestamps=True, initial_prompt=txt)
+# el audio se lee con ffmpeg (16 kHz mono): evita el fallo de versiones de PyAV («metadata_errors»)
+import subprocess
+import numpy as np
+pcm = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", voz, "-ac", "1", "-ar", "16000", "-f", "f32le", "-"], capture_output=True, check=True).stdout, np.float32)
+segs, _ = m.transcribe(pcm, language=idioma, word_timestamps=True, initial_prompt=txt)
 oidas = [(w.word.strip(), w.start, w.end) for s in segs for w in s.words if w.word.strip()]
 a, de = [], []
 for i, f in enumerate(frases):
@@ -36,6 +40,12 @@ for i, f in enumerate(frases):
     res.append([round(ts[0][0] * 30), round(ts[-1][1] * 30), f])
     print(f"{ts[0][0]:6.2f}-{ts[-1][1]:6.2f}  f{round(ts[0][0] * 30)}-{round(ts[-1][1] * 30)}  {f}  ({len(ts)}/{len(f.split())})")
 pal = [{"p": w, "f0": round((t[j] or (0, 0))[0] * 30), "f1": round((t[j] or (0, 0))[1] * 30)} for j, w in enumerate(txt.split())]
+ok_ = sum(1 for x in t if x); pct = ok_ / max(1, len(t))
+print(f"palabras del guion reconocidas en la voz: {ok_}/{len(t)} ({pct:.0%})")
+if pct < 0.9:
+    print("⚠ LA VOZ NO COINCIDE CON EL GUION (menos del 90 % de palabras): ¿se grabó el texto exacto de script.txt?")
+dur = len(pcm) / 16000
+print(f"duración de la voz: {dur:.1f} s")
 json.dump({"frases": res, "palabras": pal}, open("tiempos.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print("✓ tiempos.json (usa 'frases' para FRASES de story.js y 'palabras' para los momentos clave)")
 # web/tiempos.js para story.js y audio.py de la plantilla (FRASES, PAL = [palabra, f0, f1], DURACION = fin de la voz + 0,5 s)

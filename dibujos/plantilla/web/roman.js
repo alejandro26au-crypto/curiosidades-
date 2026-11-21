@@ -26,15 +26,16 @@ export const OUTFITS = {
   workB: { tunic: "#3f6a6f", skin: "#ecd0b6", cap: "#5b4a8a", moustache: "#4a3020" },
   // TRAJE (ensayo del profesor): mismo cuerpo y cara; traje, camisa, corbata y gafas
   profesor: { tunic: "#2e3444", skin: SKIN, hair: "#3b2a20", suit: true, pants: "#1f2330", shoes: "#151217", shirt: "#ffffff", tie: "#e0a92e", glasses: "#e0a92e", moustache: "#3b2a20", rico: true },
-  // ROPA DE EJEMPLO con las piezas nuevas (vienen del submarino). Cada vídeo hace SU reparto: mismo cuerpo y cara, solo cambia la ropa.
-  //   sleeve: color de manga propio · pants/shoes: pantalón y zapatos · chambray: camisa con bolsillos y botones ·
-  //   tshirt: camiseta de cuello redondo · leather: chaquetón · officer: gorra de plato · dixie: gorro blanco · sidecap: gorro de barco (color) ·
-  //   freckles: pecas · moustache/beard: bigote/barba · stout: más ancho
-  vecino: { tunic: "#c9693c", sleeve: "#b85e34", skin: SKIN, hair: "#5a3b2a", pants: "#3c4a6e", shoes: "#2a2224", chambray: true },
+  // REPARTO DE EJEMPLO (solo para la plaza de ejemplo). Cada vídeo hace SU reparto a medida: mismo cuerpo y cara,
+  // solo cambia la ropa. Opciones de ropa disponibles (técnica, no reparto):
+  //   sleeve: manga de color propio · pants/shoes: pantalón y zapatos · tshirt: camiseta · chambray: camisa con bolsillos ·
+  //   leather: chaquetón · cap: gorra (color) · officer / dixie / sidecap: gorros de uniforme · dress: vestido ·
+  //   suit + shirt + tie (+ glasses, rico): traje · freckles, moustache, beard, stout.
+  // Los uniformes del submarino (marineros, oficial, alemán) están SOLO como consulta en dibujos/ejemplos/submarino/web/roman.js.
+  vecino: { tunic: "#c9693c", sleeve: "#b85e34", skin: SKIN, hair: "#5a3b2a", pants: "#3c4a6e", shoes: "#2a2224" },
   chico: { tunic: "#f1f1ec", sleeve: "#e2e2dc", skin: "#f5c9a0", hair: "#c4562c", pants: "#4a6a8a", shoes: "#2a2224", tshirt: true, freckles: true },
-  jefe: { tunic: "#cdb682", sleeve: "#bfa772", skin: "#f5c9a0", hair: "#6a6a6a", pants: "#b59f6c", shoes: "#3a2a1e", officer: true, chambray: true, moustache: "#8a8a8a", stout: true },
+  jefe: { tunic: "#3f6a6f", sleeve: "#36605f", skin: "#ecd0b6", hair: "#6a6a6a", pants: "#2f3440", shoes: "#2a2224", cap: "#5b4a8a", moustache: "#8a8a8a", stout: true },
   abuela: { tunic: "#6f5a8a", sleeve: "#5f4c78", skin: "#f3d6bb", hair: "#e8e4dc", dress: "#8a6aa0", shoes: "#3a2a24" },
-  mecanico: { tunic: "#5f6a58", sleeve: "#55604f", skin: "#c99067", hair: "#1e1714", pants: "#3a3f4a", shoes: "#1e1a1a", sidecap: "#c4302b", beard: "#1e1714", leather: true },
 };
 
 /** galea: iron bowl, brass brow band, cheek guards, transverse red crest */
