@@ -41,14 +41,15 @@ Háblale al usuario en español sencillo y corto.
 - **Entregar dos versiones: con música y sin música, + la ficha para publicar.**
 
 ## Proceso de un vídeo
-1. Guion con la fórmula de Citrino, auditado y aprobado → `script.txt`. Voz del usuario → `voice.mp3`.
+1. Guion con la fórmula de Citrino: `python3 guiones/citrino.py nuevo "Título"` → rellenar → `auditar` (≥ 90 y
+   leído en voz alta) → aprobado → `python3 guiones/citrino.py texto guiones/<x>.json dibujos/videos/<nombre>/script.txt`. Voz del usuario → `voice.mp3`.
 2. `cp -r dibujos/plantilla dibujos/videos/<nombre>` + `bash dibujos/herramientas/preparar.sh dibujos/videos/<nombre>`.
 3. `python3 ../../herramientas/tiempos_es.py voice.mp3 script.txt es` (escribe `web/tiempos.js`).
    (sin voz todavía: `tiempos_estimados.py script.txt` para ir planificando).
 4. Decorado (`web/_world.js`), ropa (`web/roman.js`), planos (`web/story.js`: un plano cada 2-3 s, zoom de golpe en
    cifras y revelaciones, insertos de datos cuando la voz dice una cifra) → `bash rebuild.sh` → `carta.mjs`.
 5. Hoja de fotos + `comparar.py`, REVISARLA, corregir, enseñarla.
-6. Montaje en segundo plano (`node render.mjs frames "0-N"`) → `python3 audio.py` → `mix.py` con y sin música →
+6. Montaje en segundo plano (`bash ../../herramientas/montar.sh 0-N`, en paralelo y reanudable) → `python3 audio.py` → `mix.py` con y sin música →
    `subtitulos.py` (siempre el `.srt` para subirlo) → `terminar.sh` dos veces (`SUBS=1` si se quieren quemados).
 7. Revisar la hoja final, enviar los dos MP4.
 8. **Siempre después de los MP4:** la ficha para publicar en bloques para copiar (título de 4-7 palabras, descripción
@@ -60,7 +61,8 @@ Háblale al usuario en español sencillo y corto.
 - No veo el contador del límite, así que **guardo y subo (commit + push) después de cada paso terminado**: guion,
   decorado, hoja de fotos aprobada, montaje, sonido, MP4. Así, si se corta, no se pierde nada.
 - En renders largos, subir los avances (código y notas; los fotogramas no se suben, se rehacen con
-  `RESUME=1 node render.mjs frames "0-N"`, que salta los ya hechos).
+  `montar.sh`, que salta los ya hechos).
+- Tras un reinicio del entorno: `bash dibujos/herramientas/instalar.sh` (deja todo listo en ~1 minuto).
 - Mantener al día la sección «Estado» de abajo: qué está hecho y cuál es el siguiente paso, para continuar en otro chat.
 
 ## Estado (actualizar en cada paso)

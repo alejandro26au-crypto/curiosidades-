@@ -11,6 +11,9 @@ el 20 nov 2026 con todas las mejoras del vídeo del submarino.
 - `kit/`: el kit original tal cual (engine, tools, ejemplo de los romanos, SKILL.md) + `vendor/` con three.js y
   toon.ts guardados (licencia MIT). Es la REFERENCIA; no se toca.
 - `herramientas/`:
+  - `instalar.sh`: deja todo listo tras un reinicio (Python, modelo de voz, Chromium, fuentes) y dice qué falta.
+  - `montar.sh`: montaje en paralelo y con reanudación (`bash ../../herramientas/montar.sh 0-1799`): ~1,9 s/fotograma
+    con 3-4 trabajadores en vez de ~2,4 s (el render por software ya usa varios núcleos; más no se gana sin bajar calidad).
   - `preparar.sh`: deja listo un vídeo (copia librerías, junta el reparto, enlaza Playwright).
   - `tiempos_es.py`: tiempos de la voz en español → `tiempos.json` y `web/tiempos.js` (cada frase y cada palabra con su fotograma).
   - `comparar.py`: hoja de fotos al lado de los romanos (para revisar la calidad).
@@ -67,7 +70,7 @@ el 20 nov 2026 con todas las mejoras del vídeo del submarino.
 5. `node carta.mjs carta.png '[["vecino",{"R":"hold"}]]'` para probar personajes.
 6. Hoja: `node render.mjs stills/a "30,140,…"` + `python3 ../../herramientas/comparar.py hoja.jpg stills/a/f*.jpg` →
    REVISAR → corregir → enseñar.
-7. Montaje en segundo plano: `node render.mjs frames "0-<DURACION-1>"`.
+7. Montaje en segundo plano: `bash ../../herramientas/montar.sh 0-<DURACION-1>` (si se corta, se relanza igual).
 8. `python3 audio.py` → `python3 ../../herramientas/mix.py voice.mp3 music.wav sfx.wav` y
    `python3 ../../herramientas/mix.py voice.mp3 - sfx.wav out/mix_sin_musica.wav`.
 9. `python3 ../../herramientas/subtitulos.py` → `bash ../../herramientas/terminar.sh "Titulo"` y `bash ../../herramientas/terminar.sh "Titulo" out/mix_sin_musica.wav`
