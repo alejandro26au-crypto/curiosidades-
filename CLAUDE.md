@@ -56,7 +56,7 @@ terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
    cifras y revelaciones, insertos de datos cuando la voz dice una cifra) → `bash rebuild.sh` → `carta.mjs`.
 5. Hoja de fotos + `comparar.py`, REVISARLA, corregir, enseñarla.
 6. Montaje en segundo plano (`bash ../../herramientas/montar.sh 0-N`, en paralelo y reanudable) → `python3 audio.py` → `mix.py` con y sin música →
-   `subtitulos.py` (siempre el `.srt` para subirlo) → `terminar.sh` dos veces (`SUBS=1` si se quieren quemados).
+   `subtitulos.py` (siempre el `.srt` para subirlo) → `terminar.sh` dos veces (`SUBS=1` si se quieren quemados; estilo del usuario por defecto: una palabra, minúsculas, sin puntuación, tamaño medio, sin amarillo).
 7. Revisar la hoja final, enviar los dos MP4.
 8. **Siempre después de los MP4:** la ficha para publicar en bloques para copiar (título de 4-7 palabras, descripción
    con datos reales y hashtags, etiquetas, comentario fijado, ajustes de YouTube, hora recomendada, fuentes), en
