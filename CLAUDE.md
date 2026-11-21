@@ -43,6 +43,8 @@ Háblale al usuario en español sencillo y corto.
 - **Entregar dos versiones: con música y sin música, + la ficha para publicar.**
 
 ## Proceso de un vídeo
+**NUNCA montar ni hacer un MP4 sin la autorización del usuario** (21 nov 2026), ni siquiera de prueba. Antes hace
+falta su guion aprobado y su voz. Las pruebas del motor se hacen con fotos sueltas, no con vídeos.
 **Orden única:** `./citrino` (sin nada, enseña la ayuda): `comprobar · temas · guion · video · voz · fotos · montar ·
 terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
 1. Guion con la fórmula de Citrino: `python3 guiones/citrino.py nuevo "Título"` → rellenar → `auditar` (≥ 90 y
