@@ -43,6 +43,8 @@ Háblale al usuario en español sencillo y corto.
 - **Entregar dos versiones: con música y sin música, + la ficha para publicar.**
 
 ## Proceso de un vídeo
+**Orden única:** `./citrino` (sin nada, enseña la ayuda): `comprobar · temas · guion · video · voz · fotos · montar ·
+terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
 1. Guion con la fórmula de Citrino: `python3 guiones/citrino.py nuevo "Título"` → rellenar → `auditar` (≥ 90 y
    leído en voz alta) → aprobado → `python3 guiones/citrino.py texto guiones/<x>.json dibujos/videos/<nombre>/script.txt`. Voz del usuario → `voice.mp3`.
 2. `cp -r dibujos/plantilla dibujos/videos/<nombre>` + `bash dibujos/herramientas/preparar.sh dibujos/videos/<nombre>`.
