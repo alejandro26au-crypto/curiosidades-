@@ -32,3 +32,8 @@ Datos reales:
 ## Fuentes
 - <fuente 1>
 - <fuente 2>
+
+## Resultados a los 2 días (pedir la captura de YouTube Studio → Participación; copiar también a docs/RESULTADOS.md)
+- Vistas: · % que siguió viendo: · Duración media vista: · Retención al segundo 3: ·
+  Momento de abandono (segundo → etapa del guion): · Me gusta / comentarios / compartidos / suscriptores:
+- Lección:

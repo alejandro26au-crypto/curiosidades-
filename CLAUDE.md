@@ -55,7 +55,9 @@ Háblale al usuario en español sencillo y corto.
 8. **Siempre después de los MP4:** la ficha para publicar en bloques para copiar (título de 4-7 palabras, descripción
    con datos reales y hashtags, etiquetas, comentario fijado, ajustes de YouTube, hora recomendada, fuentes), en
    español, guardada en `dibujos/videos/<nombre>/publicar.md` (modelo: `dibujos/plantilla/publicar.md`).
-9. Guardar y subir a la rama de trabajo según se avanza (sin esperar al final).
+9. **A los 2 días de publicar:** pedir la captura de YouTube Studio (Participación) y apuntarla en
+   `docs/RESULTADOS.md` con el momento de abandono y su etapa del guion (para medir la fórmula).
+10. Guardar y subir a la rama de trabajo según se avanza (sin esperar al final).
 
 ## Guardar siempre (límite de uso de 5 horas)
 - No veo el contador del límite, así que **guardo y subo (commit + push) después de cada paso terminado**: guion,
