@@ -5,6 +5,8 @@ Háblale al usuario en español sencillo y corto.
 - `dibujos/`: **motor de dibujos** (el de los romanos + mejoras del submarino). Es el motor para los vídeos de Citrino.
   Reglas y pasos: `dibujos/LEEME.md`. Punto de partida de cada vídeo: `dibujos/plantilla/`.
 - `docs/FORMULA-GUIONES-CITRINO.md`: **la fórmula de guiones de Citrino** (la que manda).
+- `guiones/`: fichas de guion, auditor (`citrino.py`) y banco de ideas (`IDEAS.md`).
+- `docs/RESULTADOS.md`: lo que da cada vídeo a los 2 días.
 - `docs/LO-QUE-SIRVE-DE-ZINGO.md`: lo aprovechado del canal Zingo (lecciones de retención y producción).
 - `motor/`, `ejemplos/`, `ANALISIS.md`: el motor anterior (Zingo, 3D low-poly). Ya NO se usa; lo útil está en `dibujos/`.
 - `openmontage/`: plan e instalador de OpenMontage para Windows (aparte).
@@ -69,7 +71,12 @@ Háblale al usuario en español sencillo y corto.
 
 ## Estado (actualizar en cada paso)
 - 20 nov 2026: motor de dibujos portado y probado (calidad = romanos). Fórmula de Citrino guardada. Lo útil de Zingo
-  pasado al motor. Siguiente: el primer vídeo de Citrino (tema y guion con la fórmula).
+  pasado al motor.
+- 21 nov 2026: auditor de guiones (`guiones/citrino.py`), instalador, montaje en paralelo, medición de resultados
+  (`docs/RESULTADOS.md`) y banco de 15 ideas (`guiones/IDEAS.md`).
+  Pendiente del usuario: cómo es Citrino (temas, público, español de México o España, tono, voz de ElevenLabs),
+  subtítulos quemados o solo .srt, personaje fijo, pasar la rama a la principal, borrar el motor viejo de Zingo,
+  análisis con vidIQ (cuesta créditos). Siguiente: el primer vídeo (tema del banco de ideas o del usuario).
 
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
