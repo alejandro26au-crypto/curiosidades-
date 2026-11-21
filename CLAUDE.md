@@ -81,6 +81,9 @@ terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
   Pendiente del usuario: cómo es Citrino (temas, público, español de México o España, tono, voz de ElevenLabs),
   subtítulos quemados o solo .srt, personaje fijo, pasar la rama a la principal, borrar el motor viejo de Zingo,
   análisis con vidIQ (cuesta créditos). Siguiente: el primer vídeo (tema del banco de ideas o del usuario).
+- 21 nov 2026 (cierre del día): orden única `./citrino`, cortes atados a palabras, arreglo de `tiempos_es.py`, aviso si
+  la voz no coincide, reparto de ejemplo neutro. Probado sin montar: tiempos de la voz, música, mezclas y subtítulos.
+  Sin probar: el montaje final del MP4 (solo con permiso del usuario, con el primer vídeo).
 
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
