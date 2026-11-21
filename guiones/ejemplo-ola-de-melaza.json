@@ -1,0 +1,19 @@
+{
+ "titulo": "La ola de melaza de Boston",
+ "tema": "Inundación de melaza de Boston, 15 de enero de 1919",
+ "dato": "Un tanque de unos 8,7 millones de litros de melaza reventó en Boston en 1919: la ola mató a 21 personas.",
+ "hipotesis": false,
+ "etapas": [
+  {"etapa": "hook", "texto": "En 1919, una ola de azúcar mató a veintiuna personas."},
+  {"etapa": "promesa", "texto": "Y vas a ver por qué nadie pudo escapar de algo tan lento."},
+  {"etapa": "recompensa1", "texto": "En Boston, un tanque gigante guardaba casi nueve millones de litros de melaza. Un día de enero, reventó."},
+  {"etapa": "bucle1", "texto": "Pero la melaza es espesa. Más lenta que la miel. ¿Cómo atrapó a tanta gente?"},
+  {"etapa": "recompensa2", "texto": "En realidad no salió lenta. Salió como una pared de siete metros, a cincuenta kilómetros por hora."},
+  {"etapa": "bucle2", "texto": "Y eso no es lo más raro. Lo peor llegó cuando se paró."},
+  {"etapa": "climax", "texto": "Resulta que esa tarde hacía frío. La melaza se enfrió y se volvió casi pegamento. La gente atrapada no podía moverse. Por eso nadie pudo escapar, y los rescates duraron días."},
+  {"etapa": "cta", "texto": "¿Y tú habrías corrido o te habrías subido a un tejado?"}
+ ],
+ "fuentes": ["Smithsonian Magazine: The Great Molasses Flood of 1919", "Sharp y Kennedy (Harvard, 2016), estudio de la viscosidad de la melaza en frío, recogido por Scientific American"],
+ "ritmo": "pausa tras «azúcar»; énfasis en VEINTIUNA, SIETE METROS, PEGAMENTO",
+ "notas": "ejemplo para probar el auditor"
+}
