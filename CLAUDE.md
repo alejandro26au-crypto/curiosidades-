@@ -84,6 +84,10 @@ terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
 - 21 nov 2026 (cierre del día): orden única `./citrino`, cortes atados a palabras, arreglo de `tiempos_es.py`, aviso si
   la voz no coincide, reparto de ejemplo neutro. Probado sin montar: tiempos de la voz, música, mezclas y subtítulos.
   Sin probar: el montaje final del MP4 (solo con permiso del usuario, con el primer vídeo).
+- 23 nov 2026: PRIMER VÍDEO «¿Cuánto tardará GTA 6 Online?». Guion (base del usuario, corregido y con fuentes) en
+  `guiones/cuanto-tardara-gta-6-online.json`, auditoría 100/100, ~67 s. Esperando el «sí» del usuario al guion.
+  Siguiente: el usuario graba `voice.mp3` → `./citrino video gta6-online guiones/cuanto-tardara-gta-6-online.json` y `./citrino voz gta6-online`.
+  Datos del canal: por decidir.
 
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.

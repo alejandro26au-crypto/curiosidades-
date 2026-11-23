@@ -1,0 +1,51 @@
+{
+ "titulo": "¿Cuánto tardará GTA 6 Online?",
+ "tema": "Cuándo puede llegar el modo online de GTA 6 (salió el 19 nov 2026 solo con la historia)",
+ "dato": "GTA Online llegó 14 días después de GTA 5 (17 sep → 1 oct 2013) y salió con fallos graves; GTA 6 salió el 19 nov 2026 sin online anunciado; Bloomberg (oct 2026) lo sitúa en 2027, sin confirmar.",
+ "hipotesis": true,
+ "etapas": [
+  {
+   "etapa": "hook",
+   "texto": "¿Saldrá GTA 6 Online? ¿Y cuánto tendremos que esperar? Con GTA 5, la espera fue de solo catorce días."
+  },
+  {
+   "etapa": "promesa",
+   "texto": "Pero esta vez es distinto. Y vas a ver qué pista apunta ya a un año concreto."
+  },
+  {
+   "etapa": "recompensa1",
+   "texto": "GTA 5 salió el 17 de septiembre de 2013. El 1 de octubre, millones de jugadores ya recorrían Los Santos con sus amigos."
+  },
+  {
+   "etapa": "bucle1",
+   "texto": "Pero esas prisas tuvieron un precio. ¿Qué pasó en aquellos primeros días?"
+  },
+  {
+   "etapa": "recompensa2",
+   "texto": "Los servidores no aguantaron. Hubo jugadores que perdieron su dinero, sus coches y hasta su personaje. Rockstar pidió perdón y regaló quinientos mil dólares del juego a cada jugador."
+  },
+  {
+   "etapa": "bucle2",
+   "texto": "Ahora, GTA 6 salió el 19 de noviembre de 2026. Y solo trae la historia. Del online, Rockstar no ha dado ni una fecha. Entonces, ¿cuándo llegará?"
+  },
+  {
+   "etapa": "climax",
+   "texto": "En octubre, Bloomberg publicó que Rockstar lo tiene previsto para 2027. Rockstar no lo ha confirmado. Pero hay una razón para no correr. GTA Online lleva trece años vivo. Y la saga ha ingresado más de diez mil millones de dólares desde 2013. Mi apuesta: esta vez Rockstar podría esperar antes que repetir aquel caos."
+  },
+  {
+   "etapa": "cta",
+   "texto": "¿Tú esperarías hasta 2027 por un GTA Online nuevo?"
+  }
+ ],
+ "fuentes": [
+  "Rockstar Games Newswire (6 nov 2025): «Grand Theft Auto VI is now set to launch November 19, 2026» — rockstargames.com/newswire/article/ak3ak31a49a221",
+  "CNBC (20 nov 2026): «Take-Two shatters sales record as GTA VI launches» — cnbc.com/2026/11/20/take-two-sales-as-gta-vi-launches-to-massive-fanfare.html",
+  "Kotaku: «GTA V five years later» (GTA V 17 sep 2013; GTA Online dos semanas después) — kotaku.com/gta-v-five-years-later-1829120653",
+  "GameSpot (oct 2013): «Rockstar to give GTA Online players $500,000 after technical hiccups» — gamespot.com/articles/rockstar-to-give-gta-online-players-500-000-after-technical-hiccups/1100-6415533/",
+  "Consumerist (11 oct 2013): personajes y dinero perdidos, 500.000 GTA$ de compensación",
+  "Beebom y Notebookcheck sobre el reportaje de Bloomberg (14 oct 2026, Jason Schreier): online previsto para 2027, sin confirmación oficial",
+  "TweakTown (datos de Take-Two): la saga GTA supera los 10.580 millones de dólares desde 2013 — tweaktown.com/news/111789"
+ ],
+ "ritmo": "Pregunta del gancho con curiosidad real, sin prisa; pausa corta antes de «catorce días» y énfasis ahí. Pausa tras «tuvieron un precio». Énfasis: HASTA SU PERSONAJE, QUINIENTOS MIL, NI UNA FECHA, 2027, DIEZ MIL MILLONES, EL CAOS. Pausa larga antes de «Mi apuesta». CTA tranquilo, como pregunta a un amigo.",
+ "notas": "Primer vídeo de Citrino. Basado en el guion del usuario; corregido: «más de cinco años de desarrollo» (dudoso: trabajo previo desde 2008, desarrollo completo ~3 años) fuera; bucle «¿por qué no hicieron lo mismo?» sin respuesta cambiado por uno que se resuelve; 2027 ahora con fuente (Bloomberg) y marcado como no confirmado."
+}
