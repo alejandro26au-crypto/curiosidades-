@@ -88,6 +88,8 @@ terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
   `guiones/cuanto-tardara-gta-6-online.json`, auditoría 100/100, ~67 s. Esperando el «sí» del usuario al guion.
   Siguiente: el usuario graba `voice.mp3` → `./citrino video gta6-online guiones/cuanto-tardara-gta-6-online.json` y `./citrino voz gta6-online`.
   Datos del canal: por decidir.
+  Imágenes del usuario (usar tal cual) en `guiones/recursos/gta6-online/`. Este vídeo va SIN presentador: gráficos,
+  insertos y sus imágenes. Pendiente: cuál es «la miniatura» y si se recorta el fondo de cuadritos del logo.
 
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
