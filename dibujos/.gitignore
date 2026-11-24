@@ -15,3 +15,4 @@ plantilla/sheet.py
 videos/*/sheet.py
 # main.js lo junta rebuild.sh
 videos/_*/
+!videos/gta6-online/web/main.js
