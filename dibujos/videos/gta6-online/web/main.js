@@ -140,6 +140,41 @@ function lineaTiempo(cx, cy, t, a, b) { // barra 2013 → 2026
   B.font = '64px Anton'; B.textAlign = 'center'; B.fillStyle = BLANCO; B.lineWidth = 12; B.strokeStyle = INK; B.lineJoin = 'round';
   for (const [x, s] of [[x0, a], [x0 + w, b]]) { B.strokeText(s, x, cy + 90); B.fillText(s, x, cy + 90); } B.restore(); }
 
+
+/** jugadores conectados (avatares que aparecen unidos por líneas): «con sus amigos» */
+function jugadores(f, f0, f1, y) {
+  const n = 6, xs = [...Array(n)].map((_, i) => 150 + i * 156);
+  B.save(); B.lineWidth = 8; B.strokeStyle = 'rgba(125,255,138,.9)'; B.setLineDash([18, 14]); B.lineDashOffset = -f * 2;
+  for (let i = 0; i < n - 1; i++) { const k = ramp(f, f1 - 4 + i * 2, f1 + 4 + i * 2); if (k > 0) { B.beginPath(); B.moveTo(xs[i], y); B.lineTo(lerp(xs[i], xs[i + 1], k), y); B.stroke(); } }
+  B.setLineDash([]);
+  const cols = ['#ff5a8a', '#4dc3ff', '#ffd34a', '#7dff8a', '#c77dff', '#ff9a5a'];
+  xs.forEach((x, i) => { const k = pop(f, f0 + i * 3, 8); if (k <= 0) return; B.save(); B.translate(x, y + Math.sin(f * 0.15 + i) * 6); B.scale(k, k);
+    B.beginPath(); B.arc(0, 0, 62, 0, 7); B.fillStyle = INK; B.fill(); B.beginPath(); B.arc(0, 0, 52, 0, 7); B.fillStyle = cols[i]; B.fill();
+    B.fillStyle = INK; B.beginPath(); B.arc(0, -12, 18, 0, 7); B.fill(); B.beginPath(); B.ellipse(0, 30, 30, 22, 0, Math.PI, 0); B.fill();
+    B.beginPath(); B.arc(42, -42, 13, 0, 7); B.fillStyle = '#2fe060'; B.fill(); B.lineWidth = 5; B.strokeStyle = INK; B.stroke(); B.restore(); });
+  B.restore();
+}
+/** latido (electrocardiograma) que se dibuja de izquierda a derecha: «trece años vivo» */
+function latido(f, f0, y) {
+  const t = ramp(f, f0, f0 + 24); if (t <= 0) return; const pts = [];
+  for (let x = 0; x <= W; x += 6) { const u = x / W, ph = (u * 3) % 1; let v = 0;
+    if (ph > 0.42 && ph < 0.48) v = -(ph - 0.42) / 0.06 * 40; else if (ph >= 0.48 && ph < 0.53) v = -40 + (ph - 0.48) / 0.05 * 200; else if (ph >= 0.53 && ph < 0.58) v = 160 - (ph - 0.53) / 0.05 * 300; else if (ph >= 0.58 && ph < 0.62) v = -140 + (ph - 0.58) / 0.04 * 140;
+    pts.push([x, y - v]); }
+  const n = Math.max(2, Math.floor(pts.length * t));
+  B.save(); B.lineJoin = 'round'; B.lineCap = 'round';
+  for (const [lw, col] of [[26, 'rgba(0,0,0,.55)'], [18, 'rgba(47,224,96,.35)'], [8, '#7dff8a']]) { B.lineWidth = lw; B.strokeStyle = col; B.beginPath(); pts.slice(0, n).forEach(([x, yy], i) => (i ? B.lineTo(x, yy) : B.moveTo(x, yy))); B.stroke(); }
+  const [hx, hy] = pts[n - 1]; B.fillStyle = BLANCO; B.shadowColor = '#7dff8a'; B.shadowBlur = 30; B.beginPath(); B.arc(hx, hy, 14, 0, 7); B.fill(); B.restore();
+}
+/** lupa que pasa por encima (la pista) */
+function lupa(cx, cy, k) { if (k <= 0) return; B.save(); B.translate(cx, cy); B.scale(k, k); B.rotate(-0.5);
+  B.lineCap = 'round'; B.lineWidth = 60; B.strokeStyle = INK; B.beginPath(); B.moveTo(0, 170); B.lineTo(0, 340); B.stroke(); B.lineWidth = 40; B.strokeStyle = '#b8742a'; B.stroke();
+  B.beginPath(); B.arc(0, 0, 170, 0, 7); B.fillStyle = 'rgba(200,235,255,.07)'; B.fill(); B.lineWidth = 34; B.strokeStyle = INK; B.stroke(); B.lineWidth = 20; B.strokeStyle = '#e8e8f0'; B.stroke();
+  B.beginPath(); B.arc(-60, -60, 50, Math.PI * 1.05, Math.PI * 1.55); B.lineWidth = 14; B.strokeStyle = 'rgba(255,255,255,.8)'; B.stroke(); B.restore(); }
+/** destellos de atardecer que suben despacio (escenas de GTA 6) */
+function destellos(f, n = 16) { B.save(); B.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < n; i++) { const t = (f / 300 + rnd(i)) % 1, x = rnd(i + 9) * W + Math.sin(f * 0.02 + i) * 40, y = H * (1.05 - t * 1.1), r = 18 + rnd(i + 3) * 46, a = Math.sin(t * Math.PI) * 0.22;
+    const gr = B.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,${180 + (i % 3) * 25},${150 + (i % 4) * 25},${a})`); gr.addColorStop(1, 'rgba(255,150,200,0)'); B.fillStyle = gr; B.beginPath(); B.arc(x, y, r, 0, 7); B.fill(); }
+  B.restore(); }
 // ---------- recortes de las viñetas (imágenes del usuario, sin tocar) ----------
 const ON = { oro: [404, 702, 280, 95], coche: [36, 690, 340, 300], chica: [36, 438, 300, 230], ruleta: [36, 225, 300, 190], sub: [690, 430, 300, 220] };
 const COL = { moto: [870, 0, 303, 410], cocodrilo: [420, 860, 380, 200], lancha: [840, 900, 333, 420], pareja: [352, 0, 498, 345] };
@@ -168,7 +203,8 @@ plano(3, 'barrido', (f, l, S) => { // Pero esta vez es distinto. Y vas a ver qu�
   else { velo(0.35, '20,6,40'); const g = f >= en('ano', 4) ? 1 : 0;
     rotulo('LA PISTA', W / 2, 700, 90, ORO, INK, pop(f, en('pista', 4) - 2), -0.05);
     const q1 = g ? '?' : '?', jit = (i) => g ? (rnd(f * 3 + i) - 0.5) * 26 : 0;
-    B.save(); B.translate(jit(1), jit(2)); titulo('20' + q1 + q1, W / 2, 1050, 400, 'atardecer', pop(f, fr(4)), -0.04); B.restore(); }
+    B.save(); B.translate(jit(1), jit(2)); titulo('20' + q1 + q1, W / 2, 1050, 400, 'atardecer', pop(f, fr(4)), -0.04); B.restore();
+    const u = ramp(f, en('pista', 4), S.b); lupa(lerp(380, 760, smooth(u)), 1010 + Math.sin(u * 6) * 30, pop(f, en('pista', 4) - 2)); }
 });
 plano(5, 'barrido', (f, l, S) => { // GTA 5 salió el 17 de septiembre de 2013.
   fondo('gta5-portada', 1.08 + 0.05 * l / S.n, 0.5);
@@ -181,6 +217,7 @@ plano(6, 'golpe', (f, l, S) => { // El 1 de octubre, millones de jugadores ya re
   calendario('OCT', '1', '2013', 250, 330, 0.8, pop(f, en('octubre', 6) - 4), ROJO);
   rotulo('MILLONES', W / 2, 1420, 96, ORO, INK, pop(f, en('millones', 6) - 2), 0.04);
   rotulo('CON AMIGOS', W / 2, 1560, 80, BLANCO, INK, pop(f, en('amigos', 6) - 3), -0.03);
+  jugadores(f, en('jugadores', 6) - 2, en('amigos', 6), 1250);
 });
 plano(7, 'barrido', (f, l, S) => { // Pero esas prisas tuvieron un precio. ¿Qué pasó en aquellos primeros días?
   const r = smooth(ramp(f, S.a, S.a + 40));
@@ -197,7 +234,7 @@ plano(9, 'golpe', (f, l, S) => { // Los servidores no aguantaron.
 });
 plano(10, 'barrido', (f, l, S) => { // Hubo jugadores que perdieron su dinero, sus coches y hasta su personaje.
   fondo('gta-online-portada', 1.1, 0.5); velo(0.22, '120,0,0');
-  titulo('PERDIERON', W / 2, 190, 170, BLANCO, pop(f, en('perdieron', 10) - 3), -0.03);
+  rotulo('JUGADORES', W / 2, 115, 84, ORO, INK, pop(f, S.a + 2), 0.02); titulo('PERDIERON', W / 2, 250, 170, BLANCO, pop(f, en('perdieron', 10) - 3), -0.03);
   const it = [['dinero', ON.oro, 'DINERO', 470], ['coches', ON.coche, 'COCHES', 890], ['personaje', ON.chica, 'SU PERSONAJE', 1310]];
   it.forEach(([w, crop, lab, y], i) => { const f0 = en(w, 10) - 4, k = pop(f, f0);
     vineta(IMG['gta-online-portada'], crop, W / 2, y, 760, 330, (i - 1) * 0.04, k, 1.1);
@@ -205,6 +242,7 @@ plano(10, 'barrido', (f, l, S) => { // Hubo jugadores que perdieron su dinero, s
 });
 plano(11, 'golpe', (f, l, S) => { // Rockstar pidió perdón y regaló quinientos mil dólares del juego a cada jugador.
   fondo('gta-online-portada', 1.15, 0.6); const fq = en('quinientos', 11);
+  if (f < fq - 2) rotulo('ROCKSTAR', W / 2, 600, 100, BLANCO, INK, pop(f, S.a + 2), 0.03);
   if (f < fq - 2) { titulo('PIDIÓ', W / 2, 820, 200, BLANCO, pop(f, en('pidio', 11) - 3), -0.04); titulo('PERDÓN', W / 2, 1060, 260, ORO, pop(f, en('perdon', 11) - 3), -0.04); }
   else { billetes(f, fq); const v = 500000 * easeOut(ramp(f, fq, en('dolares', 11) + 4));
     titulo(contador(v), W / 2, 900, 250, '#7dff8a', pop(f, fq - 2), -0.04); titulo('GTA$', W / 2, 1120, 170, BLANCO, pop(f, en('dolares', 11) - 2), -0.04);
@@ -212,7 +250,7 @@ plano(11, 'golpe', (f, l, S) => { // Rockstar pidió perdón y regaló quiniento
     rotulo('A CADA JUGADOR', W / 2, 1460, 84, ORO, INK, pop(f, en('cada', 11) - 2), 0.03); }
 });
 plano(12, 'golpe', (f, l, S) => { // Ahora, GTA 6 salió el 19 de noviembre de 2026.
-  atardecer(f); palmeras(f, l);
+  atardecer(f); destellos(f, 22); palmeras(f, l);
   const k = pop(f, S.a + 1, 8); logo('logo-gta6', W / 2, 640, 860 * (1 + 0.25 * (1 - smooth(ramp(f, S.a, S.a + 14)))), k);
   calendario('NOV', '19', '2026', W / 2, 1320, 1.0, pop(f, en('19', 12) - 3), '#8e4fd0');
 });
@@ -229,6 +267,7 @@ plano(14, 'barrido', (f, l, S) => { // Del online, Rockstar no ha dado ni una fe
 });
 plano(15, 'golpe', (f, l, S) => { // Entonces, ¿cuándo llegará?
   cover(IMG['gta6-palmeras-coche'], null, 1.0 + 0.14 * l / S.n, 0, 0.9); degradado(0, 700, 0.55, 0);
+  destellos(f);
   titulo('¿CUÁNDO', W / 2, 330, 230, BLANCO, pop(f, en('cuando', 15) - 3), -0.04); titulo('LLEGARÁ?', W / 2, 560, 230, 'atardecer', pop(f, en('llegara', 15) - 3), -0.04);
 });
 plano(16, 'barrido', (f, l, S) => { // En octubre, Bloomberg publicó que Rockstar lo tiene previsto para 2027. Rockstar no lo ha confirmado.
@@ -243,12 +282,12 @@ plano(18, 'barrido', (f, l, S) => { // Pero hay una razón para no correr. GTA O
   if (f < fr(19) - 2) { titulo('UNA RAZÓN', W / 2, 1250, 210, BLANCO, pop(f, en('razon', 18) - 3), -0.04); titulo('PARA NO CORRER', W / 2, 1450, 140, ORO, pop(f, en('correr', 18) - 3), -0.04); }
   else { const ft = en('trece', 19), v = 13 * easeOut(ramp(f, fr(19), ft + 6));
     rotulo('GTA ONLINE', W / 2, 1080, 96, ROJO, BLANCO, pop(f, fr(19) - 1), -0.03);
-    titulo(Math.round(v) + ' AÑOS', W / 2, 1290, 210, BLANCO, pop(f, ft - 3), -0.03); lineaTiempo(W / 2, 1490, easeOut(ramp(f, fr(19), ft + 10)), '2013', '2026'); }
+    titulo(Math.round(v) + ' AÑOS', W / 2, 1290, 210, BLANCO, pop(f, ft - 3), -0.03); lineaTiempo(W / 2, 1490, easeOut(ramp(f, fr(19), ft + 10)), '2013', '2026'); latido(f, en('vivo', 19) - 8, 860); }
 });
 plano(20, 'golpe', (f, l, S) => { // Y la saga ha ingresado más de diez mil millones de dólares desde 2013.
   fondo('gta5-portada', 1.1 + 0.05 * l / S.n, 0.62); billetes(f, en('diez', 20), 14);
   const fd = en('diez', 20), v = 10000 * easeOut(ramp(f, fd - 2, en('millones', 20) + 6));
-  rotulo('MÁS DE', W / 2, 660, 90, ORO, INK, pop(f, en('mas', 20) - 3), -0.04);
+  rotulo('LA SAGA GTA', W / 2, 470, 96, BLANCO, INK, pop(f, S.a + 2), 0.03); rotulo('MÁS DE', W / 2, 660, 90, ORO, INK, pop(f, en('mas', 20) - 3), -0.04);
   titulo(contador(v), W / 2, 900, 330, '#7dff8a', pop(f, fd - 3), -0.04);
   titulo('MILLONES DE $', W / 2, 1150, 150, BLANCO, pop(f, en('millones', 20) - 2), -0.04);
   rotulo('DESDE 2013', W / 2, 1360, 86, BLANCO, INK, pop(f, en('desde', 20) - 2), 0.03);
@@ -262,6 +301,7 @@ plano(21, 'barrido', (f, l, S) => { // Mi apuesta: esta vez Rockstar podría esp
 plano(22, 'golpe', (f, l, S) => { // ¿Tú esperarías hasta 2027 por un GTA Online nuevo?
   fondo('portada-collage', 1.08, 0.5);
   vineta(IMG['portada-collage'], null, W / 2, 640, 900, 1040, -0.02, 1.08 - 0.08 * easeOut(l / S.n), 1.0);
+  destellos(f, 20);
   rotulo('GTA ONLINE NUEVO', W / 2, 1215, 84, ROJO, BLANCO, pop(f, en('nuevo', 22) - 3), 0.03);
   titulo('¿ESPERARÍAS', W / 2, 1440, 190, BLANCO, pop(f, en('esperarias', 22) - 3), -0.04);
   titulo('HASTA 2027?', W / 2, 1630, 210, 'atardecer', pop(f, en('2027', 22) - 3), -0.04);
@@ -283,11 +323,11 @@ window.renderFrame = (f) => {
   for (const [a, d] of caos) if (f >= a && f < a + d) glitch(f, 1 - (f - a) / d);
   G.save(); G.fillStyle = '#000'; G.fillRect(0, 0, W, H);
   if (S.entrada === 'golpe' && l < 6) { const t = easeOut(l / 6), z = lerp(1.14, 1, t); G.translate(W / 2, H / 2); G.scale(z, z); G.translate(-W / 2, -H / 2); G.drawImage(BUF, 0, 0); G.setTransform(1, 0, 0, 1, 0, 0); G.fillStyle = `rgba(255,255,255,${(0.55 * (1 - t)).toFixed(3)})`; G.fillRect(0, 0, W, H); }
-  else if (S.entrada === 'barrido' && l < 5 && S.a > 0) { const t = easeOut(l / 5), dx = (1 - t) * W * 0.35; for (let k = 3; k >= 0; k--) { G.globalAlpha = k ? 0.22 : 1; G.drawImage(BUF, dx + k * 40 * (1 - t), 0); } G.globalAlpha = 1; }
+  else if (S.entrada === 'barrido' && l < 5 && S.a > 0) { const t = easeOut(l / 5), dx = (1 - t) * W * 0.35; for (let k = 3; k >= 0; k--) { G.globalAlpha = k ? 0.22 : 1; const x = dx + k * 40 * (1 - t); G.drawImage(BUF, x, 0); G.drawImage(BUF, x - W, 0); } G.globalAlpha = 1; }
   else G.drawImage(BUF, 0, 0);
   G.restore();
   // grano y viñeteado (dan textura de póster)
-  G.save(); G.globalAlpha = 0.07; G.globalCompositeOperation = 'overlay'; const ox = Math.floor(rnd(f) * 256), oy = Math.floor(rnd(f + 1) * 256);
+  G.save(); G.globalAlpha = 0.04; G.globalCompositeOperation = 'overlay'; const fg = Math.floor(f / 4), ox = Math.floor(rnd(fg) * 256), oy = Math.floor(rnd(fg + 1) * 256);
   for (let y = -oy; y < H; y += 256) for (let x = -ox; x < W; x += 256) G.drawImage(IMG.grano, x, y); G.restore();
   const v = G.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, H * 0.75); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.45)'); G.fillStyle = v; G.fillRect(0, 0, W, H);
 };

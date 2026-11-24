@@ -93,8 +93,12 @@ terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
 - 24 nov 2026: voz recibida (ElevenLabs, 78 s; `voice.mp3` no se sube) → tiempos reales (186/191 palabras; las cifras
   que el reconocedor escribió en números se arreglan en main.js). Vídeo hecho con un COMPOSITOR 2D propio
   (`dibujos/videos/gta6-online/web/main.js`: planos por frase, Ken Burns, insertos, glitch en el caos; 0,08 s/fotograma),
-  no con el motor 3D. Hoja de fotos revisada: `dibujos/videos/gta6-online/stills/hoja.jpg`. Esperando su «sí» a la hoja
-  y su «monta». Luego: `./citrino montar gta6-online` y `./citrino terminar gta6-online "Titulo"`.
+  no con el motor 3D. Hoja de fotos revisada: `dibujos/videos/gta6-online/stills/hoja.jpg`. Hoja aprobada; el usuario pidió montarlo SIN música
+  (la pone él en YouTube) y gráficos propios además de sus imágenes (jugadores conectados, latido, lupa, destellos).
+  HECHO: `out/Cuanto-tardara-GTA-6-Online-sin-musica.mp4` (76,8 s, 102 MB, −15 LUFS), efectos sintetizados (`sfx.py`),
+  `out/subtitulos.srt` (191 palabras) y `publicar.md`. Rehacer: `bash ../../herramientas/montar.sh 0-2304 4` →
+  `python3 sfx.py` → `mix.py voice.mp3 - sfx.wav out/mix_sin_musica.wav` → `terminar.sh "Cuanto-tardara-GTA-6-Online" out/mix_sin_musica.wav`.
+  Siguiente: a los 2 días de publicar, pedir la captura de YouTube Studio y apuntarla en `docs/RESULTADOS.md`.
 
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
