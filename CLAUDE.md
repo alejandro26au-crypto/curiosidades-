@@ -89,7 +89,12 @@ terminar · publicar · medir`. Los pasos de abajo son lo que hace por dentro.
   Siguiente: el usuario graba `voice.mp3` → `./citrino video gta6-online guiones/cuanto-tardara-gta-6-online.json` y `./citrino voz gta6-online`.
   Datos del canal: por decidir.
   Imágenes del usuario (usar tal cual) en `guiones/recursos/gta6-online/`. Este vídeo va SIN presentador: gráficos,
-  insertos y sus imágenes. Logos GTA 6 y GTA 5 recortados (.png). Plan de imágenes y paleta en `guiones/recursos/gta6-online/LEEME.md`. Guion aprobado por el usuario («sí», 23 nov). Siguiente: su `voice.mp3`.
+  insertos y sus imágenes. Logos GTA 6 y GTA 5 recortados (.png). Plan de imágenes y paleta en `guiones/recursos/gta6-online/LEEME.md`. Guion aprobado por el usuario («sí», 23 nov).
+- 24 nov 2026: voz recibida (ElevenLabs, 78 s; `voice.mp3` no se sube) → tiempos reales (186/191 palabras; las cifras
+  que el reconocedor escribió en números se arreglan en main.js). Vídeo hecho con un COMPOSITOR 2D propio
+  (`dibujos/videos/gta6-online/web/main.js`: planos por frase, Ken Burns, insertos, glitch en el caos; 0,08 s/fotograma),
+  no con el motor 3D. Hoja de fotos revisada: `dibujos/videos/gta6-online/stills/hoja.jpg`. Esperando su «sí» a la hoja
+  y su «monta». Luego: `./citrino montar gta6-online` y `./citrino terminar gta6-online "Titulo"`.
 
 ## Créditos de vidIQ
 NUNCA gastar créditos de vidIQ sin decir el coste y esperar el «sí» del usuario.
