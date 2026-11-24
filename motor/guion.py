@@ -19,7 +19,7 @@ def _catalogo():
   parámetros útiles: arbol_fruta{{fruta:'#hex', hielo:bool}}, arbol{{pintado:bool}}, fogata{{apagada:bool}},
   lata_leche{{vendada:bool}}, camioneta{{color, hundida:0-1, llantas_bajas:bool}}, carreta{{carga:'leña', giro}},
   fardos{{filas, humo:bool}}, granero{{vapor:bool}}, bomba_agua{{sin_manija:bool}}, vaca{{ojos_traseros:bool, mira:±1}},
-  cerca/muro{{largo}}. Cada prop: x (0-1, puede salir de 0-1 para paneos), plano: fondo|medio|frente|primer_plano,
+  cerca/muro{{largo}}, auto/camion/furgoneta{{volcado: true (de cabeza) o 0.5 (de lado), rot}}. Cada prop: x (0-1, puede salir de 0-1 para paneos), plano: fondo|medio|frente|primer_plano,
   y (solo frente, 0.80-0.92), escala.
   fondo.mar_sube (0-1) en playa hace subir la marea durante el plano.
 - personajes.*: sombrero {personajes.SOMBREROS}, peinado {personajes.PEINADOS}, ropa {personajes.ROPAS},
@@ -35,6 +35,8 @@ def _catalogo():
   termometro/manometro/contador/regla {{de, a, unidad, etiqueta, min, max}}, reloj {{de, a (horas decimales), texto}},
   comparativa {{items:[{{etiqueta, valor, color, unidad}}], etiqueta}}, flechas {{izq, der}} (fuerza concentrada vs repartida),
   capas {{capas:[{{color, etiqueta}}]}} (corte transversal), texto {{texto, etiqueta, color}}.
+  boton {{botones:[triangulo|circulo|cuadro|equis|L1|L2|R1|R2|L3|R3], modo: tocar|mantener, veces, combo:bool,
+  etiqueta}} (controles de videojuego: L3/R3 = palanca presionada; combo = presionar juntos).
 - efectos: {efectos.EFECTOS}
 - sfx: {SFX} (string, o {{nombre, t (seg desde inicio del plano), vol}})
 - destacar: palabras que el subtítulo pinta en amarillo (los números y el apodo ya se pintan solos).

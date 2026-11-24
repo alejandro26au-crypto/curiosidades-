@@ -493,6 +493,11 @@ window.construir = function (fondo) {
     if (p.tipo === 'cerca' && MODELOS.fence) g = cercaModelo(p);
     if (!g) { const f = PROPS[p.tipo]; if (!f) continue; g = new THREE.Group(); f(g, p, r); }
     g.position.set(...p._pos); g.rotation.y = p.rot || 0; g.scale.setScalar(p._escala || 1);
+    if (p.volcado) {  // carro de cabeza (o de lado con volcado: 0.5)
+      const caja = new THREE.Box3().setFromObject(g), alto = caja.max.y - caja.min.y;
+      g.rotation.z = Math.PI * (p.volcado === true ? 1 : p.volcado);
+      g.position.y += (p.volcado === true || p.volcado >= 0.9) ? alto : alto * 0.45;
+    }
     scene.add(g);
   }
   window.__marSube = fondo.mar_sube || 0;

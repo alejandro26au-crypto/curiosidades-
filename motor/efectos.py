@@ -12,7 +12,7 @@ from .formula import ESTILO
 
 W, H = 1080, 1920
 INSERTOS = ["termometro", "manometro", "contador", "reloj", "comparativa", "flechas",
-            "texto", "capas", "regla"]
+            "texto", "capas", "regla", "boton"]
 EFECTOS = ["nieve", "lluvia", "chispas", "polvo", "vapor", "escarcha", "velocidad",
            "impacto", "destello", "calor", "hojas", "burbujas", "oscuro"]
 
@@ -153,6 +153,8 @@ def dibujar_inserto(ctx, ins, p, t, dur):
         texto(ctx, izq, -250, -210, 56, relleno=(0.88, 0.18, 0.15))
         texto(ctx, der, 230, -210, 56, relleno=(0.9, 0.5, 0.05))
         linea(ctx, [(0, -240), (0, 200)], 4, (0.7, 0.7, 0.7))
+    elif tipo == "boton":
+        _dibujar_botones(ctx, ins, t, dur, k)
     elif tipo == "capas":
         _panel(ctx, W * 0.5, cy, 680, 680, k)
         capas = ins.get("capas") or [{"color": "#BFE6FF", "etiqueta": "hielo"},
@@ -167,6 +169,119 @@ def dibujar_inserto(ctx, ins, p, t, dur):
             yy = -rr + 40
             texto(ctx, cp.get("etiqueta", ""), 0, yy + (j * 10), 46, relleno=(1, 1, 1), grosor=10)
     ctx.restore()
+
+
+# --- Botones de control (inserto "boton") -----------------------------------------
+# Glifos genéricos de mando: △ ○ □ ✕, gatillos (L1 L2 R1 R2) y palancas (L3 R3 = palanca presionada).
+_COL_BOTON = {"triangulo": (0.24, 0.84, 0.63), "circulo": (1.0, 0.36, 0.37),
+              "cuadro": (0.91, 0.5, 0.85), "equis": (0.43, 0.61, 1.0)}
+
+
+def _glifo(ctx, b, x, y, r, brillo):
+    """Dibuja un botón centrado en (x, y). brillo 0..1 = está presionado."""
+    ctx.save()
+    ctx.translate(x, y)
+    k = 1 - 0.14 * brillo
+    ctx.scale(k, k)
+    if b in _COL_BOTON:
+        cc = _COL_BOTON[b]
+        ctx.arc(8, 12, r, 0, 2 * math.pi)
+        color(ctx, (0, 0, 0), 0.3)
+        ctx.fill()
+        ctx.arc(0, 0, r, 0, 2 * math.pi)
+        relleno_contorno(ctx, mezcla((0.13, 0.13, 0.16), cc, 0.25 * brillo), 9)
+        s = r * 0.5
+        if b == "triangulo":
+            poligono(ctx, [(0, -s * 1.05), (s * 1.0, s * 0.7), (-s * 1.0, s * 0.7)])
+        elif b == "cuadro":
+            ctx.rectangle(-s * 0.8, -s * 0.8, s * 1.6, s * 1.6)
+        elif b == "circulo":
+            ctx.arc(0, 0, s * 0.85, 0, 2 * math.pi)
+        if b == "equis":
+            linea(ctx, [(-s * 0.8, -s * 0.8), (s * 0.8, s * 0.8)], r * 0.16, cc)
+            linea(ctx, [(s * 0.8, -s * 0.8), (-s * 0.8, s * 0.8)], r * 0.16, cc)
+        else:
+            ctx.set_source_rgb(*cc)
+            ctx.set_line_width(r * 0.15)
+            ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+            ctx.stroke()
+    elif b in ("L3", "R3", "palanca_izq", "palanca_der"):
+        ctx.arc(8, 12, r, 0, 2 * math.pi)
+        color(ctx, (0, 0, 0), 0.3)
+        ctx.fill()
+        ctx.arc(0, 0, r, 0, 2 * math.pi)
+        relleno_contorno(ctx, (0.2, 0.2, 0.24), 9)
+        ctx.arc(0, 0, r * 0.66, 0, 2 * math.pi)
+        relleno_contorno(ctx, mezcla((0.32, 0.32, 0.37), (1, 0.85, 0.3), brillo), 6)
+        texto(ctx, "L" if b in ("L3", "palanca_izq") else "R", 0, 0, r * 0.62, relleno=(1, 1, 1))
+        for a in (0, 1, 2, 3):  # muescas de "presionar"
+            ang = a * math.pi / 2 + math.pi / 4
+            linea(ctx, [(math.cos(ang) * r * 0.8, math.sin(ang) * r * 0.8),
+                        (math.cos(ang) * r * 0.93, math.sin(ang) * r * 0.93)], 4, (0.55, 0.55, 0.6))
+    else:  # gatillos L1 L2 R1 R2 o cualquier texto corto
+        w, h = r * 2.1, r * 1.35
+        rect_redondo(ctx, -w / 2 + 8, -h / 2 + 12, w, h, h * 0.42)
+        color(ctx, (0, 0, 0), 0.3)
+        ctx.fill()
+        rect_redondo(ctx, -w / 2, -h / 2, w, h, h * 0.42)
+        relleno_contorno(ctx, mezcla((0.13, 0.13, 0.16), (1, 0.85, 0.3), 0.35 * brillo), 9)
+        texto(ctx, str(b), 0, 0, r * 0.78, relleno=(1, 1, 1))
+    ctx.restore()
+
+
+def _dibujar_botones(ctx, ins, t, dur, k):
+    """ins = {botones:[...], modo: 'tocar'|'mantener', veces: n, etiqueta, combo: bool}.
+    tocar: cada botón se presiona en secuencia (y se repite 'veces').
+    mantener: un aro se llena alrededor del botón mientras se mantiene."""
+    bots = ins.get("botones") or ["equis"]
+    modo = ins.get("modo", "tocar")
+    veces = int(ins.get("veces", 1))
+    etiqueta = ins.get("etiqueta", "")
+    n = len(bots)
+    r = 105 if n <= 2 else 88
+    paso = r * 2.6
+    ancho = max(640, paso * n + 160)
+    cy = H * (0.30 if ins.get("posicion", "arriba") == "arriba" else 0.45)
+    _panel(ctx, W * 0.5, cy, ancho, 460 if etiqueta else 380, k)
+    oy = 30 if etiqueta else 0
+    x0 = -paso * (n - 1) / 2
+    # cronograma de toques
+    t0, gap = 0.35, 0.32
+    eventos = [(t0 + (v * n + i) * gap, i) for v in range(veces) for i in range(n)]
+    if ins.get("combo"):  # todos a la vez (p. ej. L2 + R1): el 2.º se suma al 1.º
+        eventos = [(t0 + i * 0.25, i) for i in range(n)]
+    for i, b in enumerate(bots):
+        x = x0 + i * paso
+        if modo == "mantener":
+            ini = t0 + i * 0.2
+            fin = max(ini + 0.5, dur * 0.85)
+            f = clamp((t - ini) / (fin - ini))
+            brillo = 1.0 if t >= ini else 0.0
+            if t >= ini:
+                ctx.save()
+                ctx.translate(x, oy)
+                ctx.set_line_width(14)
+                ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+                ctx.arc(0, 0, r + 24, -math.pi / 2, -math.pi / 2 + 2 * math.pi * max(0.001, f))
+                ctx.set_source_rgb(1, 0.78, 0.15)
+                ctx.stroke()
+                ctx.restore()
+        elif ins.get("combo"):
+            ti = [e for e in eventos if e[1] == i][0][0]
+            brillo = clamp((t - ti) / 0.08)
+        else:
+            brillo = 0.0
+            for te, j in eventos:
+                if j == i and 0 <= t - te < 0.22:
+                    brillo = max(brillo, 1 - (t - te) / 0.22)
+        _glifo(ctx, b, x, oy, r, brillo)
+        if i < n - 1:
+            texto(ctx, "+", x + paso / 2, oy, 80, relleno=(0.2, 0.2, 0.24))
+    if veces > 1:
+        texto(ctx, f"×{veces}", x0 + (n - 1) * paso + r + 70, oy - r * 0.7, 70,
+              relleno=hex2rgb(ESTILO["color_destacado"]), trazo=NEGRO, grosor=10)
+    if etiqueta:
+        texto(ctx, etiqueta, 0, oy - r - 75, 50, relleno=(0.3, 0.3, 0.35))
 
 
 # --- Partículas / efectos de pantalla -------------------------------------------------

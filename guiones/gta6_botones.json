@@ -1,0 +1,1103 @@
+{
+  "titulo": "¿Por qué tu amigo sigue esperando la grúa en GTA 6?",
+  "apodo": "Grúa",
+  "tema": "Controles poco explicados de GTA 6 (versión PlayStation): bajarse sin apagar el motor, agacharse, abrir la puerta en marcha, gritar, voltear el carro, empujar lanchas, sentarse, recargarse y el dedo.",
+  "fuente": "Guion de referencia del usuario (video de tips). Verificar cada botón en el juego antes de publicar.",
+  "animo_musica": "curioso",
+  "voz_narrador": "es-MX-JorgeNeural",
+  "personajes": {
+    "tu": {
+      "rol": "heroe",
+      "sombrero": "gorra",
+      "color_sombrero": "#1E1E24",
+      "ropa": "hawaiana",
+      "color_ropa": "#E0457B",
+      "color_ropa2": "#2E3A59",
+      "accesorios": [
+        "lentes_sol"
+      ]
+    },
+    "grua": {
+      "rol": "rival",
+      "sombrero": "gorro_lana",
+      "color_sombrero": "#E9A23B",
+      "ropa": "camisa",
+      "color_ropa": "#3F6EA8",
+      "accesorios": [],
+      "voz": "es-CO-GonzaloNeural",
+      "tono": "-6Hz"
+    },
+    "poli": {
+      "rol": "extra",
+      "sombrero": "militar",
+      "color_sombrero": "#1F2A44",
+      "ropa": "uniforme",
+      "color_ropa": "#2B3A5C",
+      "accesorios": [
+        "lentes_sol"
+      ]
+    },
+    "moto": {
+      "rol": "extra",
+      "sombrero": "casco",
+      "color_sombrero": "#D64541",
+      "ropa": "chaleco",
+      "color_ropa": "#333338"
+    }
+  },
+  "planos": [
+    {
+      "beat": "gancho",
+      "texto": "Si aprietas triángulo dos veces, te bajas del carro sin apagarlo.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.35,
+            "plano": "frente",
+            "y": 0.86,
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.62,
+          "expresion": "confiado",
+          "pose": "caminar",
+          "mira": "der",
+          "accion": "salir_der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "tu"
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "triangulo"
+        ],
+        "veces": 2,
+        "etiqueta": "Toca rápido"
+      },
+      "sfx": [
+        {
+          "nombre": "pop",
+          "t": 0.35
+        },
+        {
+          "nombre": "pop",
+          "t": 0.67
+        }
+      ],
+      "destacar": [
+        "triángulo"
+      ]
+    },
+    {
+      "beat": "gancho",
+      "texto": "El motor y la radio se quedan prendidos.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.9,
+            "color": "#E0457B"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.8
+        ]
+      },
+      "sfx": [
+        "motor"
+      ]
+    },
+    {
+      "beat": "burla",
+      "texto": "¿Y para qué tanto botón? Yo nomás acelero.",
+      "voz": "grua",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.8,
+            "plano": "medio",
+            "color": "#3F6EA8"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.5,
+          "expresion": "burla",
+          "pose": "reir",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "foco": "grua"
+      },
+      "sfx": [
+        "risa"
+      ]
+    },
+    {
+      "beat": "burla",
+      "texto": "Dice el amigo que todos llaman Grúa.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.78,
+            "plano": "medio",
+            "color": "#3F6EA8"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.45,
+          "expresion": "presumido",
+          "pose": "brazos_cruzados",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "primer_plano",
+        "foco": "grua"
+      },
+      "sfx": [
+        "whoosh"
+      ]
+    },
+    {
+      "beat": "apuesta",
+      "texto": "Y no es el único botón que el juego casi no te explica.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.25,
+            "plano": "medio",
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "auto",
+            "x": 0.7,
+            "plano": "medio",
+            "color": "#3F6EA8"
+          },
+          {
+            "tipo": "camion",
+            "x": 1.05,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "general"
+      }
+    },
+    {
+      "beat": "apuesta",
+      "texto": "Hay ocho más escondidos.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "estatico"
+      },
+      "inserto": {
+        "tipo": "contador",
+        "de": 0,
+        "a": 8,
+        "etiqueta": "Botones escondidos"
+      },
+      "sfx": [
+        "ding"
+      ]
+    },
+    {
+      "beat": "rival",
+      "texto": "Con la policía atrás, Grúa acelera en línea recta.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.45,
+            "plano": "frente",
+            "y": 0.86,
+            "color": "#3F6EA8"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.45,
+          "expresion": "panico",
+          "pose": "correr",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "seguimiento",
+        "foco": "grua",
+        "entrada": "whip"
+      },
+      "efectos": [
+        "velocidad"
+      ],
+      "sfx": [
+        "motor"
+      ]
+    },
+    {
+      "beat": "rival",
+      "texto": "Tú mantienes círculo dentro del carro y te agachas para esconderte.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88,
+            "color": "#E0457B"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.5,
+          "expresion": "determinado",
+          "pose": "agachado",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "americano",
+        "foco": "tu"
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "circulo"
+        ],
+        "modo": "mantener",
+        "etiqueta": "Mantén dentro del carro"
+      },
+      "efectos": [
+        "oscuro"
+      ]
+    },
+    {
+      "beat": "rival",
+      "texto": "La patrulla pasa de largo.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "noche",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.7,
+            "plano": "medio",
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "poli",
+          "x": 0.3,
+          "expresion": "neutral",
+          "pose": "caminar",
+          "mira": "der",
+          "accion": "salir_der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_der"
+      },
+      "sfx": [
+        "motor"
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Si vas manejando y aprietas cuadro, abres la puerta en movimiento.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.45,
+            "plano": "frente",
+            "y": 0.88,
+            "color": "#E0457B"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.45,
+          "expresion": "confiado",
+          "pose": "sentado",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "seguimiento",
+        "foco": "tu"
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "cuadro"
+        ],
+        "etiqueta": "Manejando"
+      },
+      "efectos": [
+        "velocidad"
+      ],
+      "sfx": [
+        {
+          "nombre": "pop",
+          "t": 0.35
+        }
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Y tumbas motos o le pegas al carro de al lado.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.35,
+            "plano": "frente",
+            "y": 0.88,
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "auto",
+            "x": 0.75,
+            "plano": "medio",
+            "color": "#7A8899",
+            "volcado": 0.5
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "moto",
+          "x": 0.68,
+          "expresion": "panico",
+          "pose": "sorpresa",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "sacudida",
+        "intensidad": 0.7,
+        "foco": "moto"
+      },
+      "efectos": [
+        "impacto"
+      ],
+      "sfx": [
+        "golpe"
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Si alguien se te cierra, aprieta la palanca derecha.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.3,
+            "plano": "medio",
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "auto",
+            "x": 0.62,
+            "plano": "medio",
+            "color": "#3CB371",
+            "rot": 0.5
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "foco": [
+          0.5,
+          0.7
+        ]
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "R3"
+        ],
+        "etiqueta": "Presiona la palanca"
+      },
+      "sfx": [
+        {
+          "nombre": "tick",
+          "t": 0.35
+        }
+      ]
+    },
+    {
+      "beat": "proceso",
+      "texto": "Y le gritas desde tu ventana.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.9,
+            "color": "#E0457B"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.5,
+          "expresion": "enojado",
+          "pose": "señalar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "primer_plano",
+        "foco": "tu"
+      },
+      "efectos": [
+        "impacto"
+      ],
+      "sfx": [
+        "impacto"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "Y este es para Grúa, que siempre vuelca el carro.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.65,
+            "plano": "medio",
+            "color": "#3F6EA8",
+            "volcado": true
+          },
+          {
+            "tipo": "arbol",
+            "x": 0.9,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.3,
+          "expresion": "triste",
+          "pose": "rascarse",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pull_out",
+        "foco": [
+          0.5,
+          0.7
+        ]
+      },
+      "sfx": [
+        "golpe"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "Y se queda esperando a que lo rescaten. Uno, dos, tres minutos.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.68,
+            "plano": "medio",
+            "color": "#3F6EA8",
+            "volcado": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.35,
+          "expresion": "preocupado",
+          "pose": "sentado",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "grua"
+      },
+      "inserto": {
+        "tipo": "contador",
+        "de": 1,
+        "a": 3,
+        "unidad": "min",
+        "etiqueta": "Esperando"
+      },
+      "sfx": [
+        "tictac"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "¿Alguien me ayuda?",
+      "voz": "grua",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "dia",
+        "props": []
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.5,
+          "expresion": "panico",
+          "pose": "saludar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "tilt_arriba",
+        "foco": "grua"
+      },
+      "sfx": [
+        "viento"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "Pero la grúa nunca llega.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.5,
+            "plano": "medio",
+            "color": "#3F6EA8",
+            "volcado": true
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "pull_out",
+        "encuadre": "general"
+      },
+      "efectos": [
+        "polvo"
+      ],
+      "sfx": [
+        "viento"
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "El truco: pégate al carro y aprieta la palanca izquierda.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.62,
+            "plano": "medio",
+            "color": "#3F6EA8",
+            "volcado": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.32,
+          "expresion": "determinado",
+          "pose": "empujar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "tu",
+        "entrada": "whip"
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "L3"
+        ],
+        "etiqueta": "Pegado al carro"
+      },
+      "sfx": [
+        {
+          "nombre": "tick",
+          "t": 0.35
+        }
+      ]
+    },
+    {
+      "beat": "truco",
+      "texto": "Mantén cuadro y lo volteas tú solo.",
+      "fondo": {
+        "lugar": "campo",
+        "hora": "atardecer",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.62,
+            "plano": "medio",
+            "color": "#3F6EA8",
+            "volcado": 0.5
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.32,
+          "expresion": "determinado",
+          "pose": "empujar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "sacudida",
+        "intensidad": 0.5,
+        "foco": [
+          0.55,
+          0.7
+        ]
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "cuadro"
+        ],
+        "modo": "mantener",
+        "etiqueta": "Mantén"
+      },
+      "sfx": [
+        {
+          "nombre": "golpe",
+          "t": 1.6
+        }
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Y así también empujas lanchas al agua.",
+      "fondo": {
+        "lugar": "playa",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "barco",
+            "x": 0.62,
+            "plano": "medio",
+            "escala": 0.6
+          },
+          {
+            "tipo": "palmera",
+            "x": 0.9,
+            "plano": "fondo"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.3,
+          "expresion": "confiado",
+          "pose": "empujar",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pan_der",
+        "foco": "tu"
+      },
+      "sfx": [
+        "olas"
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "A pie, si mantienes círculo, te sientas donde sea.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "caja",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.5,
+          "expresion": "feliz",
+          "pose": "sentado",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "americano",
+        "foco": "tu"
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "circulo"
+        ],
+        "modo": "mantener",
+        "etiqueta": "A pie"
+      },
+      "sfx": [
+        "pop"
+      ]
+    },
+    {
+      "beat": "desenlace",
+      "texto": "Y si estás junto a una pared, te recargas.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "muro",
+            "x": 0.5,
+            "plano": "medio",
+            "largo": 900
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.42,
+          "expresion": "confiado",
+          "pose": "brazos_cruzados",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "orbita",
+        "encuadre": "americano",
+        "foco": "tu"
+      }
+    },
+    {
+      "beat": "remate",
+      "texto": "Y el último: apunta a Grúa con L2 y aprieta R1.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.3,
+          "expresion": "burla",
+          "pose": "señalar",
+          "mira": "der"
+        },
+        {
+          "id": "grua",
+          "x": 0.72,
+          "expresion": "asombro",
+          "pose": "sorpresa",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "foco": "grua"
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "L2",
+          "R1"
+        ],
+        "combo": true,
+        "etiqueta": "Apunta y presiona"
+      },
+      "sfx": [
+        {
+          "nombre": "tick",
+          "t": 0.35
+        },
+        {
+          "nombre": "pop",
+          "t": 0.6
+        }
+      ]
+    },
+    {
+      "beat": "remate",
+      "texto": "Le enseñas el dedo.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": []
+      },
+      "actores": [
+        {
+          "id": "grua",
+          "x": 0.5,
+          "expresion": "enojado",
+          "pose": "temblar",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "primer_plano",
+        "foco": "grua"
+      },
+      "efectos": [
+        "impacto"
+      ],
+      "sfx": [
+        "risa"
+      ]
+    },
+    {
+      "beat": "remate",
+      "texto": "Ahora ya sabes más que Grúa y que tus amigos.",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.2,
+            "plano": "medio",
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "tu",
+          "x": 0.5,
+          "expresion": "confiado",
+          "pose": "manos_cadera",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "americano",
+        "foco": "tu"
+      },
+      "sfx": [
+        "ding"
+      ]
+    },
+    {
+      "beat": "remate",
+      "texto": "Así que la próxima vez que se suban a un carro, recuerda que…",
+      "fondo": {
+        "lugar": "ciudad",
+        "hora": "dia",
+        "props": [
+          {
+            "tipo": "auto",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.88,
+            "color": "#E0457B"
+          },
+          {
+            "tipo": "casa",
+            "x": 0.12,
+            "plano": "fondo"
+          },
+          {
+            "tipo": "poste",
+            "x": 0.85,
+            "plano": "medio"
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "push_in",
+        "foco": [
+          0.5,
+          0.78
+        ]
+      },
+      "inserto": {
+        "tipo": "boton",
+        "botones": [
+          "triangulo"
+        ],
+        "veces": 2,
+        "etiqueta": "Toca rápido"
+      }
+    }
+  ]
+}
