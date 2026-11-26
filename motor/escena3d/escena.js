@@ -106,7 +106,7 @@ function instancia(nombre, escala = 1) {
   g.add(o);
   if (m.anims.length) {
     const mixer = new THREE.AnimationMixer(o);
-    const clip = m.anims.find((a) => /idle|eat|graz/i.test(a.name)) || m.anims[0];
+    const clip = m.anims.find((a) => /idle$/i.test(a.name)) || m.anims.find((a) => /idle|eating|graz/i.test(a.name) && !/death/i.test(a.name)) || m.anims[0];
     mixer.clipAction(clip).play();
     animables.push((t) => mixer.setTime(t));
   }
