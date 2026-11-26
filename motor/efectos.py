@@ -369,7 +369,10 @@ def quitar_palabras_en_pantalla(palabras, ins):
     toks = palabras_en_pantalla(ins)
     if not toks:
         return palabras
-    fuera = [_norm(w[0]) in toks for w in palabras]
+    # la voz puede devolver varias palabras en un solo bloque ("342 metros"): se filtra cada una
+    palabras = [(" ".join(x for x in w[0].split() if _norm(x) not in toks) or w[0], w[1], w[2])
+                if len(w[0].split()) > 1 else w for w in palabras]
+    fuera = [all(_norm(x) in toks for x in w[0].split()) for w in palabras]
     # conectores que quedarían colgando junto a una palabra quitada ("de [342 metros]", "con [ocho]")
     conectores = {"de", "del", "con", "el", "la", "los", "las", "y", "a", "en", "un", "una"}
     for i, w in enumerate(palabras):
