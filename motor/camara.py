@@ -7,7 +7,7 @@ from .dibujo import ease_in_out, ease_out, ease_out_back, clamp, ruido1d
 W, H = 1080, 1920
 MOVIMIENTOS = ["estatico", "push_in", "pull_out", "pan_izq", "pan_der", "tilt_arriba",
                "tilt_abajo", "zoom_golpe", "sacudida", "seguimiento", "orbita"]
-ENCUADRES = {"general": 0.9, "medio": 1.3, "americano": 1.38, "primer_plano": 1.85, "detalle": 2.3}
+ENCUADRES = {"general": 0.9, "medio": 1.3, "americano": 1.38, "primer_plano": 1.85, "detalle": 2.3, "macro": 2.6}
 
 
 def estado(cam_spec, p, t, foco_xy, dur, semilla=0):

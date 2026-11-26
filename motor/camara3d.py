@@ -8,9 +8,9 @@ W, H = 1080, 1920
 FOV = 40.0
 ALTO_PERSONAJE = 1.75          # metros
 ALTO_LOCAL = 660.0             # unidades de dibujo de personajes.py (pies -> coronilla)
-DIST = {"general": 10.5, "medio": 4.8, "americano": 3.5, "primer_plano": 2.3, "detalle": 2.4}
-ALTURA_FOCO = {"general": 1.2, "medio": 1.05, "americano": 1.2, "primer_plano": 1.5, "detalle": 0.55}
-DESENFOQUE = {"general": 0.0, "medio": 1.4, "americano": 2.2, "primer_plano": 3.6, "detalle": 4.5}
+DIST = {"general": 10.5, "medio": 4.8, "americano": 3.5, "primer_plano": 2.3, "detalle": 2.4, "macro": 1.5}
+ALTURA_FOCO = {"general": 1.2, "medio": 1.05, "americano": 1.2, "primer_plano": 1.5, "detalle": 0.55, "macro": 0.22}
+DESENFOQUE = {"general": 0.0, "medio": 1.4, "americano": 2.2, "primer_plano": 3.6, "detalle": 4.5, "macro": 3.0}
 
 
 # --- mapeo del storyboard (0-1) a metros -------------------------------------------------

@@ -50,3 +50,17 @@ El guion es un JSON legible (mira `ejemplos/lechero.json`): cada plano lleva su 
 
 ## Rendimiento
 Los fondos 3D se renderizan en Chromium. Sin GPU (SwiftShader) tarda unos 18 s por segundo de video en 1080p. En una PC con GPU va mucho más rápido.
+
+## Escala de referencia
+El mundo 3D está en metros y el personaje mide 1,75 m. Para que un objeto pequeño se vea grande, acerca la cámara (encuadre `macro` o `detalle`) en vez de inflar el `escala` del prop.
+
+| Objeto | Alto a `escala` 1 | `escala` recomendada | Alto en escena | Comentario |
+|---|---|---|---|---|
+| Personaje | 1,75 m | 1 | 1,75 m | referencia |
+| Sofá (`sofa`) | 1,15 m (asiento 0,45) | 1 | 1,15 m | |
+| Gato (`gato`) | 0,35 m | 1,15 | 0,40 m | un gato real mide ~0,25 m a la cruz, ~0,40 con orejas: le llega a la rodilla |
+| Caca (`caca`) | 0,39 m | 0,45 | 0,18 m | ~3 veces su tamaño real, para que se lea; menos de la mitad del gato |
+| Casa (`casa`) | 4,6 m | 1 | 4,6 m | |
+| Portaaviones (`portaaviones`) | 23 m de cubierta, 342 m de eslora | 1 | escala real | se coloca con `pos` en metros |
+
+Encuadres: `macro` (cámara a 1,5 m, a ras de suelo) para mascotas y objetos; `detalle` (2,4 m); `medio` (4,8 m); `general` (10,5 m).
