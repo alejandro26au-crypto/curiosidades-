@@ -30,6 +30,8 @@ def prop_mundo(pr):
     plano = pr.get("plano", "medio")
     x = float(pr.get("x", 0.5))
     esc = float(pr.get("escala", 1.0))
+    if pr.get("pos"):  # posición explícita en metros (props gigantes, p. ej. portaaviones)
+        return [float(v) for v in pr["pos"]], esc
     if plano == "fondo":
         return [(x - 0.5) * 10, 0, -13.0], esc * 1.2
     if plano == "medio":

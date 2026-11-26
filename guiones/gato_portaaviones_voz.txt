@@ -1,0 +1,22 @@
+GUION PARA VOZ — "El gato y el portaaviones" (~15 s)
+
+[Versión para leer]
+¿Sabías que, si tu gato se caga en el salón, puedes recogerlo con un trozo de papel?
+No necesitas traer el portaaviones USS Enterprise, de 342 metros…
+con ocho reactores nucleares…
+porque podrías perder tu casa.
+Sígueme para más.
+
+[Versión fonética para TTS (números y siglas en letra)]
+¿Sabías que, si tu gato se caga en el salón, puedes recogerlo con un trozo de papel?
+No necesitas traer el portaaviones U-ese-ese Énterprais, de trescientos cuarenta y dos metros…
+con ocho reactores nucleares…
+porque podrías perder tu casa.
+Sígueme para más.
+
+[Ritmo / pausas]
+0:00–0:04  "¿Sabías que, si tu gato se caga en el salón, puedes recogerlo con un trozo de papel?"  -> tono de dato curioso, sube al final (pregunta).
+0:04–0:09  "No necesitas traer el portaaviones USS Enterprise, de 342 metros…"  -> serio, solemne, como documental.
+0:09–0:11  "con ocho reactores nucleares…"  -> remarca "ocho".
+0:11–0:13  "porque podrías perder tu casa."  -> seco; pausa de ~0,6 s después (impacto).
+0:13–0:15  "Sígueme para más."  -> ligero, sonriente.

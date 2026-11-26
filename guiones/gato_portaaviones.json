@@ -1,0 +1,449 @@
+{
+  "titulo": "¿Sabías que para recoger la caca del gato no necesitas un portaaviones?",
+  "formato": "corto",
+  "apodo": "",
+  "tema": "Humor de contraste: solución cotidiana vs. escalada absurda con datos reales del USS Enterprise.",
+  "fuente": "USS Enterprise (CVN-65): 342 m de eslora, primer portaaviones nuclear, propulsado por 8 reactores A2W.",
+  "animo_musica": "curioso",
+  "voz_narrador": "es-MX-JorgeNeural",
+  "personajes": {
+    "dueno": {
+      "rol": "heroe",
+      "peinado": "flequillo",
+      "ropa": "camisa",
+      "color_ropa": "#E9A23B",
+      "color_ropa2": "#3F6EA8",
+      "color_zapatos": "#4A3426",
+      "accesorios": []
+    }
+  },
+  "planos": [
+    {
+      "beat": "gancho",
+      "texto": "¿Sabías que si tu gato se caga en el salón,",
+      "fondo": {
+        "lugar": "interior",
+        "hora": "dia",
+        "semilla": 3,
+        "props": [
+          {
+            "tipo": "sofa",
+            "x": 0.5,
+            "plano": "medio"
+          },
+          {
+            "tipo": "alfombra",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.855
+          },
+          {
+            "tipo": "gato",
+            "x": 0.4,
+            "plano": "frente",
+            "y": 0.86,
+            "escala": 1.3,
+            "rot": 0.5
+          },
+          {
+            "tipo": "caca",
+            "x": 0.6,
+            "plano": "frente",
+            "y": 0.865,
+            "escala": 1.3
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "zoom_golpe",
+        "encuadre": "detalle",
+        "foco": [
+          0.5,
+          0.84
+        ]
+      },
+      "efectos": [],
+      "sfx": [
+        "pop"
+      ],
+      "destacar": [
+        "gato",
+        "salón"
+      ],
+      "pausa": 0.05
+    },
+    {
+      "beat": "proceso",
+      "texto": "puedes recogerlo con un trozo de papel?",
+      "fondo": {
+        "lugar": "interior",
+        "hora": "dia",
+        "semilla": 3,
+        "props": [
+          {
+            "tipo": "sofa",
+            "x": 0.5,
+            "plano": "medio"
+          },
+          {
+            "tipo": "alfombra",
+            "x": 0.5,
+            "plano": "frente",
+            "y": 0.855
+          },
+          {
+            "tipo": "gato",
+            "x": 0.18,
+            "plano": "frente",
+            "y": 0.85,
+            "escala": 1.5,
+            "rot": 0.9
+          },
+          {
+            "tipo": "caca",
+            "x": 0.66,
+            "plano": "frente",
+            "y": 0.865,
+            "escala": 1.3
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "dueno",
+          "x": 0.46,
+          "expresion": "confiado",
+          "pose": "agachado",
+          "objeto": "papel",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "push_in",
+        "encuadre": "medio",
+        "foco": "dueno"
+      },
+      "efectos": [
+        "destello"
+      ],
+      "sfx": [
+        "ding"
+      ],
+      "destacar": [
+        "papel"
+      ]
+    },
+    {
+      "beat": "escalada",
+      "texto": "No necesitas traer el portaaviones USS Enterprise de 342 metros",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "dia",
+        "semilla": 7,
+        "llano": true,
+        "props": [
+          {
+            "tipo": "casa",
+            "x": 0.75,
+            "plano": "medio",
+            "modelo": "kk_home_B_yellow"
+          },
+          {
+            "tipo": "arbol",
+            "x": 0.1,
+            "plano": "medio"
+          },
+          {
+            "tipo": "portaaviones",
+            "pos": [
+              -75,
+              0,
+              -300
+            ],
+            "rot": -1.15,
+            "avance": [
+              30,
+              70
+            ],
+            "avance_t": [
+              0,
+              1
+            ],
+            "polvo": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "dueno",
+          "x": 0.4,
+          "expresion": "asombro",
+          "pose": "sorpresa",
+          "mira": "izq"
+        }
+      ],
+      "camara": {
+        "mov": "tilt_arriba",
+        "encuadre": "general",
+        "foco": [
+          0.4,
+          0.3
+        ],
+        "entrada": "whip",
+        "intensidad": 2.5
+      },
+      "inserto": {
+        "tipo": "regla",
+        "de": 0,
+        "a": 342,
+        "max": 342,
+        "unidad": "m",
+        "etiqueta": "USS Enterprise · CVN-65",
+        "posicion": "abajo"
+      },
+      "efectos": [],
+      "sfx": [
+        {
+          "nombre": "motor",
+          "t": 0.0,
+          "vol": 0.9
+        },
+        {
+          "nombre": "campana",
+          "t": 0.5,
+          "vol": 0.5
+        }
+      ],
+      "destacar": [
+        "USS",
+        "Enterprise",
+        "342",
+        "metros"
+      ]
+    },
+    {
+      "beat": "giro",
+      "texto": "con ocho reactores nucleares,",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "dia",
+        "semilla": 7,
+        "llano": true,
+        "props": [
+          {
+            "tipo": "portaaviones",
+            "pos": [
+              20,
+              0,
+              -95
+            ],
+            "rot": 0.18,
+            "reactores": true
+          }
+        ]
+      },
+      "actores": [],
+      "camara": {
+        "mov": "pan_der",
+        "encuadre": "general",
+        "foco": [
+          0.5,
+          -3.1
+        ],
+        "intensidad": 4
+      },
+      "inserto": {
+        "tipo": "ficha",
+        "titulo": "USS ENTERPRISE",
+        "subtitulo": "CVN-65 · propulsión nuclear",
+        "filas": [
+          [
+            "Eslora",
+            "342 m"
+          ],
+          [
+            "Reactores",
+            "8"
+          ]
+        ],
+        "iconos": 8,
+        "posicion": "arriba"
+      },
+      "efectos": [],
+      "sfx": [
+        {
+          "nombre": "tick",
+          "t": 0.45
+        },
+        {
+          "nombre": "tick",
+          "t": 0.7
+        },
+        {
+          "nombre": "ding",
+          "t": 1.2
+        }
+      ],
+      "destacar": [
+        "ocho",
+        "reactores",
+        "nucleares"
+      ],
+      "pausa": 0.05
+    },
+    {
+      "beat": "desenlace",
+      "texto": "porque podrías perder tu casa.",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "dia",
+        "semilla": 7,
+        "llano": true,
+        "props": [
+          {
+            "tipo": "escombros",
+            "x": 0.5,
+            "plano": "medio",
+            "radio": 4
+          },
+          {
+            "tipo": "casa",
+            "x": 0.5,
+            "plano": "medio",
+            "modelo": "kk_home_B_yellow",
+            "aplastar": [
+              0.34,
+              0.46
+            ],
+            "cae": -1
+          },
+          {
+            "tipo": "portaaviones",
+            "pos": [
+              4,
+              0,
+              -222
+            ],
+            "rot": -1.5708,
+            "avance": [
+              0,
+              44
+            ],
+            "avance_t": [
+              0.0,
+              0.5
+            ],
+            "polvo": true
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "dueno",
+          "x": 0.22,
+          "expresion": "panico",
+          "pose": "temblar",
+          "mira": "der",
+          "y": 0.9
+        }
+      ],
+      "camara": {
+        "mov": "pull_out",
+        "encuadre": "general",
+        "foco": "dueno",
+        "sacudida": true,
+        "intensidad": 1.4
+      },
+      "efectos": [
+        "impacto",
+        "polvo"
+      ],
+      "sfx": [
+        {
+          "nombre": "motor",
+          "t": 0.0,
+          "vol": 0.8
+        },
+        {
+          "nombre": "impacto",
+          "t": 0.7
+        },
+        {
+          "nombre": "golpe",
+          "t": 0.78
+        }
+      ],
+      "destacar": [
+        "casa"
+      ],
+      "pausa": 0.6
+    },
+    {
+      "beat": "remate",
+      "texto": "Sígueme para más.",
+      "fondo": {
+        "lugar": "pueblo",
+        "hora": "atardecer",
+        "semilla": 7,
+        "llano": true,
+        "props": [
+          {
+            "tipo": "escombros",
+            "x": 0.62,
+            "plano": "medio",
+            "radio": 4
+          },
+          {
+            "tipo": "portaaviones",
+            "pos": [
+              10,
+              0,
+              -190
+            ],
+            "rot": -1.5708
+          },
+          {
+            "tipo": "gato",
+            "x": 0.62,
+            "plano": "frente",
+            "y": 0.86,
+            "escala": 1.6,
+            "rot": -0.4
+          }
+        ]
+      },
+      "actores": [
+        {
+          "id": "dueno",
+          "x": 0.38,
+          "expresion": "feliz",
+          "pose": "saludar",
+          "objeto": "papel",
+          "mira": "der"
+        }
+      ],
+      "camara": {
+        "mov": "pull_out",
+        "encuadre": "general",
+        "foco": "dueno"
+      },
+      "inserto": {
+        "tipo": "texto",
+        "texto": "¡Sígueme!",
+        "etiqueta": "para más curiosidades",
+        "color": "#E0533A",
+        "posicion": "arriba"
+      },
+      "efectos": [],
+      "sfx": [
+        "pop"
+      ],
+      "destacar": [
+        "Sígueme"
+      ]
+    }
+  ],
+  "velocidad_voz": "+4%",
+  "cola": 1.0
+}

@@ -33,7 +33,7 @@ PEINADOS = ["ninguno", "calvo_lados", "flequillo", "moño", "canas", "rizos"]
 ROPAS = ["camisa", "overol", "hawaiana", "chaleco", "abrigo", "vestido", "uniforme", "bata"]
 ACCESORIOS = ["bufanda", "lentes", "lentes_sol", "mochila", "tirantes", "corbata", "delantal"]
 OBJETOS = ["balde", "martillo", "brocha", "reloj", "fosforo", "barra", "lata",
-           "termometro", "trapo", "farol", "carton", "rama", "pala", "libreta", "pez"]
+           "termometro", "trapo", "farol", "carton", "rama", "pala", "libreta", "pez", "papel"]
 
 
 # --- Poses -----------------------------------------------------------------------
@@ -594,6 +594,11 @@ def dibujar_objeto(ctx, nombre, x, y, mira, t=0.0, escala=1.0):
         rect_redondo(ctx, -22, -20, 44, 60, 10)
         relleno_contorno(ctx, (0.98, 0.9, 0.6), 6)
         curva(ctx, (-14, -20), (0, -44), (14, -20), 5)
+    elif nombre == "papel":
+        poligono(ctx, [(-8, -64), (78, -72), (84, 6), (-2, 14)])
+        relleno_contorno(ctx, (1, 1, 0.98), 5)
+        linea(ctx, [(6, -44), (66, -50)], 3, (0.75, 0.78, 0.85))
+        linea(ctx, [(8, -24), (68, -30)], 3, (0.75, 0.78, 0.85))
     elif nombre == "carton":
         rect_redondo(ctx, -10, -70, 110, 80, 4)
         relleno_contorno(ctx, (0.8, 0.65, 0.45), 6)

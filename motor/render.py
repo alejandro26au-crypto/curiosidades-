@@ -81,8 +81,12 @@ def planificar(guion, sin_voz=False, carpeta="salida/tmp"):
     for pl in planos:
         quien = pl.get("voz", "narrador")
         spec = personajes.get(quien, {}) if quien != "narrador" else {}
-        segs.append({"texto": pl["texto"].strip(), "voz": spec.get("voz", voz_narr),
-                     "velocidad": spec.get("velocidad", ESTILO["velocidad_voz"]), "tono": spec.get("tono", "+0Hz")})
+        seg = {"texto": pl["texto"].strip(), "voz": spec.get("voz", voz_narr),
+               "velocidad": spec.get("velocidad", guion.get("velocidad_voz", ESTILO["velocidad_voz"])),
+               "tono": spec.get("tono", "+0Hz")}
+        if pl.get("pausa") is not None:  # silencio tras la frase (remates, impactos)
+            seg["pausa"] = float(pl["pausa"])
+        segs.append(seg)
     if sin_voz:
         voz, tiempos = audio.estimar(segs)
     else:
@@ -94,7 +98,7 @@ def planificar(guion, sin_voz=False, carpeta="salida/tmp"):
     inicios = []
     for i, ps in enumerate(tiempos):
         inicios.append(0.0 if i == 0 else max(0.0, ps[0][1] - 0.06) if ps else inicios[-1] + 1.5)
-    fin_total = len(voz) / audio.SR + 0.35
+    fin_total = len(voz) / audio.SR + float(guion.get("cola", 0.35))
     for i, pl in enumerate(planos):
         pl["_i"], pl["_t0"] = i, inicios[i]
         pl["_t1"] = inicios[i + 1] if i + 1 < len(planos) else fin_total

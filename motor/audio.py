@@ -80,7 +80,7 @@ def sintetizar(segmentos, carpeta, cache=True):
     for i, seg in enumerate(segmentos):
         ruta = os.path.join(carpeta, f"voz_{i:03d}.mp3")
         meta = ruta + ".json"
-        clave = json.dumps(seg, sort_keys=True, ensure_ascii=False)
+        clave = json.dumps({k: v for k, v in seg.items() if k != "pausa"}, sort_keys=True, ensure_ascii=False)
         if cache and os.path.exists(meta) and json.load(open(meta)).get("clave") == clave:
             palabras = json.load(open(meta))["palabras"]
         else:
@@ -101,7 +101,7 @@ def sintetizar(segmentos, carpeta, cache=True):
         fin = min(len(x), idx[-1] + int(0.06 * SR)) if len(idx) else len(x)
         x = x[ini:fin]
         corr = ini / SR
-        pausa = 0.08 if seg["texto"].rstrip()[-1:] in ".?!" else 0.02
+        pausa = seg.get("pausa", 0.08 if seg["texto"].rstrip()[-1:] in ".?!" else 0.02)
         palabras = _alinear_puntuacion(seg["texto"], palabras)
         tiempos.append([[w, cursor + a - corr, cursor + b - corr] for w, a, b in palabras])
         pistas.append(x)

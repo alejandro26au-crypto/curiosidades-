@@ -604,7 +604,7 @@ _CAT = _json.load(open(_os.path.join(_os.path.dirname(__file__), "escena3d", "ca
 PROPS_MODELO = sorted(_CAT["props"])
 PROPS = PROPS_MODELO + ["arbol_fruta", "granero", "fardos", "camioneta", "lata_leche", "torre_agua", "bomba_agua",
          "puesto", "pasto_alto", "vaca", "cañon", "muro", "bandera", "poste", "humo", "fogata", "cerca", "estanque",
-         "barco", "carreta", "acacia"]
+         "barco", "carreta", "acacia", "portaaviones", "caca", "sofa", "alfombra", "escombros"]
 _PROPS_2D = ["arbol", "arbol_fruta", "pino", "arbusto", "palmera", "acacia", "granero", "casa",
          "cerca", "fogata", "roca", "fardos", "camioneta", "auto", "carreta", "estanque", "barco",
          "lata_leche", "torre_agua", "bomba_agua", "puesto", "pasto_alto", "vaca", "cañon",

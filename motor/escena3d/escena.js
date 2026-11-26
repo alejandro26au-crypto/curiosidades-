@@ -181,7 +181,7 @@ function terreno(L, r) {
     const x = p.getX(i), z = p.getZ(i);
     const d = Math.hypot(x * 0.8, Math.min(0, z + 8));
     let y = 0;
-    if (!L.todoMar && !L.interior) {
+    if (!L.todoMar && !L.interior && !window.__llano) {
       y = Math.max(0, d - 22) * 0.06 * (1 + ruido(x, z)) * (L.hielo ? 0.5 : 1);
       y += Math.max(0, d - 70) * 0.18 * (0.6 + 0.4 * ruido(x * 0.5, z * 0.5));
       y += (r() - 0.5) * 0.06;
@@ -253,6 +253,116 @@ function copa(g, y, r, color, n = 5, radio = 0.9) {
   }
 }
 const PROPS = {
+  // --- portaaviones (clase Enterprise, CVN-65): 342 m de eslora, 8 reactores ---
+  portaaviones(g, p, r) {
+    const L = p.eslora || 342, B = 40, Bd = 78, Hc = 20, Hd = 3;
+    const gris = '#7f8a96', grisO = '#5d6672', cubierta = '#3c4048';
+    // casco: proa en +x, afilada; popa recta
+    const sc = new THREE.Shape();
+    sc.moveTo(-L / 2, -B / 2); sc.lineTo(L * 0.30, -B / 2); sc.quadraticCurveTo(L * 0.47, -B * 0.3, L / 2, 0);
+    sc.quadraticCurveTo(L * 0.47, B * 0.3, L * 0.30, B / 2); sc.lineTo(-L / 2, B / 2); sc.closePath();
+    const gc = new THREE.ExtrudeGeometry(sc, { depth: Hc, bevelEnabled: false }); gc.rotateX(-Math.PI / 2);
+    const casco = malla(gc, mat(gris)); g.add(casco);
+    // franja roja inferior (obra viva) y línea de flotación
+    const gr = new THREE.ExtrudeGeometry(sc, { depth: 3.2, bevelEnabled: false }); gr.rotateX(-Math.PI / 2);
+    const roja = malla(gr, mat('#9a3328')); roja.scale.set(1.004, 1, 1.01); g.add(roja);
+    // cubierta de vuelo con la pista en ángulo
+    const sd = new THREE.Shape();
+    sd.moveTo(-L / 2, -Bd * 0.42); sd.lineTo(L * 0.05, -Bd * 0.5); sd.lineTo(L * 0.18, -Bd * 0.36); sd.lineTo(L * 0.46, -B * 0.42);
+    sd.lineTo(L * 0.46, B * 0.42); sd.lineTo(L * 0.12, Bd * 0.42); sd.lineTo(-L * 0.38, Bd * 0.48); sd.lineTo(-L / 2, Bd * 0.4); sd.closePath();
+    const gd = new THREE.ExtrudeGeometry(sd, { depth: Hd, bevelEnabled: false }); gd.rotateX(-Math.PI / 2);
+    const dk = malla(gd, mat(grisO)); dk.position.y = Hc; g.add(dk);
+    const tex = texCanvas(2048, 512, (c, w, h) => {
+      c.fillStyle = cubierta; c.fillRect(0, 0, w, h);
+      c.strokeStyle = '#f2f2ea'; c.lineWidth = 6; c.setLineDash([60, 40]);
+      c.beginPath(); c.moveTo(w * 0.02, h * 0.55); c.lineTo(w * 0.98, h * 0.55); c.stroke();
+      c.strokeStyle = '#f4d24a'; c.beginPath(); c.moveTo(w * 0.05, h * 0.4); c.lineTo(w * 0.62, h * 0.05); c.stroke();
+      c.setLineDash([]); c.strokeStyle = '#f2f2ea'; c.lineWidth = 10;
+      c.strokeRect(w * 0.01, h * 0.06, w * 0.98, h * 0.88);
+      c.fillStyle = '#f2f2ea'; c.font = 'bold 300px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.save(); c.translate(w * 0.86, h * 0.55); c.rotate(Math.PI / 2); c.fillText('65', 0, 0); c.restore();
+    });
+    const pd = malla(new THREE.PlaneGeometry(L * 0.9, Bd * 0.72), new THREE.MeshToonMaterial({ map: tex, gradientMap: grad }), false);
+    pd.rotation.x = -Math.PI / 2; pd.position.set(-L * 0.02, Hc + Hd + 0.05, 0); g.add(pd);
+    // isla (puente) a estribor
+    const isla = new THREE.Group(); isla.position.set(-L * 0.02, Hc + Hd, -B * 0.5 + 6); g.add(isla);
+    const i1 = malla(new THREE.BoxGeometry(34, 14, 10), mat(gris)); i1.position.y = 7; isla.add(i1);
+    const i2 = malla(new THREE.BoxGeometry(22, 9, 9), mat(gris)); i2.position.set(2, 18.5, 0); isla.add(i2);
+    const vid = malla(new THREE.BoxGeometry(22.2, 2, 9.2), mat('#1e2733')); vid.position.set(2, 20.5, 0); isla.add(vid);
+    const mas = malla(new THREE.CylinderGeometry(0.6, 1, 16, 8), mat(grisO)); mas.position.set(2, 31, 0); isla.add(mas);
+    const rad = malla(new THREE.BoxGeometry(10, 1.2, 1.2), mat('#d8dde3')); rad.position.set(2, 36, 0); isla.add(rad);
+    animables.push((t) => { rad.rotation.y = t * 2.4; });
+    // aviones en cubierta
+    for (let i = 0; i < 9; i++) {
+      const a = new THREE.Group();
+      const f = malla(new THREE.BoxGeometry(16, 2, 2.4), mat('#9aa3ad')); f.position.y = 1.4; a.add(f);
+      const ala = malla(new THREE.BoxGeometry(6, 0.4, 13), mat('#8b949e')); ala.position.set(-1, 1.4, 0); a.add(ala);
+      const co = malla(new THREE.BoxGeometry(1.6, 2.6, 3.6), mat('#8b949e')); co.position.set(-7, 3, 0); a.add(co);
+      a.position.set(-L * 0.42 + i * 15, Hc + Hd, B * 0.1 + (i % 2) * 14); a.rotation.y = 0.7; g.add(a);
+    }
+    // número de casco en la proa (ambos costados)
+    const num = texCanvas(512, 256, (c, w, h) => { c.fillStyle = '#ffffff'; c.font = 'bold 220px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('65', w / 2, h / 2); });
+    for (const sgn of [1, -1]) {
+      const n = malla(new THREE.PlaneGeometry(22, 11), new THREE.MeshBasicMaterial({ map: num, transparent: true }), false);
+      n.position.set(L * 0.33, Hc * 0.62, sgn * (B / 2 - 1.2)); n.rotation.y = sgn > 0 ? 0.12 : Math.PI - 0.12; g.add(n);
+    }
+    // los 8 reactores nucleares: ojos de buey radiactivos en el costado
+    if (p.reactores) {
+      const rx = texCanvas(256, 256, (c, w) => {
+        c.fillStyle = '#ffd400'; c.beginPath(); c.arc(w / 2, w / 2, w / 2 - 4, 0, 7); c.fill();
+        c.lineWidth = 10; c.strokeStyle = '#111'; c.stroke(); c.fillStyle = '#111';
+        for (let k = 0; k < 3; k++) { const a0 = -Math.PI / 2 + k * 2 * Math.PI / 3 - 0.52; c.beginPath(); c.moveTo(w / 2, w / 2); c.arc(w / 2, w / 2, w * 0.42, a0, a0 + 1.04); c.closePath(); c.fill(); }
+        c.fillStyle = '#ffd400'; c.beginPath(); c.arc(w / 2, w / 2, w * 0.11, 0, 7); c.fill();
+        c.fillStyle = '#111'; c.beginPath(); c.arc(w / 2, w / 2, w * 0.075, 0, 7); c.fill();
+      });
+      const lado = p.lado_reactores || 1;
+      for (let i = 0; i < 8; i++) {
+        const d = malla(new THREE.CircleGeometry(5.2, 32), new THREE.MeshBasicMaterial({ map: rx }), false);
+        d.position.set(-L * 0.36 + i * L * 0.085, Hc * 0.55, lado * (B / 2 + 0.3)); if (lado < 0) d.rotation.y = Math.PI; g.add(d);
+        const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: texSuave, color: C('#c6ff3a'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+        halo.position.copy(d.position); halo.position.z += lado * 1.5; g.add(halo);
+        animables.push((t) => { const k = 15 + 4 * Math.sin(t * 7 + i); halo.scale.set(k, k, 1); halo.material.opacity = 0.55 + 0.3 * Math.sin(t * 7 + i); });
+      }
+    }
+    if (p.polvo) for (const z of [-B * 0.55, B * 0.55]) humo(g, L * 0.42, 1, z, 0.82, 10, 18);
+  },
+  caca(g, p, r) {
+    const c = p.color || '#6b4320';
+    const capas = [[0.16, 0.06], [0.12, 0.15], [0.08, 0.23]];
+    for (const [rad, y] of capas) { const b = malla(new THREE.TorusGeometry(rad, rad * 0.55, 8, 16), mat(c)); b.rotation.x = Math.PI / 2; b.position.y = y; g.add(b); }
+    const pu = malla(new THREE.ConeGeometry(0.06, 0.12, 10), mat(c)); pu.position.y = 0.33; pu.rotation.z = 0.4; g.add(pu);
+    // olor
+    const ol = [];
+    for (let i = 0; i < 3; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: texSuave, color: C('#9bc53d'), transparent: true, depthWrite: false })); g.add(s); ol.push(s); }
+    animables.push((t) => ol.forEach((s, i) => { const k = (t * 0.6 + i / 3) % 1; s.position.set(Math.sin(t * 3 + i * 2) * 0.08, 0.35 + k * 0.6, 0); const e = 0.12 + k * 0.2; s.scale.set(e, e, 1); s.material.opacity = 0.7 * (1 - k); }));
+  },
+  sofa(g, p, r) {
+    const c = p.color || '#3f6ea8';
+    const base = malla(new THREE.BoxGeometry(2.2, 0.45, 0.9), mat(c)); base.position.y = 0.32; g.add(base);
+    const resp = malla(new THREE.BoxGeometry(2.2, 0.7, 0.25), mat(c)); resp.position.set(0, 0.8, -0.35); g.add(resp);
+    for (const x of [-1.12, 1.12]) { const b = malla(new THREE.BoxGeometry(0.25, 0.6, 0.9), mat(c)); b.position.set(x, 0.55, 0); g.add(b); }
+    for (const x of [-0.5, 0.5]) { const co = malla(new THREE.BoxGeometry(0.95, 0.16, 0.7), mat('#5a86c0')); co.position.set(x, 0.62, 0.05); g.add(co); }
+    for (const x of [-1, 1]) for (const z of [-0.35, 0.35]) { const pa = malla(new THREE.CylinderGeometry(0.04, 0.04, 0.12, 6), mat('#3a2616')); pa.position.set(x, 0.05, z); g.add(pa); }
+  },
+  alfombra(g, p, r) {
+    const t = texCanvas(512, 512, (c, w, h) => {
+      c.fillStyle = p.color || '#b8433a'; c.fillRect(0, 0, w, h); c.strokeStyle = '#f2d38a'; c.lineWidth = 18;
+      c.strokeRect(30, 30, w - 60, h - 60); c.lineWidth = 8; c.strokeRect(80, 80, w - 160, h - 160);
+      c.fillStyle = '#f2d38a'; c.beginPath(); c.arc(w / 2, h / 2, 70, 0, 7); c.fill();
+    });
+    const a = malla(new THREE.PlaneGeometry(p.ancho || 3.2, p.fondo || 2.2), new THREE.MeshToonMaterial({ map: t, gradientMap: grad }), false);
+    a.rotation.x = -Math.PI / 2; a.position.y = 0.012; g.add(a);
+  },
+  escombros(g, p, r) {
+    const cols = ['#b5654a', '#c9b79a', '#8e6e5c', '#6b4a30', '#d8cbb3'];
+    const n = p.n || 40, ext = p.radio || 4;
+    for (let i = 0; i < n; i++) {
+      const s = 0.2 + r() * 0.9;
+      const b = malla(new THREE.BoxGeometry(s * (1 + r() * 2), s * 0.35, s), mat(cols[i % cols.length]));
+      b.position.set((r() - 0.5) * ext * 2, s * 0.15 + r() * 0.6, (r() - 0.5) * ext); b.rotation.set(r() * 1.2, r() * 6, r() * 1.2); g.add(b);
+    }
+    if (p.humo !== false) { humo(g, -1, 0.5, 0, 0.6, 10, 8); humo(g, 1.5, 0.5, -0.5, 0.7, 8, 6); }
+  },
   arbol(g, p, r) {
     const tc = p.pintado ? '#f1f0ea' : (p.color_tronco || '#7a5236');
     const tr = malla(new THREE.CylinderGeometry(0.13, 0.2, 2.0, 7), mat(tc)); tr.position.y = 1.0; g.add(tr);
@@ -447,7 +557,7 @@ function cercaModelo(p) {
 window.construir = function (fondo) {
   scene = new THREE.Scene(); animables = [];
   const h = HORAS[fondo.hora] || HORAS.dia, L = LUGARES[fondo.lugar] || LUGARES.campo;
-  window.__noche = fondo.hora === 'noche';
+  window.__noche = fondo.hora === 'noche'; window.__llano = !!fondo.llano;
   const r = rnd((fondo.semilla || 1) * 9973 + 17);
   renderer.toneMappingExposure = h.exp;
   scene.fog = new THREE.Fog(C(h.niebla), L.interior ? 30 : 26, L.interior ? 80 : 150);
@@ -494,7 +604,17 @@ window.construir = function (fondo) {
     if (!g) { const f = PROPS[p.tipo]; if (!f) continue; g = new THREE.Group(); f(g, p, r); }
     g.position.set(...p._pos); g.rotation.y = p.rot || 0; g.scale.setScalar(p._escala || 1);
     scene.add(g);
+    const suave = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / Math.max(1e-3, b - a))); return k * k * (3 - 2 * k); };
+    if (p.avance) {  // [dx, dz] metros recorridos durante el plano (de p.avance_t[0] a [1])
+      const [a0, a1] = p.avance_t || [0, 1], base = g.position.clone();
+      animables.push((t, pp) => { const k = suave(a0, a1, pp); g.position.set(base.x + p.avance[0] * k, base.y, base.z + p.avance[1] * k); });
+    }
+    if (p.aplastar) {  // [p0, p1]: el prop se derrumba (casa aplastada)
+      const [a0, a1] = p.aplastar, e = p._escala || 1, sgn = p.cae || 1;
+      animables.push((t, pp) => { const k = suave(a0, a1, pp); g.scale.set(e * (1 + 0.35 * k), e * Math.max(0.06, 1 - 0.94 * k), e * (1 + 0.2 * k)); g.rotation.z = sgn * 0.25 * k; });
+    }
   }
+  if ((fondo.props || []).some((q) => q.tipo === 'portaaviones')) { scene.fog.near = 70; scene.fog.far = 520; }
   window.__marSube = fondo.mar_sube || 0;
   return true;
 };
@@ -504,7 +624,7 @@ window.cuadro = function (cam, t, p) {
   camera.up.set(Math.sin(cam.roll || 0), Math.cos(cam.roll || 0), 0);
   camera.lookAt(...cam.target);
   camera.fov = cam.fov; camera.updateProjectionMatrix();
-  for (const a of animables) a(t);
+  for (const a of animables) a(t, p || 0);
   if (window.__mar && window.__marSube) window.__mar.position.z = -209 + window.__marSube * 6 * p;
   renderer.render(scene, camera);
   return renderer.domElement.toDataURL('image/jpeg', 0.93);

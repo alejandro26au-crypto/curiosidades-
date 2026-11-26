@@ -12,7 +12,7 @@ from .formula import ESTILO
 
 W, H = 1080, 1920
 INSERTOS = ["termometro", "manometro", "contador", "reloj", "comparativa", "flechas",
-            "texto", "capas", "regla"]
+            "texto", "capas", "regla", "ficha"]
 EFECTOS = ["nieve", "lluvia", "chispas", "polvo", "vapor", "escarcha", "velocidad",
            "impacto", "destello", "calor", "hojas", "burbujas", "oscuro"]
 
@@ -46,7 +46,7 @@ def dibujar_inserto(ctx, ins, p, t, dur):
     unidad = ins.get("unidad", "")
     etiqueta = ins.get("etiqueta", "")
     pos = ins.get("posicion", "arriba")
-    cy = H * (0.30 if pos == "arriba" else 0.45)
+    cy = H * {"arriba": 0.30, "abajo": 0.86}.get(pos, 0.45)
     ctx.save()
     if tipo == "termometro":
         _panel(ctx, W * 0.5, cy, 640, 620, k)
@@ -153,6 +153,55 @@ def dibujar_inserto(ctx, ins, p, t, dur):
         texto(ctx, izq, -250, -210, 56, relleno=(0.88, 0.18, 0.15))
         texto(ctx, der, 230, -210, 56, relleno=(0.9, 0.5, 0.05))
         linea(ctx, [(0, -240), (0, 200)], 4, (0.7, 0.7, 0.7))
+    elif tipo == "ficha":
+        # ficha técnica: título, subtítulo, filas etiqueta/valor e iconos (☢) que aparecen uno a uno
+        filas = ins.get("filas") or []
+        n_ic = int(ins.get("iconos", 0))
+        alto = 250 + 120 * len(filas) + (170 if n_ic else 0)
+        _panel(ctx, W * 0.5, cy, 880, alto, k)
+        y = -alto / 2 + 95
+        texto(ctx, ins.get("titulo", ""), 0, y, 84, peso=cairo.FONT_WEIGHT_BOLD, relleno=(0.1, 0.12, 0.16))
+        if ins.get("subtitulo"):
+            texto(ctx, ins["subtitulo"], 0, y + 78, 50, relleno=(0.45, 0.47, 0.52))
+        y += 150
+        amarillo = hex2rgb(ESTILO["color_destacado"])
+        for j, (et, val) in enumerate(filas):
+            kj = ease_out_back(clamp((t - 0.25 - 0.22 * j) / 0.3))
+            if kj <= 0:
+                continue
+            rect_redondo(ctx, -380, y - 48, 760, 96, 24)
+            color(ctx, (0.93, 0.93, 0.9))
+            ctx.fill()
+            texto(ctx, et, -170, y, 52, relleno=(0.3, 0.32, 0.36))
+            ctx.save()
+            ctx.translate(190, y)
+            ctx.scale(kj, kj)
+            texto(ctx, val, 0, 0, 76, peso=cairo.FONT_WEIGHT_BOLD, relleno=amarillo, trazo=NEGRO, grosor=10)
+            ctx.restore()
+            y += 120
+        if n_ic:
+            paso = 760 / n_ic
+            for i in range(n_ic):
+                ki = ease_out_back(clamp((t - 0.45 - 0.11 * i) / 0.22), 2.2)
+                if ki <= 0:
+                    continue
+                x = -380 + paso * (i + 0.5)
+                ctx.save()
+                ctx.translate(x, y + 40)
+                ctx.scale(ki, ki)
+                rr = min(42, paso * 0.45)
+                ctx.arc(0, 0, rr, 0, 2 * math.pi)
+                relleno_contorno(ctx, (1, 0.84, 0.0), 5)
+                for a in range(3):
+                    a0 = -math.pi / 2 + a * 2 * math.pi / 3 - 0.52
+                    ctx.move_to(0, 0)
+                    ctx.arc(0, 0, rr * 0.8, a0, a0 + 1.04)
+                    ctx.close_path()
+                    color(ctx, NEGRO)
+                    ctx.fill()
+                ctx.arc(0, 0, rr * 0.22, 0, 2 * math.pi)
+                relleno_contorno(ctx, (1, 0.84, 0.0), 3)
+                ctx.restore()
     elif tipo == "capas":
         _panel(ctx, W * 0.5, cy, 680, 680, k)
         capas = ins.get("capas") or [{"color": "#BFE6FF", "etiqueta": "hielo"},
