@@ -104,7 +104,8 @@ def planificar(guion, sin_voz=False, carpeta="salida/tmp"):
         pl["_t1"] = inicios[i + 1] if i + 1 < len(planos) else fin_total
     subs = []
     for i, ps in enumerate(tiempos):
-        for txt, a, b in efectos.agrupar_palabras([tuple(x) for x in ps]):
+        visibles = efectos.quitar_palabras_en_pantalla([tuple(x) for x in ps], planos[i].get("inserto"))
+        for txt, a, b in efectos.agrupar_palabras(visibles):
             subs.append((a, b, txt, i))
     return voz, subs, fin_total
 

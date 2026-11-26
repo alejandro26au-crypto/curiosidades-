@@ -324,6 +324,60 @@ NUM_PAL = {"uno", "una", "dos", "tres", "cuatro", "cinco", "seis", "siete", "och
            "cien", "mil", "medianoche", "mediodía", "cero", "media", "menos"}
 
 
+_NUM_A_DIG = {"uno": "1", "una": "1", "dos": "2", "tres": "3", "cuatro": "4", "cinco": "5", "seis": "6",
+              "siete": "7", "ocho": "8", "nueve": "9", "diez": "10", "cien": "100", "mil": "1000"}
+_UNIDADES = {"m": "metros", "km": "kilometros", "kg": "kilos", "t": "toneladas", "h": "horas",
+             "min": "minutos", "s": "segundos", "°c": "grados", "%": "por ciento"}
+
+
+def _norm(w):
+    import unicodedata
+    w = unicodedata.normalize("NFKD", w.lower()).encode("ascii", "ignore").decode()
+    w = re.sub(r"[^a-z0-9°%]", "", w)
+    return _NUM_A_DIG.get(w, w)
+
+
+def palabras_en_pantalla(ins):
+    """Palabras que ya muestra un inserto (recuadro, ficha, contador): no se repiten en subtítulos."""
+    if not ins:
+        return set()
+    textos = [ins.get(k, "") for k in ("texto", "etiqueta", "titulo", "subtitulo", "izq", "der")]
+    for f in ins.get("filas") or []:
+        textos += [str(x) for x in f]
+    for it in ins.get("items") or []:
+        textos += [str(it.get("etiqueta", "")), str(it.get("valor", "")), str(it.get("unidad", ""))]
+    for c in ins.get("capas") or []:
+        textos.append(str(c.get("etiqueta", "")))
+    if ins.get("tipo") in ("contador", "regla", "termometro", "manometro"):
+        a = ins.get("a")
+        if a is not None:
+            textos.append(str(int(a)) if float(a).is_integer() else str(a))
+        textos.append(ins.get("unidad", ""))
+    toks = set()
+    for t in textos:
+        for w in re.split(r"[\s·/,()]+", str(t)):
+            n = _norm(w)
+            if n:
+                toks.add(n)
+                if n in _UNIDADES:
+                    toks.add(_norm(_UNIDADES[n]))
+    return toks
+
+
+def quitar_palabras_en_pantalla(palabras, ins):
+    """Filtra [(texto, t0, t1)] quitando las palabras que ya aparecen en el inserto del plano."""
+    toks = palabras_en_pantalla(ins)
+    if not toks:
+        return palabras
+    fuera = [_norm(w[0]) in toks for w in palabras]
+    # conectores que quedarían colgando junto a una palabra quitada ("de [342 metros]", "con [ocho]")
+    conectores = {"de", "del", "con", "el", "la", "los", "las", "y", "a", "en", "un", "una"}
+    for i, w in enumerate(palabras):
+        if not fuera[i] and _norm(w[0]) in conectores and i + 1 < len(palabras) and fuera[i + 1]:
+            fuera[i] = True
+    return [w for i, w in enumerate(palabras) if not fuera[i]]
+
+
 def agrupar_palabras(palabras, maxp=None):
     """palabras: [(texto, t0, t1)] -> grupos de 1-3 palabras que se muestran juntos."""
     maxp = maxp or ESTILO["subtitulo_max_palabras"]
