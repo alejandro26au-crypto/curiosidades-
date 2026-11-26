@@ -41,7 +41,7 @@
             "tipo": "gato",
             "x": 0.45,
             "plano": "frente",
-            "y": 0.86,
+            "y": 0.858,
             "escala": 1.15,
             "rot": 0.45
           },
@@ -49,8 +49,8 @@
             "tipo": "caca",
             "x": 0.565,
             "plano": "frente",
-            "y": 0.868,
-            "escala": 0.45
+            "y": 0.858,
+            "escala": 0.3
           }
         ]
       },
@@ -105,8 +105,8 @@
             "tipo": "caca",
             "x": 0.62,
             "plano": "frente",
-            "y": 0.868,
-            "escala": 0.45
+            "y": 0.858,
+            "escala": 0.3
           }
         ]
       },
@@ -385,7 +385,7 @@
       "texto": "Sígueme para más.",
       "fondo": {
         "lugar": "pueblo",
-        "hora": "atardecer",
+        "hora": "dia",
         "semilla": 7,
         "llano": true,
         "props": [
@@ -406,18 +406,18 @@
           },
           {
             "tipo": "gato",
-            "x": 0.47,
+            "x": 0.58,
             "plano": "frente",
-            "y": 0.875,
+            "y": 0.87,
             "escala": 1.15,
-            "rot": 0.3
+            "rot": 0.9
           }
         ]
       },
       "actores": [
         {
           "id": "dueno",
-          "x": 0.38,
+          "x": 0.42,
           "expresion": "feliz",
           "pose": "saludar",
           "objeto": "papel",
@@ -426,8 +426,12 @@
       ],
       "camara": {
         "mov": "pull_out",
-        "encuadre": "general",
-        "foco": "dueno"
+        "encuadre": "medio",
+        "foco": [
+          0.5,
+          0.62
+        ],
+        "intensidad": 1.0
       },
       "inserto": {
         "tipo": "texto",

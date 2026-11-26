@@ -59,7 +59,7 @@ El mundo 3D está en metros y el personaje mide 1,75 m. Para que un objeto peque
 | Personaje | 1,75 m | 1 | 1,75 m | referencia |
 | Sofá (`sofa`) | 1,15 m (asiento 0,45) | 1 | 1,15 m | |
 | Gato (`gato`) | 0,35 m | 1,15 | 0,40 m | un gato real mide ~0,25 m a la cruz, ~0,40 con orejas: le llega a la rodilla |
-| Caca (`caca`) | 0,39 m | 0,45 | 0,18 m | ~3 veces su tamaño real, para que se lea; menos de la mitad del gato |
+| Caca (`caca`) | 0,39 m | 0,3 | 0,12 m | ~2-3 veces su tamaño real, para que se lea; siempre menos de la mitad del gato y a su misma profundidad (más cerca de cámara parecería mayor) |
 | Casa (`casa`) | 4,6 m | 1 | 4,6 m | |
 | Portaaviones (`portaaviones`) | 23 m de cubierta, 342 m de eslora | 1 | escala real | se coloca con `pos` en metros |
 
